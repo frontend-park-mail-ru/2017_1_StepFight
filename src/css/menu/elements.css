@@ -1,0 +1,105 @@
+.btn-play {
+    margin: 0 auto !important;
+    margin-top: 15px !important;
+    margin-bottom: 15px !important;
+    width: 180px;
+    height: 180px;
+    border-color: var(--btn-border-color);
+    border-style: solid;;
+    border-width: 2px;
+    padding: 10px;
+    border-radius: 2000px;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    color: var(--btn-text-color);
+    display: table;
+    /*box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.5) inset;*/
+    background-color: var(--btn-bg-color);
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+
+.btn-play:hover, .btn-play:focus {
+    /*box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0) inset;
+    width: 200px;
+    height: 200px;*/
+    color: var(--btn-text-color-focus);
+    border-color: var(--btn-border-color-focus);
+    background-color: var(--btn-bg-color-focus);
+    cursor: pointer;
+}
+
+.btn-play h1 {
+    font-size: 30px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.btn-play h1:hover, .btn-play h1:focus {
+    cursor: pointer;
+}
+
+.close {
+    color: rgba(0, 0, 0, 0.90);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: rgba(0, 0, 0, 1);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+input {
+    margin-top: 5px;
+}
+
+button {
+    margin-top: 5px;
+}
+
+.btn {
+    margin-top: 5px;
+    width: 100%;
+    color: var(--btn-text-color);
+    background-color: var(--btn-bg-color);
+    border-color: var(--btn-border-color);
+    border-style: solid;;
+    border-width: 2px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.btn:hover {
+    background-color: var(--btn-bg-color-focus);
+    border-color: var(--btn-border-color-focus);
+    color: var(--btn-text-color-focus);
+}
+
+/*bootstrap list*/
+.list-group {
+    color: var(--btn-text-color);
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+}
+
+.list-group-item {
+    border: 0 solid black !important;
+}
+
+.badge {
+    background-color: var(--btn-text-color) !important;
+}
+
+.list-group li:nth-child(2n) {
+    background-color: var(--bg-color);
+}
+
+/*--------------------*/

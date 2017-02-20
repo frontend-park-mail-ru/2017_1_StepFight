@@ -1,0 +1,14 @@
+:root{
+    --bg-color: #E4F1FE;
+    --btn-bg-color: #8DC6FF;
+    --btn-border-color-focus: #8DC6FF;
+    --btn-text-color-focus: #8DC6FF;
+    --btn-bg-color-focus: #34495E;
+    --btn-text-color: #34495E;
+    --btn-border-color: #34495E;
+    --text-color: #34495E;
+}
+
+body{
+    background-color: var(--bg-color);
+}

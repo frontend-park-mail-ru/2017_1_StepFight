@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Main page</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+
+    <!--   для нормальных читаемых текстов font-family: 'Cabin', sans-serif; -->
+
+    <link rel="stylesheet" href="../vendor/bootstrap/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../src/css/menu/support.css"/>
+    <link rel="stylesheet" href="../src/css/menu/text.css"/>
+    <link rel="stylesheet" href="../src/css/menu/main.css"/>
+    <link rel="stylesheet" href="../src/css/menu/elements.css"/>
+</head>
+<body>
+
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1 class="title-name">Step Fight</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 col-sm-push-4">
+                <div id="btn-start" class="btn-play">
+                    <h1>PLAY</h1>
+                </div>
+            </div>
+            <div class="col-sm-4 col-sm-pull-4">
+                <div id="btn-leaderboard" class="btn-play">
+                    <h1>LEADER BOARD</h1>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div id="btn-about" class="btn-play">
+                    <h1>ABOUT</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="login-modal" class="modal hidden">
+    <div class="modal-content">
+        <span id="login-modal-close-span" class="close">&times;</span>
+        <div class="container" style="width: 100% !important;">
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div id="div-login" class="col-sm-6">
+                    <h3 class="text-center">Log in</h3>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="login" placeholder="Login">
+                        <input type="password" class="form-control" id="password" placeholder="Password">
+                        <a href="game.html" class="btn btn-info" role="button">Enter</a>
+
+                        <div style="margin-top: 25px;"><a href="#" id="btn-to-signup" class="" role="button">Sign up</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="div-signup" class="col-sm-6 hidden">
+                    <h3 class="text-center">Sign up</h3>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="r-login" placeholder="Login">
+                        <input type="password" class="form-control" id="r-password" placeholder="Password">
+                        <input type="password" class="form-control" id="r-repeatpassword" placeholder="Repeat password">
+                        <input type="text" class="form-control" id="r-nickname" placeholder="Nickname">
+                        <input type="email" class="form-control" id="r-e-mail" placeholder="e-mail">
+                        <a href="#" class="btn btn-info" role="button">Registrate</a>
+
+                        <div style="margin-top: 25px;"><a href="#" id="btn-to-login" class="" role="button">Log in</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="leaderboard-modal" class="modal hidden">
+    <div class="modal-content">
+        <span id="leaderboard-modal-close-span" class="close">&times;</span>
+        <div class="container" style="width: 100% !important;">
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8">
+                    <h2 class="text-center">Top players:</h2>
+                    <ul class="list-group">
+                        <li class="list-group-item">Dondiego1245<span class="badge">13213</span></li>
+                        <li class="list-group-item">asdfsdfg <span class="badge">3</span></li>
+                        <li class="list-group-item">Rishat <span class="badge">0</span>
+                        <li class="list-group-item">Rishat <span class="badge">0</span></li>
+                        <li class="list-group-item">Rishat <span class="badge">0</span></li>
+                        <li class="list-group-item">Rishat <span class="badge">0</span></li>
+                        <li class="list-group-item">Rishat <span class="badge">0</span></li>
+                    </ul>
+                </div>
+                <div class="col-sm-2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="about-modal" class="modal hidden">
+    <div class="modal-content">
+        <span id="about-modal-close-span" class="close">&times;</span>
+        <div class="container" style="width: 100% !important;">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="text-center">About game</h2>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../vendor/jquery/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../vendor/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript" src="../vendor/bootstrap/bootstrap-filestyle.min.js"></script>
+
+<script src="../src/js/menu/index-events.js"></script>
+</body>
+</html>

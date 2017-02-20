@@ -1,0 +1,22 @@
+.title-name{
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 90px;
+    color: var(--text-color);
+    border-width: 5px;
+}
+
+h2{
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+h4, h3, h2{
+    font-family: 'Orbitron', sans-serif;
+    color: var(--text-color);
+}
+
