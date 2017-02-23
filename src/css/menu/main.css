@@ -12,3 +12,17 @@
 body{
     background-color: var(--bg-color);
 }
+
+.fcontainer-row {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.fcontainer-column {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    flex-wrap: wrap;
+}

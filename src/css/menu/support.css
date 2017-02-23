@@ -6,62 +6,42 @@
     text-align: center;
 }
 
-/*выравнивание wrapper(родительский) and cell(дочерний)*/
-.wrapper {
-    display: table;
+.padding-25{
+    padding: 0 25% 0 25%;
 }
 
-.cell {
-    display: table-cell;
-    vertical-align: middle;
-}
+@media (max-width: 767px) {
+    .padding-25{
+        padding: 0;
+    }
 
-.col-sm-6 {
-    text-align: center !important;
+    #btn-play{
+        order: -1;
+    }
 }
 
 /*Модальное окно в меню*/
 .modal {
     background-color: rgba(0, 0, 0, .8);
-    display: block;
     position: fixed;
-    z-index: 1;
     padding-top: 100px;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     overflow: auto;
+    text-align: center;
 }
 
 .modal-content {
     background-color: #fefefe;
-    margin: auto;
-    margin-bottom: 15px;
+    margin: auto auto 15px;
     padding: 10px 20px 40px 20px;
     border: 1px solid var(--btn-border-color);
     border-radius: 20px;
     max-width: 80%;
 }
 
-.modal-content .container .row .col-sm-6 {
-    margin-top: 5px;
-}
-
-.modal-content .container {
-    margin-top: 30px;
-}
-
-.input-group {
-    width: 100%;
-    font-family: 'Cabin', sans-serif;
-}
-
 .hidden {
-    display: none !important;
+    display: none;
 }
-
-.black-back {
-    background: rgba(0, 0, 0, .8);
-}
-
