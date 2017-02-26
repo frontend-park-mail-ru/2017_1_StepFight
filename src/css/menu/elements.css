@@ -53,9 +53,29 @@
 }
 
 .input:focus {
-    border: 2px solid var(--btn-bg-color);
+    border: 1px solid var(--btn-bg-color);
     height: 25px;
+    outline-color: var(--btn-bg-color);
 
+}
+
+.input__error {
+    border: 1px solid #c35465;
+    background-color: #fff4f4;
+    outline-color: #c35465;
+}
+
+.span__err{
+    font-family: 'Cabin', sans-serif;
+    text-align: left;
+    color: #c35465;
+    visibility: hidden;
+}
+
+.input__ok{
+    border: 1px solid #32d3ac;
+    background-color: #c9f7dd;
+    outline-color: #32d3ac;
 }
 
 .btn {
@@ -68,6 +88,7 @@
     text-decoration: none;
     font-family: 'Cabin', sans-serif;
     -webkit-transition: all 0.5s ease;
+    cursor: pointer;
 }
 
 .link {
@@ -75,6 +96,8 @@
     margin-top: 25px;
     text-decoration: none;
     -webkit-transition: all 0.5s ease;
+    cursor: pointer;
+    color: rgba(97, 97, 97, 0.91);
 }
 
 .link:hover {

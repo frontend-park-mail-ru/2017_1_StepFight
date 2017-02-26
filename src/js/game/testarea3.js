@@ -1,7 +1,7 @@
 /**
  * Created by Denis on 18.02.2017.
  */
-$(function () {
+document.addEventListener('DOMContentLoaded', function () {
     let width = window.innerWidth;
     let height = window.innerHeight;
     let scene = new THREE.Scene();
@@ -47,6 +47,6 @@ $(function () {
     camera.position.z = 30;
     camera.lookAt(scene.position);
 
-    document.getElementById('WebGL-output').append(renderer.domElement);
+    document.getElementById('game-area').append(renderer.domElement);
     renderer.render(scene, camera);
 });

@@ -41,11 +41,12 @@
             <h3 class="text-center">Log in</h3>
             <div class="padding-25">
                 <div class="fcontainer-column">
-                    <input type="text" class="input" id="login" placeholder="Login">
-                    <input type="password" class="input" id="password" placeholder="Password">
-                    <a href="game.html" class="btn" role="button">Enter</a>
+                    <span id="l-span-err" class="span__err"></span>
+                    <input type="text" class="input" id="l-login" placeholder="Login">
+                    <input type="password" class="input" id="l-password" placeholder="Password">
+                    <p id="btn-login" class="btn" role="button">Enter</p>
 
-                    <a href="#" id="btn-to-signup" class="link" role="button">Sign up</a>
+                    <p id="btn-to-signup" class="link" role="button">Sign up</p>
                 </div>
             </div>
         </div>
@@ -53,15 +54,21 @@
             <h3 class="text-center">Sign up</h3>
             <div class="padding-25">
                 <div class="fcontainer-column">
+                    <span id="r-span-err" class="span__err"></span>
+                    <span id="r-login-span-err" class="span__err"></span>
                     <input type="text" class="input" id="r-login" placeholder="Login">
+                    <span id="r-pass-span-err" class="span__err"></span>
                     <input type="password" class="input" id="r-password" placeholder="Password">
+                    <span id="r-repeat-pass-span-err" class="span__err"></span>
                     <input type="password" class="input" id="r-repeatpassword" placeholder="Repeat password">
+                    <span id="r-nick-span-err" class="span__err"></span>
                     <input type="text" class="input" id="r-nickname" placeholder="Nickname">
-                    <input type="email" class="input" id="r-e-mail" placeholder="e-mail">
+                    <span id="r-email-span-err" class="span__err"></span>
+                    <input type="email" class="input" id="r-email" placeholder="e-mail">
 
-                    <a href="#" class="btn" role="button">Registrate</a>
+                    <p id="btn-signup" class="btn" role="button">Registrate</p>
 
-                    <a href="#" id="btn-to-login" class="link" role="button">Log in</a>
+                    <p id="btn-to-login" class="link" role="button">Log in</p>
                 </div>
             </div>
         </div>
@@ -76,10 +83,6 @@
         <div class="padding-25">
             <div class="fcontainer-column">
                 <ul class="list-group">
-                    <li class="list-group-item">adsf<span class="badge">14</span></li>
-                    <li class="list-group-item">adsf<span class="badge">14</span></li>
-                    <li class="list-group-item">adsf<span class="badge">14</span></li>
-                    <li class="list-group-item">adsf<span class="badge">14</span></li>
                     <li class="list-group-item">adsf<span class="badge">14</span></li>
                     <li class="list-group-item">adsf<span class="badge">14</span></li>
                     <li class="list-group-item">adsf<span class="badge">14</span></li>
@@ -131,6 +134,13 @@
         </div>
     </div>
 </div>
+
+<div id="game-area" class="modal hidden">
+
+</div>
+
 <script src="../src/js/menu/index-events.js"></script>
+<script type="text/javascript" src="../vendor/three/three.js"></script>
+<script type="text/javascript" src="../src/js/game/testarea3.js"></script>
 </body>
 </html>

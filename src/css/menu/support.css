@@ -44,3 +44,8 @@
 .hidden {
     display: none;
 }
+
+.game-body{
+    margin: 0;
+    overflow: hidden;
+}
