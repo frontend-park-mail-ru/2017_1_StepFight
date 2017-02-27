@@ -1,4 +1,4 @@
-:root{
+:root {
     --bg-color: #E4F1FE;
     --btn-bg-color: #8DC6FF;
     --btn-border-color-focus: #8DC6FF;
@@ -9,8 +9,12 @@
     --text-color: #34495E;
 }
 
-body{
-    background-color: var(--bg-color);
+body {
+    /*background-color: var(--bg-color);*/
+    background: url("../../img/menu/menubg.jpeg") center;
+    background-size: cover;
+    margin: 0;
+    box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.5) inset;
 }
 
 .fcontainer-row {
