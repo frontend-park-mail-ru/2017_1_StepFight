@@ -95,14 +95,10 @@ document.addEventListener('DOMContentLoaded', function () {
     let r_login_span_err = document.getElementById('r-login-span-err');
     let r_pass_span_err = document.getElementById('r-pass-span-err');
     let r_repeat_pass_span_err = document.getElementById('r-repeat-pass-span-err');
-    let r_nick_span_err = document.getElementById('r-nick-span-err');
-    let r_email_span_err = document.getElementById('r-email-span-err');
 
     let r_login = document.getElementById('r-login');
     let r_password = document.getElementById('r-password');
     let r_repeatpassword = document.getElementById('r-repeatpassword');
-    let r_nickname = document.getElementById('r-nickname');
-    let r_email = document.getElementById('r-email');
 
     btn_signup.addEventListener('click', function (event) {
         let check = true;
@@ -110,13 +106,6 @@ document.addEventListener('DOMContentLoaded', function () {
             r_login.classList.add('input__error');
             r_login_span_err.innerHTML = 'Only Latin';
             r_login_span_err.style.visibility = 'visible';
-            check = false;
-        }
-
-        if (r_nickname.value.match(/[а-яА-Я]+/) != null) {
-            r_nickname.classList.add('input__error');
-            r_nick_span_err.innerHTML = 'Only Latin';
-            r_nick_span_err.style.visibility = 'visible';
             check = false;
         }
 
@@ -141,13 +130,6 @@ document.addEventListener('DOMContentLoaded', function () {
             check = false;
         }
 
-        if (!validateEmail(r_email.value)) {
-            r_email.classList.add('input__error');
-            r_email_span_err.innerHTML = 'E- mail is not valid';
-            r_email_span_err.style.visibility = 'visible';
-            check = false;
-        }
-
         if (check === true) {
             window.alert('SUCCESS');
         } else {
@@ -158,10 +140,6 @@ document.addEventListener('DOMContentLoaded', function () {
         r_login.classList.remove('input__error');
         r_login_span_err.style.visibility = 'hidden';
     });
-    r_nickname.addEventListener('keydown', function () {
-        r_nickname.classList.remove('input__error');
-        r_nick_span_err.style.visibility = 'hidden';
-    });
     r_password.addEventListener('keydown', function () {
         r_password.classList.remove('input__error');
         r_pass_span_err.style.visibility = 'hidden';
@@ -170,13 +148,5 @@ document.addEventListener('DOMContentLoaded', function () {
         r_repeatpassword.classList.remove('input__error');
         r_repeat_pass_span_err.style.visibility = 'hidden';
     });
-    r_email.addEventListener('keydown', function () {
-        r_email.classList.remove('input__error');
-        r_email_span_err.style.visibility = 'hidden';
-    });
 });
 
-function validateEmail(email) {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-}

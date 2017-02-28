@@ -1,5 +1,5 @@
 :root {
-    --bg-color: #E4F1FE;
+    --bg-color: rgba(229, 229, 229, 0.75);
     --btn-bg-color: rgba(229, 229, 229, 0.56);
     --btn-border-color-focus: white;
     --btn-text-color-focus: black;
