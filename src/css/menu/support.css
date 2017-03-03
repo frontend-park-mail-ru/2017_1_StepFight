@@ -20,32 +20,6 @@
     }
 }
 
-/*Модальное окно в меню*/
-.modal {
-    background-color: rgba(0, 0, 0, .8);
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    text-align: center;
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 100px auto 15px;
-    padding: 10px 20px 40px 20px;
-    border: 1px solid var(--btn-border-color);
-    border-radius: 20px;
-    max-width: 80%;
-}
-
 .hidden {
     display: none;
-}
-
-.game-body{
-    margin: 0;
-    overflow: hidden;
 }

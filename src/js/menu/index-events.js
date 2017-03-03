@@ -1,8 +1,8 @@
-'use strict';
-
 /**
  * Created by Denis on 14.02.2017.
  */
+'use strict';
+
 document.addEventListener('DOMContentLoaded', function () {
     let btn_play = document.getElementById('btn-play');
     let login_modal = document.getElementById('login-modal');
@@ -104,28 +104,28 @@ document.addEventListener('DOMContentLoaded', function () {
         let check = true;
         if (r_login.value.match(/[а-яА-Я]+/) != null) {
             r_login.classList.add('input__error');
-            r_login_span_err.innerHTML = 'Only Latin';
+            r_login_span_err.innerText = 'Only Latin';
             r_login_span_err.style.visibility = 'visible';
             check = false;
         }
 
         if (r_password.value.length < 8) {
             r_password.classList.add('input__error');
-            r_pass_span_err.innerHTML = '8 - is min length';
+            r_pass_span_err.innerText = '8 - is min length';
             r_pass_span_err.style.visibility = 'visible';
             check = false;
         }
 
         if (r_repeatpassword.value.length < 8) {
             r_repeatpassword.classList.add('input__error');
-            r_repeat_pass_span_err.innerHTML = '8 - is min length';
+            r_repeat_pass_span_err.innerText = '8 - is min length';
             r_repeat_pass_span_err.style.visibility = 'visible';
             check = false;
         }
 
         if (r_password.value != r_repeatpassword.value) {
             r_password.classList.add('input__error');
-            r_pass_span_err.innerHTML += ' Passwords not equals';
+            r_pass_span_err.innerText += ' Passwords not equals';
             r_pass_span_err.style.visibility = 'visible';
             check = false;
         }

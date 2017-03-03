@@ -1,14 +1,3 @@
-:root {
-    --bg-color: rgba(229, 229, 229, 0.75);
-    --btn-bg-color: rgba(229, 229, 229, 0.56);
-    --btn-border-color-focus: white;
-    --btn-text-color-focus: black;
-    --btn-bg-color-focus: rgba(229, 229, 229, 0.9);
-    --btn-text-color: white;
-    --btn-border-color: black;
-    --text-color: black;
-}
-
 html {
     height: 100%;
 }

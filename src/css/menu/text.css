@@ -1,3 +1,7 @@
+:root{
+    --text-color: black;
+}
+
 .title-name{
     text-align: center;
     font-family: 'Orbitron', sans-serif;
