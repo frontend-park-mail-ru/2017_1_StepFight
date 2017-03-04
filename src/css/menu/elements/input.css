@@ -24,7 +24,6 @@
     border: 1px solid var(--input-border-color);
     height: 25px;
     outline-color: var(--input-outline-color);
-
 }
 
 .input__error {

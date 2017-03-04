@@ -48,21 +48,9 @@
             <div id="div-signup" class="hidden padding-25"></div>
         </div>
         <div id="modal-leaderboard" class="hidden">
-            <h2 class="text-center">Top players:</h2>
             <div class="padding-25">
-                <div class="fcontainer-column">
-                    <ul class="list-group">
-                        <li class="list-group-item">adsf<span class="badge">14</span></li>
-                        <li class="list-group-item">adsf<span class="badge">14</span></li>
-                        <li class="list-group-item">adsf<span class="badge">14</span></li>
-                        <li class="list-group-item">adsf<span class="badge">14</span></li>
-                        <li class="list-group-item">adsf<span class="badge">14</span></li>
-                        <li class="list-group-item">adsf<span class="badge">14</span></li>
-                        <li class="list-group-item">adsf<span class="badge">14</span></li>
-                        <li class="list-group-item">adsf<span class="badge">14</span></li>
-                        <li class="list-group-item">adsf<span class="badge">14</span></li>
-                        <li class="list-group-item">adsf<span class="badge">14</span></li>
-                    </ul>
+                <div class="fcontainer-column" id="leaderboard-container">
+
                 </div>
             </div>
         </div>
@@ -72,7 +60,7 @@
     </div>
 </div>
 
-<div id="game-area" class="modal hidden">
+<div id="game-area" class="game-body hidden">
 
 </div>
 
@@ -83,5 +71,10 @@
 <script type="text/javascript" src="../src/js/menu/forms/signup.js"></script>
 <script type="text/javascript" src="../src/js/menu/forms/login.js"></script>
 <script src="../src/js/menu/actions/menu.js"></script>
+
+<script src="../vendor/handlebars-v4.0.5.js"></script>
+
+<script src="../src/js/menu/templates/leaderboard.js"></script>
+<script src="../src/js/menu/main.js"></script>
 </body>
 </html>

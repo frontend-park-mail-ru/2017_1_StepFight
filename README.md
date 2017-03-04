@@ -4,6 +4,8 @@
 
 ## Пошаговая стратегия, в которой игроки на каждом ходу выбирают стратегию из 5-ти действий и сражаются!
 
-# Для запуска проекта: `node server.js`
+# Для запуска проекта: 
+# `npm install express --save`
+# `node server.js`
 
 # [Попробовать](https://tp-front-end-js-game.herokuapp.com)

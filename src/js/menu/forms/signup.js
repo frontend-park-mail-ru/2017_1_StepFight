@@ -11,7 +11,7 @@
             title: {
                 text: 'Sign up',
                 attrs: {
-                    class: 'text-center'
+                    class: 'text-center',
                 }
             },
             form: {
