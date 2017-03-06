@@ -13,24 +13,59 @@
 
         getUser() {
             const address = `${this.url}/user/get`;
-            this.http.get(address, null).then(response => {
-                console.log(response);
+            const http = this.http;
+            return new Promise(function (resolve, reject) {
+                http.get(address, null).then(response => {
+                    if (response.status == '200 OK') {
+                        resolve(response.user);
+                    } else {
+                        reject(response);
+                    }
+                });
             });
         }
 
-        login(body){
+        login(body) {
             const address = `${this.url}/user/login`;
-            let headers = {'Content-Type': 'application/json'};
-            this.http.post(address, headers, body).then(response => {
-                console.log(response);
+            const http = this.http;
+            return new Promise(function (resolve, reject) {
+                let headers = {'Content-Type': 'application/json'};
+                http.post(address, headers, body).then(response => {
+                    if (response.status == '200 OK') {
+                        resolve(response.user);
+                    } else {
+                        reject(response);
+                    }
+                });
             });
         }
 
-        signup(body){
+        signup(body) {
             const address = `${this.url}/user/signup`;
-            let headers = {'Content-Type': 'application/json'};
-            this.http.post(address, headers, body).then(response => {
-                console.log(response);
+            const http = this.http;
+            return new Promise(function (resolve, reject) {
+                let headers = {'Content-Type': 'application/json'};
+                http.post(address, headers, body).then(response => {
+                    if (response.status == '200 OK') {
+                        resolve({result: 'success'});
+                    } else {
+                        reject({result: 'error'});
+                    }
+                });
+            });
+        }
+
+        getLeaders() {
+            const address = `${this.url}/user/leaders`;
+            const http = this.http;
+            return new Promise(function (resolve, reject) {
+                http.get(address, null).then(response => {
+                    if (response.status == '200 OK') {
+                        resolve(response);
+                    } else {
+                        reject({result: 'error'});
+                    }
+                });
             });
         }
     }

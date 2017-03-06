@@ -5,24 +5,40 @@
 
 (function () {
     let LeaderBoard = window.LeaderBoard;
+    let UserService = window.UserService;
 
-    let leaderBoardContainer = document.getElementById('leaderboard-container');
-    leaderBoardContainer.innerHTML = new LeaderBoard({
-        titles: {
-            title: 'Top players:',
-        },
-        rating: [
-            {title: 'dondiego1', score: 12},
-            {title: 'dondiego2', score: 123},
-            {title: 'dondiego3', score: 4512},
-            {title: 'dondiego4', score: 123},
-            {title: 'dondiego5', score: 123},
-            {title: 'dondiego6', score: 1234},
-            {title: 'dondiego6', score: 1234},
-            {title: 'dondiego6', score: 1234},
-            {title: 'dondiego6', score: 1234},
-            {title: 'dondiego6', score: 1234},
-            {title: 'dondiego6', score: 1234}
-        ]
-    }).render();
+    new UserService().getLeaders().then(responce => {
+        let leaderBoardContainer = document.getElementById('leaderboard-container');
+        leaderBoardContainer.innerHTML = new LeaderBoard({
+            titles: {
+                title: 'Top players:',
+            },
+            leaderboard: responce.leaders
+        }).render();
+    }).catch(err => {
+        console.log(err);
+    });
+
+
+    new UserService().getUser().then(response => {
+        console.log('sdafgdsfg');
+        let profileDiv = document.getElementById('profile');
+        let profile = new Profile({
+            data: {
+                login: user.login,
+                rating: user.rating,
+                button: {
+                    text: 'Log Out',
+                    attrs: {
+                        class: 'link',
+                        id: 'btn-logout'
+                    },
+                    type: 'h3'
+                },
+                div: profileDiv
+            }
+        });
+    }).catch(response => {
+        console.log(response);
+    });
 })();

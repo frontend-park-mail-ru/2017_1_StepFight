@@ -10,39 +10,54 @@
 
         }
 
-        static checkLatin(value) {
+        static _checkLatin(value) {
             return value.match(/[а-яА-ЯёЁ]+/) == null;
         }
 
-        static checkLogin(field) {
+        static checkLogin(obj) {
             let arr = [];
-            if (this.checkEmpty(field.value)) {
+            if (this.checkEmpty(obj.field.value)) {
                 arr.push({
                     err_text: 'empty field',
-                    field: field
                 });
             } else {
-                if (!this.checkLatin(field.value)) {
+                if (!this._checkLatin(obj.field.value)) {
                     arr.push({
                         err_text: 'Only Latin',
-                        field: field
                     })
                 }
-                if (field.value.length < 4) {
+                if (obj.field.value.length < 4) {
                     arr.push({
                         err_text: '4 - min length',
-                        field: field
                     });
                 }
             }
-            return arr;
+
+            obj.help.textContent = '';
+            arr.forEach(item => {
+                this.fieldSetErr(obj.field);
+                this.fieldRemoveOk(obj.field);
+
+                if (obj.help.textContent === '') {
+                    obj.help.textContent = item.err_text;
+                } else {
+                    obj.help.textContent = obj.help.textContent + ', ' + item.err_text;
+                    console.log(obj.help.textContent);
+                }
+            });
+
+            if (arr.length == 0) {
+                this.fieldSetOk(obj.field);
+            }
+
+            return arr.length == 0;
         }
 
-        static checkPassLength(value) {
+        static _checkPassLength(value) {
             return value.length >= 8;
         }
 
-        static checkPassEquals(value1, value2) {
+        static _checkPassEquals(value1, value2) {
             return value1 === value2;
         }
 
@@ -51,33 +66,91 @@
         }
 
 
-        static checkPassword(field1, field2) {
+        static checkPassword(obj1, obj2) {
             let arr = [];
-            if (this.checkEmpty(field1.value)) {
+            let check = true;
+            if (this.checkEmpty(obj1.field.value)) {
                 arr.push({
                     err_text: 'empty field',
-                    field: field1
+                    field: obj1.field,
+                    help: obj1.help
                 });
-            } else {
-                if (!this.checkPassLength(field1.value)) {
+                check = false;
+            }
+            if (this.checkEmpty(obj2.field.value)) {
+                arr.push({
+                    err_text: 'empty field',
+                    field: obj2.field,
+                    help: obj2.help
+                });
+                check = false;
+            }
+
+            if (check) {
+                if (!this._checkPassLength(obj1.field.value)) {
                     arr.push({
                         err_text: '8 - min length',
-                        field: field1
+                        field: obj1.field,
+                        help: obj1.help
                     })
                 }
-                if (!this.checkPassEquals(field1.value, field2.value)) {
+                if (!this._checkPassEquals(obj1.field.value, obj2.field.value)) {
                     arr.push({
                         err_text: 'Passwords not equals',
-                        field: field1
+                        field: obj1.field,
+                        help: obj1.help
                     });
                     arr.push({
                         err_text: 'Passwords not equals',
-                        field: field2
+                        field: obj2.field,
+                        help: obj2.help
                     });
                 }
             }
-            return arr;
+
+            obj1.help.textContent = '';
+            obj2.help.textContent = '';
+            arr.forEach(item => {
+                this.fieldSetErr(item.field);
+                this.fieldRemoveOk(item.field);
+
+                if (item.help.textContent === '') {
+                    item.help.textContent = item.err_text;
+                } else {
+                    item.help.textContent = item.help.textContent + ', ' + item.err_text;
+                }
+            });
+
+            if (arr.length == 0) {
+                this.fieldSetOk(obj1.field);
+                this.fieldSetOk(obj2.field);
+            }
+            return arr.length == 0;
         }
+
+        static helpSetText(elem, value) {
+            elem.textContent = value;
+        }
+        static fieldSetText(elem, value) {
+            elem.value = value;
+        }
+
+        static fieldSetErr(elem) {
+            elem.classList.add('input__error');
+        }
+
+        static fieldRemoveErr(elem) {
+            elem.classList.remove('input__error');
+        }
+
+        static fieldSetOk(elem) {
+            elem.classList.add('input__ok');
+        }
+
+        static fieldRemoveOk(elem) {
+            elem.classList.remove('input__ok');
+        }
+
     }
 
     window.CheckFields = CheckFields;

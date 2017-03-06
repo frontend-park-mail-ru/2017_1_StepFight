@@ -28,12 +28,12 @@
 
             }
             try {
-                this.appendTo(this.getFields(), this.el);
+                this.fieldsAppendTo(this.getFields(), this.el);
             } catch (err) {
 
             }
             try {
-                this.appendTo(this.getControlls(), this.el);
+                this.controlsAppendTo(this.getControls(), this.el);
             } catch (err) {
 
             }
@@ -52,13 +52,20 @@
             })
         }
 
-        appendTo(array, elem) {
+        fieldsAppendTo(array, elem) {
+            array.forEach(item => {
+                elem.appendChild(item.el);
+                elem.appendChild(item.help_el);
+            })
+        }
+
+        controlsAppendTo(array, elem) {
             array.forEach(item => {
                 elem.appendChild(item.el);
             })
         }
 
-        getControlls() {
+        getControls() {
             let {controls = []}=this.data;
             return controls.map(data => {
                 return new Button(data).render();

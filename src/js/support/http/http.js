@@ -31,7 +31,8 @@
                 fetch(address, {
                     method: 'GET',
                     mode: 'cors',
-                    headers: headers
+                    headers: headers,
+                    credentials: 'include'
                 }).then(response => {
                     return response.json();
                 }).then(json => {
@@ -48,6 +49,7 @@
                     method: 'POST',
                     mode: 'cors',
                     headers: headers,
+                    credentials: 'include',
                     body: JSON.stringify(body)
                 }).then(response => {
                     return response.json();
@@ -61,5 +63,4 @@
     }
 
     window.Http = Http;
-
 })();
