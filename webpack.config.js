@@ -7,14 +7,27 @@ let webpack = require('webpack');
 module.exports = {
     context: __dirname,
     devtool: debug ? "inline-sourcemap" : null,
-    entry: "./src/js/main.js",
+    entry: ["whatwg-fetch", "./src/js/main.js"],
     output: {
-        path: __dirname + "dist/js",
+        path: "./dist/js",
         filename: "scripts.min.js"
     },
     plugins: debug ? [] : [
             new webpack.optimize.DedupePlugin(),
             new webpack.optimize.OccurenceOrderPlugin(),
-            new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
-        ],
+            new webpack.optimize.UglifyJsPlugin({
+                beautify: false,
+                comments: false,
+                minimize: true,
+                compress: {
+                    sequences: true,
+                    booleans: true,
+                    loops: true,
+                    unused: true,
+                    warnings: true,
+                    drop_console: false,
+                    unsafe: true
+                }
+            })
+        ]
 };

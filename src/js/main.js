@@ -1,44 +1,37 @@
 /**
  * Created by Denis on 04.03.2017.
  */
-'use strict';
+import 'whatwg-fetch';
+import LeaderBoard from './menu/templates/leaderBoard';
+import MenuAction from './menu/actions/menuActions';
+import LoginForm from './menu/forms/login';
+import SignupForm from './menu/forms/signup';
+import UserService from './support/service/userService';
 
-(function () {
-    let LeaderBoard = window.LeaderBoard;
-    let UserService = window.UserService;
+new LoginForm();
+new SignupForm();
+new MenuAction();
+new LeaderBoard().refreshLeaderBoard({leaders: [{login: 'chlen', rating: 9012}]});
 
-    new UserService().getLeaders().then(responce => {
-        let leaderBoardContainer = document.getElementById('leaderboard-container');
-        leaderBoardContainer.innerHTML = new LeaderBoard({
-            titles: {
-                title: 'Top players:',
-            },
-            leaderboard: responce.leaders
-        }).render();
-    }).catch(err => {
-        console.log(err);
-    });
-
-
-    new UserService().getUser().then(response => {
-        console.log('sdafgdsfg');
-        let profileDiv = document.getElementById('profile');
-        let profile = new Profile({
-            data: {
-                login: user.login,
-                rating: user.rating,
-                button: {
-                    text: 'Log Out',
-                    attrs: {
-                        class: 'link',
-                        id: 'btn-logout'
-                    },
-                    type: 'h3'
-                },
-                div: profileDiv
-            }
-        });
-    }).catch(response => {
-        console.log(response);
-    });
-})();
+/*
+ new UserService().getUser().then(response => {
+ console.log('sdafgdsfg');
+ let profileDiv = document.getElementById('profile');
+ let profile = new Profile({
+ data: {
+ login: user.login,
+ rating: user.rating,
+ button: {
+ text: 'Log Out',
+ attrs: {
+ class: 'link',
+ id: 'btn-logout'
+ },
+ type: 'h3'
+ },
+ div: profileDiv
+ }
+ });
+ }).catch(response => {
+ console.log(response);
+ });*/

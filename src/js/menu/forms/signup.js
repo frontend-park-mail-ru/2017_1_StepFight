@@ -1,119 +1,126 @@
 /**
  * Created by Denis on 02.03.2017.
  */
-'use strict';
 
-(function () {
-    let signupDiv = document.querySelector('#div-signup');
-    let CheckFields = window.CheckFields;
+import Form from '../elements/form';
+import CheckFields from '../actions/checkFields';
 
+export default class SignupForm {
 
-    let signupForm = new Form({
-        data: {
-            title: {
-                text: 'Sign up',
-                attrs: {
-                    class: 'text-center',
-                }
-            },
-            form: {
-                attrs: {
-                    class: 'fcontainer-column',
-                    action: '',
-                    method: ''
-                }
-            },
-            fields: [
-                {
+    constructor() {
+        this.signupDiv = document.querySelector('#div-signup');
+        this.render();
+    }
+    render() {
+        this.signupForm = new Form({
+            data: {
+                title: {
+                    text: 'Sign up',
                     attrs: {
-                        placeholder: 'Login',
-                        id: 'r-login',
-                        class: 'input',
-                        type: 'text',
-                        name: 'login'
-                    },
-                    help_attrs: {
-                        id: 'r-login-help',
-                        class: 'p__error'
+                        class: 'text-center',
                     }
                 },
-                {
+                form: {
                     attrs: {
-                        placeholder: 'Password',
-                        id: 'r-password',
-                        class: 'input',
-                        type: 'password',
-                        name: 'password'
-                    },
-                    help_attrs: {
-                        id: 'r-password-help',
-                        class: 'p__error'
+                        class: 'fcontainer-column',
+                        action: '',
+                        method: ''
                     }
                 },
-                {
-                    attrs: {
-                        placeholder: 'Repeat password',
-                        id: 'r-repeatpassword',
-                        class: 'input',
-                        type: 'password',
-                        name: 'repeatpassword'
+                fields: [
+                    {
+                        attrs: {
+                            placeholder: 'Login',
+                            id: 'r-login',
+                            class: 'input',
+                            type: 'text',
+                            name: 'login'
+                        },
+                        help_attrs: {
+                            id: 'r-login-help',
+                            class: 'p__error'
+                        }
                     },
-                    help_attrs: {
-                        id: 'r-repeatpassword-help',
-                        class: 'p__error'
+                    {
+                        attrs: {
+                            placeholder: 'Password',
+                            id: 'r-password',
+                            class: 'input',
+                            type: 'password',
+                            name: 'password'
+                        },
+                        help_attrs: {
+                            id: 'r-password-help',
+                            class: 'p__error'
+                        }
+                    },
+                    {
+                        attrs: {
+                            placeholder: 'Repeat password',
+                            id: 'r-repeatpassword',
+                            class: 'input',
+                            type: 'password',
+                            name: 'repeatpassword'
+                        },
+                        help_attrs: {
+                            id: 'r-repeatpassword-help',
+                            class: 'p__error'
+                        }
                     }
-                }
-            ],
-            controls: [
-                {
-                    text: 'Registrate',
-                    attrs: {
-                        type: 'submit',
-                        class: 'btn',
-                        id: 'btn-signup'
+                ],
+                controls: [
+                    {
+                        text: 'Registrate',
+                        attrs: {
+                            type: 'submit',
+                            class: 'btn',
+                            id: 'btn-signup'
+                        },
+                        type: 'button'
                     },
-                    type: 'button'
-                },
-                {
-                    text: 'Log In',
-                    attrs: {
-                        class: 'link',
-                        id: 'btn-to-login'
-                    },
-                    type: 'p'
-                }
-            ]
-        }
-    });
+                    {
+                        text: 'Log In',
+                        attrs: {
+                            class: 'link',
+                            id: 'btn-to-login'
+                        },
+                        type: 'p'
+                    }
+                ]
+            }
+        });
+        this.listener();
+        this.signupDiv.appendChild(this.signupForm.el);
 
-    signupForm.el.addEventListener('submit', event => {
-        event.preventDefault();
+        this.login = document.getElementById('r-login');
+        this.password = document.getElementById('r-password');
+        this.repeatPassword = document.getElementById('r-repeatpassword');
 
-        if (checkFields()) {
-            let body = signupForm.getFormData();
-            new UserService().signup(body).then(success => {
-                console.log('success reg');
-                clearHelp();
-                clearFields();
-            }).catch(err => {
-                CheckFields.fieldRemoveOk(login);
-                CheckFields.fieldSetErr(login);
-                CheckFields.helpSetText(loginHelp, 'login used');
-            });
-        }
-    });
+        this.loginHelp = document.getElementById('r-login-help');
+        this.passwordHelp = document.getElementById('r-password-help');
+        this.repeatPasswordHelp = document.getElementById('r-repeatpassword-help');
 
-    signupDiv.appendChild(signupForm.el);
+    }
 
-    let login = document.getElementById('r-login');
-    let password = document.getElementById('r-password');
-    let repeatPassword = document.getElementById('r-repeatpassword');
+    listener() {
+        this.signupForm.el.addEventListener('submit', event => {
+            event.preventDefault();
 
-    let loginHelp = document.getElementById('r-login-help');
-    let passwordHelp = document.getElementById('r-password-help');
-    let repeatPasswordHelp = document.getElementById('r-repeatpassword-help');
-
-    function checkFields() {
+            if (checkFields()) {
+                let body = signupForm.getFormData();
+                new UserService().signup(body).then(success => {
+                    console.log('success reg');
+                    clearHelp();
+                    clearFields();
+                }).catch(err => {
+                    CheckFields.fieldRemoveOk(login);
+                    CheckFields.fieldSetErr(login);
+                    CheckFields.helpSetText(loginHelp, 'login used');
+                });
+            }
+        });
+    }
+    checkFields() {
         let checkLoginArr = CheckFields.checkLogin(
             {field: login, help: loginHelp});
         let checkPasswordArr = CheckFields.checkPassword(
@@ -123,13 +130,13 @@
         return checkLoginArr && checkPasswordArr;
     }
 
-    function clearHelp() {
+    clearHelp() {
         CheckFields.helpSetText(loginHelp, '');
         CheckFields.helpSetText(passwordHelp, '');
         CheckFields.helpSetText(repeatPasswordHelp, '');
     }
 
-    function clearFields() {
+    clearFields() {
         CheckFields.fieldSetText(login, '');
         CheckFields.fieldSetText(password, '');
         CheckFields.fieldSetText(repeatPassword, '');
@@ -142,4 +149,4 @@
         CheckFields.fieldRemoveErr(password);
         CheckFields.fieldRemoveErr(repeatPassword);
     }
-})();
+}

@@ -1,76 +1,77 @@
 /**
  * Created by Denis on 03.03.2017.
  */
-'use strict';
-(function () {
-    let btnPlay = document.getElementById('btn-play');
-    let btnAbout = document.getElementById('btn-about');
-    let btnLeaderBoard = document.getElementById('btn-leaderboard');
-    let btnModalClose = document.getElementById('modal-close');
-    let currModal = null;
+export default class MenuActions {
+    constructor() {
+        this.btnPlay = document.getElementById('btn-play');
+        this.btnAbout = document.getElementById('btn-about');
+        this.btnLeaderBoard = document.getElementById('btn-leaderboard');
+        this.btnModalClose = document.getElementById('modal-close');
+        this.currModal = null;
 
-    let modalDiv = document.getElementById('modal');
-    let modalLogin = document.getElementById('modal-login');
-    let modalLeaderBoard = document.getElementById('modal-leaderboard');
-    let modalAbout = document.getElementById('modal-about');
+        this.modalDiv = document.getElementById('modal');
+        this.modalLogin = document.getElementById('modal-login');
+        this.modalLeaderBoard = document.getElementById('modal-leaderboard');
+        this.modalAbout = document.getElementById('modal-about');
 
-    let btnToSignUp = document.getElementById('btn-to-signup');
-    let btnToLogIn = document.getElementById('btn-to-login');
-    let divLogin = document.getElementById('div-login');
-    let divSignUp = document.getElementById('div-signup');
+        this.btnToSignUp = document.getElementById('btn-to-signup');
+        this.btnToLogIn = document.getElementById('btn-to-login');
+        this.divLogin = document.getElementById('div-login');
+        this.divSignUp = document.getElementById('div-signup');
 
-    initMenuButtonsListeners();
-    initLoginButtonsListeners();
+        this.initMenuButtonsListeners();
+        this.initLoginButtonsListeners();
+    }
 
-    function initMenuButtonsListeners() {
-        btnPlay.addEventListener('click', function () {
-            showDiv(modalDiv);
-            showDiv(modalLogin);
-            setCurrModal(modalLogin);
+    initMenuButtonsListeners() {
+        this.btnPlay.addEventListener('click', () => {
+            this.showDiv(this.modalDiv);
+            this.showDiv(this.modalLogin);
+            this.setCurrModal(this.modalLogin);
         });
 
-        btnAbout.addEventListener('click', function () {
-            showDiv(modalDiv);
-            showDiv(modalAbout);
-            setCurrModal(modalAbout);
+        this.btnAbout.addEventListener('click', () => {
+            this.showDiv(this.modalDiv);
+            this.showDiv(this.modalAbout);
+            this.setCurrModal(this.modalAbout);
         });
 
-        btnLeaderBoard.addEventListener('click', function () {
-            showDiv(modalDiv);
-            showDiv(modalLeaderBoard);
-            setCurrModal(modalLeaderBoard);
+        this.btnLeaderBoard.addEventListener('click', () => {
+            this.showDiv(this.modalDiv);
+            this.showDiv(this.modalLeaderBoard);
+            this.setCurrModal(this.modalLeaderBoard);
         });
-        btnModalClose.addEventListener('click', function () {
-            hideDiv(modalDiv);
-            hideCurrModal();
+        this.btnModalClose.addEventListener('click', () => {
+            this.hideDiv(this.modalDiv);
+            this.hideCurrModal();
         });
     }
 
-    function initLoginButtonsListeners() {
-        btnToSignUp.addEventListener('click', function () {
-            showDiv(divSignUp);
-            hideDiv(divLogin);
+    initLoginButtonsListeners() {
+        this.btnToSignUp.addEventListener('click', () => {
+            this.showDiv(this.divSignUp);
+            this.hideDiv(this.divLogin);
         });
 
-        btnToLogIn.addEventListener('click', function () {
-            showDiv(divLogin);
-            hideDiv(divSignUp);
+        this.btnToLogIn.addEventListener('click', () => {
+            this.showDiv(this.divLogin);
+            this.hideDiv(this.divSignUp);
         });
     }
 
-    function hideDiv(div) {
+    hideDiv(div) {
         div.classList.add('hidden');
     }
 
-    function showDiv(div) {
+    showDiv(div) {
         div.classList.remove('hidden');
     }
 
-    function setCurrModal(modal) {
-        currModal = modal;
+    setCurrModal(modal) {
+        this.currModal = modal;
     }
 
-    function hideCurrModal() {
-        currModal.classList.add('hidden');
+    hideCurrModal() {
+        this.currModal.classList.add('hidden');
     }
-})();
+}
