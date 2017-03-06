@@ -27,7 +27,8 @@
                         placeholder: 'Login',
                         id: 'r-login',
                         class: 'input',
-                        type: 'text'
+                        type: 'text',
+                        name: 'login'
                     }
                 },
                 {
@@ -35,7 +36,8 @@
                         placeholder: 'Password',
                         id: 'r-password',
                         class: 'input',
-                        type: 'password'
+                        type: 'password',
+                        name: 'password'
                     }
                 },
                 {
@@ -43,7 +45,8 @@
                         placeholder: 'Repeat password',
                         id: 'r-repeatpassword',
                         class: 'input',
-                        type: 'password'
+                        type: 'password',
+                        name: 'repeatpassword'
                     }
                 }
             ],
@@ -71,7 +74,11 @@
 
     signupForm.el.addEventListener('submit', event => {
         event.preventDefault();
-        checkFields();
+
+        if (checkFields()) {
+            let body = signupForm.getFormData();
+            new UserService().signup(body);
+        }
     });
 
     signupDiv.appendChild(signupForm.el);
@@ -80,22 +87,18 @@
     let password = document.getElementById('r-password');
     let repeatPassword = document.getElementById('r-repeatpassword');
 
-    initFieldsListeners();
-
     function checkFields() {
-        CheckFields.checkLogin(login);
-        CheckFields.checkPassword(password, repeatPassword);
+        let checkLoginArr = CheckFields.checkLogin(login);
+        let checkPasswordArr = CheckFields.checkPassword(password, repeatPassword);
+
+        const result = checkLoginArr.length == 0 && checkPasswordArr == 0;
+        if (!result) {
+            setErrors(checkLoginArr.concat(checkPasswordArr));
+        }
+        return result;
     }
 
-    function initFieldsListeners() {
-        login.addEventListener('keydown', function () {
-            login.classList.remove('input__error');
-        });
-        password.addEventListener('keydown', function () {
-            password.classList.remove('input__error');
-        });
-        repeatPassword.addEventListener('keydown', function () {
-            password.classList.remove('input__error');
-        });
+    function setErrors(arr) {
+        //TODO set errors on view
     }
 })();

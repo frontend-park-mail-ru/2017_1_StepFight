@@ -18,6 +18,11 @@
             {title: 'dondiego4', score: 123},
             {title: 'dondiego5', score: 123},
             {title: 'dondiego6', score: 1234},
+            {title: 'dondiego6', score: 1234},
+            {title: 'dondiego6', score: 1234},
+            {title: 'dondiego6', score: 1234},
+            {title: 'dondiego6', score: 1234},
+            {title: 'dondiego6', score: 1234}
         ]
     }).render();
 })();

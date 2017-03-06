@@ -68,6 +68,23 @@
         toString() {
             return this.el.outerHTML;
         }
+
+        getFormData() {
+            let elements = this.el.elements;
+            let fields = {};
+
+            Object.keys(elements).forEach(element => {
+                let name = elements[element].name;
+                let value = elements[element].value;
+
+                if (!name) {
+                    return;
+                }
+
+                fields[name] = value;
+            });
+            return fields;
+        }
     }
 
 

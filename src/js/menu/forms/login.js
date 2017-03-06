@@ -5,6 +5,7 @@
 
 (function () {
     let CheckFields = window.CheckFields;
+    let UserService = window.UserService;
 
     let loginDiv = document.querySelector('#div-login');
 
@@ -29,7 +30,8 @@
                         placeholder: 'Login',
                         id: 'l-login',
                         class: 'input',
-                        type: 'text'
+                        type: 'text',
+                        name: 'login'
                     }
                 },
                 {
@@ -37,7 +39,8 @@
                         placeholder: 'Password',
                         id: 'l-password',
                         class: 'input',
-                        type: 'password'
+                        type: 'password',
+                        name: 'password'
                     }
                 }
             ],
@@ -65,7 +68,10 @@
 
     loginForm.el.addEventListener('submit', event => {
         event.preventDefault();
-        //TODO check fields
+        if (checkFields()) {
+            let body = loginForm.getFormData();
+            new UserService().login(body);
+        }
     });
 
     loginDiv.appendChild(loginForm.el);
@@ -73,15 +79,15 @@
     let login = document.getElementById('l-login');
     let password = document.getElementById('l-password');
 
-    initFieldsListeners();
+    function checkFields() {
+        const result = !CheckFields.checkEmpty(login.value) && !CheckFields.checkEmpty(password.value);
+        if (!result) {
+            setErrors();
+        }
+        return result;
+    }
 
-
-    function initFieldsListeners() {
-        login.addEventListener('keydown', function () {
-            login.classList.remove('input__error');
-        });
-        password.addEventListener('keydown', function () {
-            password.classList.remove('input__error');
-        });
+    function setErrors() {
+        //TODO set errors on view
     }
 })();
