@@ -11,7 +11,7 @@ import UserService from './support/service/userService';
 new LoginForm();
 new SignupForm();
 new MenuAction();
-new LeaderBoard().refreshLeaderBoard({leaders: [{login: 'chlen', rating: 9012}]});
+new LeaderBoard().refreshLeaderBoard();
 
 /*
  new UserService().getUser().then(response => {

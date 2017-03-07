@@ -120,7 +120,6 @@ export default class LoginForm {
 
 
                 }).catch(errResp => {
-                    console.log('ER=' + errResp);
                     CheckFields.fieldSetErr(login);
                     CheckFields.fieldSetErr(password);
                     CheckFields.helpSetText(loginHelp, 'wrong data');

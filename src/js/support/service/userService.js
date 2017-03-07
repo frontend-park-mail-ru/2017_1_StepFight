@@ -60,8 +60,11 @@ export default class UserService {
                 if (response.status == '200 OK') {
                     resolve(response);
                 } else {
-                    reject({result: 'error'});
+                    reject(response);
                 }
+            }).catch(err => {
+                console.error(err);
+                reject();
             });
         });
     }

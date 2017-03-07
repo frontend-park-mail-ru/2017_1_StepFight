@@ -21,7 +21,7 @@ export default class Http {
     }
 
     get(address = '', headers = {}) {
-        return new Promise(function (resolve) {
+        return new Promise(function (resolve, reject) {
             fetch(address, {
                 method: 'GET',
                 mode: 'cors',
