@@ -7,7 +7,7 @@ export default class Http {
             return Http.instance;
         }
 
-        //this._baseUrl = 'http://localhost:8080/api';
+        //this._baseUrl = 'http://localhost:8000/api';
         this._baseUrl = 'https://tp-server-java.herokuapp.com/api';
 
         Http.instance = this;

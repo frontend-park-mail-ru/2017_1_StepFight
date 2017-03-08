@@ -9,11 +9,6 @@ export default class LeaderBoard {
 
     }
 
-    compare(obj1, obj2) {
-        return obj2.rating - obj1.rating;
-    }
-
-
     render(data) {
         let leaderBoardSource = `
                         {{#with titles}}
