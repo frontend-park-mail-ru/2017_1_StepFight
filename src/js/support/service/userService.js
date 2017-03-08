@@ -16,8 +16,12 @@ export default class UserService {
                 if (response.status == '200 OK') {
                     resolve(response.user);
                 } else {
+                    console.log(response.status);
                     reject(response);
                 }
+            }, response => {
+                console.log(response.status);
+                reject({});
             });
         });
     }
@@ -31,8 +35,12 @@ export default class UserService {
                 if (response.status == '200 OK') {
                     resolve(response.user);
                 } else {
+                    console.log(response.status);
                     reject(response);
                 }
+            }, response => {
+                console.log(response.status);
+                reject({});
             });
         });
     }
@@ -46,8 +54,12 @@ export default class UserService {
                 if (response.status == '200 OK') {
                     resolve({result: 'success'});
                 } else {
+                    console.error(response.status);
                     reject({result: 'error'});
                 }
+            }, response => {
+                console.error(response.status);
+                reject({result: 'error'});
             });
         });
     }
@@ -60,11 +72,33 @@ export default class UserService {
                 if (response.status == '200 OK') {
                     resolve(response);
                 } else {
+                    console.error(response.status);
                     reject(response);
                 }
+            }, response => {
+                console.error(response.status);
+                reject({});
             }).catch(err => {
+                reject({});
                 console.error(err);
-                reject();
+            });
+        });
+    }
+
+    logOutUser() {
+        const address = `${this.url}/user/logout`;
+        const http = this.http;
+        return new Promise(function (resolve, reject) {
+            http.get(address, null).then(response => {
+                if (response.status == '200 OK') {
+                    resolve(response);
+                } else {
+                    console.error(response.status);
+                    reject(response);
+                }
+            }, response => {
+                console.error(response.status);
+                reject({});
             });
         });
     }

@@ -28,23 +28,17 @@ export default class LeaderBoard {
                         </ul>
                         {{/if}}`;
         let leaderBoardTemplate = Handlebars.compile(leaderBoardSource);
-        this.sleep(500);
+        ProgressBar.sleep(500);
         return leaderBoardTemplate(data);
-    }
-
-    sleep(ms) {
-        ms += new Date().getTime();
-        while (new Date() < ms) {
-        }
     }
 
     refreshLeaderBoard() {
         let leaderBoardContainer = document.getElementById('leaderboard-container');
         this.setProgressBar(leaderBoardContainer);
 
-        new UserService().getLeaders().then(responce => {
+        new UserService().getLeaders().then(response => {
             let leaderBoardContainer = document.getElementById('leaderboard-container');
-            let arr = responce.leaders;
+            let arr = response.leaders;
             leaderBoardContainer.innerHTML = this.render({
                 titles: {
                     title: 'Top players:',

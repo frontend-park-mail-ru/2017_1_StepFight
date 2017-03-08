@@ -11,11 +11,11 @@ export default class User {
         User.__instance = this;
     }
 
-    set ObjUser(user) {
+    set obj(user) {
         this._user = user;
     }
 
-    get ObjUser() {
+    get obj() {
         return this._user;
     }
 }

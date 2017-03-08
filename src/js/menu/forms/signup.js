@@ -4,13 +4,17 @@
 
 import Form from '../elements/form';
 import CheckFields from '../actions/checkFields';
+import UserService from '../../support/service/userService';
+import ProgressBar from '../elements/progressBar';
 
-export default class SignupForm {
+export default class SignUpForm {
 
     constructor() {
         this.signupDiv = document.querySelector('#div-signup');
+        this.loginDiv = document.querySelector('#div-login');
         this.render();
     }
+
     render() {
         this.signupForm = new Form({
             data: {
@@ -88,8 +92,8 @@ export default class SignupForm {
                     }
                 ]
             }
-        });
-        this.listener();
+        }).render();
+        this.initListener();
         this.signupDiv.appendChild(this.signupForm.el);
 
         this.login = document.getElementById('r-login');
@@ -100,53 +104,83 @@ export default class SignupForm {
         this.passwordHelp = document.getElementById('r-password-help');
         this.repeatPasswordHelp = document.getElementById('r-repeatpassword-help');
 
+        this.btnSignUp = document.getElementById('btn-signup');
     }
 
-    listener() {
+    initListener() {
+        //Submit form
         this.signupForm.el.addEventListener('submit', event => {
             event.preventDefault();
 
-            if (checkFields()) {
-                let body = signupForm.getFormData();
-                new UserService().signup(body).then(success => {
+            if (this.checkFields()) {
+                let body = this.signupForm.getFormData();
+
+                this.showProgressBar();
+
+                new UserService().signup(body).then(response => {
                     console.log('success reg');
-                    clearHelp();
-                    clearFields();
+                    this.clearHelp();
+                    this.clearFields();
+                    this.hideProgressBar();
+                    this.openLogin();
+                }, response => {
+                    CheckFields.fieldRemoveOk(this.login);
+                    CheckFields.fieldSetErr(this.login);
+                    CheckFields.helpSetText(this.loginHelp, 'login used');
+                    this.hideProgressBar();
                 }).catch(err => {
-                    CheckFields.fieldRemoveOk(login);
-                    CheckFields.fieldSetErr(login);
-                    CheckFields.helpSetText(loginHelp, 'login used');
+                    this.hideProgressBar();
+                    console.error(err);
                 });
             }
         });
     }
+
+    showProgressBar() {
+        this.btnSignUp.hidden = true;
+        let progressBar = new ProgressBar().render();
+        this.btnSignUp.parentNode.insertBefore(progressBar, this.btnSignUp.nextSibling);
+    }
+
+    hideProgressBar(){
+        ProgressBar.sleep(500);
+        this.btnSignUp.hidden = false;
+        this.btnSignUp.parentNode.removeChild(this.btnSignUp.nextElementSibling);
+    }
+
+    openLogin(){
+        this.signupDiv.classList.add('hidden');
+        this.loginDiv.classList.remove('hidden');
+        alert('Successfully registration');
+    }
+
     checkFields() {
         let checkLoginArr = CheckFields.checkLogin(
-            {field: login, help: loginHelp});
+            {field: this.login, help: this.loginHelp});
         let checkPasswordArr = CheckFields.checkPassword(
-            {field: password, help: passwordHelp},
-            {field: repeatPassword, help: repeatPasswordHelp});
+            {field: this.password, help: this.passwordHelp},
+            {field: this.repeatPassword, help: this.repeatPasswordHelp});
 
         return checkLoginArr && checkPasswordArr;
     }
 
     clearHelp() {
-        CheckFields.helpSetText(loginHelp, '');
-        CheckFields.helpSetText(passwordHelp, '');
-        CheckFields.helpSetText(repeatPasswordHelp, '');
+        CheckFields.helpSetText(this.loginHelp, '');
+        CheckFields.helpSetText(this.passwordHelp, '');
+        CheckFields.helpSetText(this.repeatPasswordHelp, '');
     }
 
     clearFields() {
-        CheckFields.fieldSetText(login, '');
-        CheckFields.fieldSetText(password, '');
-        CheckFields.fieldSetText(repeatPassword, '');
+        CheckFields.fieldSetText(this.login, '');
+        CheckFields.fieldSetText(this.password, '');
+        CheckFields.fieldSetText(this.repeatPassword, '');
 
-        CheckFields.fieldRemoveOk(login);
-        CheckFields.fieldRemoveOk(password);
-        CheckFields.fieldRemoveOk(repeatPassword);
+        CheckFields.fieldRemoveOk(this.login);
+        CheckFields.fieldRemoveOk(this.password);
+        CheckFields.fieldRemoveOk(this.repeatPassword);
 
-        CheckFields.fieldRemoveErr(login);
-        CheckFields.fieldRemoveErr(password);
-        CheckFields.fieldRemoveErr(repeatPassword);
+        CheckFields.fieldRemoveErr(this.login);
+        CheckFields.fieldRemoveErr(this.password);
+        CheckFields.fieldRemoveErr(this.repeatPassword);
     }
 }

@@ -32,13 +32,14 @@ export default class Http {
             }).then(json => {
                 resolve(json);
             }).catch(err => {
+                reject({});
                 console.error(err || err.statusText);
             });
         });
     }
 
     post(address = '', headers = {}, body = {}) {
-        return new Promise(function (resolve) {
+        return new Promise(function (resolve, reject) {
             fetch(address, {
                 method: 'POST',
                 mode: 'cors',
@@ -50,6 +51,7 @@ export default class Http {
             }).then(json => {
                 resolve(json);
             }).catch(err => {
+                reject({});
                 console.error(err || err.statusText);
             });
         });

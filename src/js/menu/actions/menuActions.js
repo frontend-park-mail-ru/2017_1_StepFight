@@ -1,6 +1,7 @@
 /**
  * Created by Denis on 03.03.2017.
  */
+import User from '../../game/user';
 export default class MenuActions {
     constructor() {
         this.btnPlay = document.getElementById('btn-play');
@@ -13,6 +14,7 @@ export default class MenuActions {
         this.modalLogin = document.getElementById('modal-login');
         this.modalLeaderBoard = document.getElementById('modal-leaderboard');
         this.modalAbout = document.getElementById('modal-about');
+        this.modalGame = document.getElementById('modal-game');
 
         this.btnToSignUp = document.getElementById('btn-to-signup');
         this.btnToLogIn = document.getElementById('btn-to-login');
@@ -26,8 +28,13 @@ export default class MenuActions {
     initMenuButtonsListeners() {
         this.btnPlay.addEventListener('click', () => {
             this.showDiv(this.modalDiv);
-            this.showDiv(this.modalLogin);
-            this.setCurrModal(this.modalLogin);
+            if(JSON.stringify(new User().obj) === JSON.stringify({})){
+                this.showDiv(this.modalLogin);
+                this.setCurrModal(this.modalLogin);
+            } else {
+                this.showDiv(this.modalGame);
+                this.setCurrModal(this.modalGame);
+            }
         });
 
         this.btnAbout.addEventListener('click', () => {

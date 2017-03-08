@@ -7,30 +7,20 @@ export default class Form {
     constructor(options = {data: {}}) {
         this.data = options.data;
         this.el = document.createElement('form');
-
-        this.render();
     }
 
     render() {
-        try {
-            this.setAttrs(this.data.form.attrs, this.el);
-            let h3 = document.createElement('h3');
-            this.setAttrs(this.data.title.attrs, h3);
-            h3.innerHTML = this.data.title.text;
-            this.el.appendChild(h3);
-        } catch (err) {
+        this.setAttrs(this.data.form.attrs, this.el);
+        let h3 = document.createElement('h3');
+        this.setAttrs(this.data.title.attrs, h3);
+        h3.innerHTML = this.data.title.text;
+        this.el.appendChild(h3);
 
-        }
-        try {
-            this.fieldsAppendTo(this.getFields(), this.el);
-        } catch (err) {
+        this.fieldsAppendTo(this.getFields(), this.el);
 
-        }
-        try {
-            this.controlsAppendTo(this.getControls(), this.el);
-        } catch (err) {
+        this.controlsAppendTo(this.getControls(), this.el);
 
-        }
+        return this;
     }
 
     getFields() {

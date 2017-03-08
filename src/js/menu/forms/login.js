@@ -7,6 +7,7 @@ import UserService from '../../support/service/userService';
 import Profile from '../elements/profile';
 import User from '../../game/user';
 import Form from '../elements/form';
+import ProgressBar from '../elements/progressBar';
 export default class LoginForm {
     constructor() {
         this.loginDiv = document.querySelector('#div-login');
@@ -77,24 +78,30 @@ export default class LoginForm {
                     }
                 ]
             }
-        });
-        this.listener();
+        }).render();
+        this.initListener();
+
         this.loginDiv.appendChild(this.loginForm.el);
 
         this.login = document.getElementById('l-login');
         this.password = document.getElementById('l-password');
         this.loginHelp = document.getElementById('l-login-help');
         this.passwordHelp = document.getElementById('l-password-help');
+        this.btnLogin = document.getElementById('btn-login');
     }
 
-    listener() {
+    initListener() {
+        //Submit form
         this.loginForm.el.addEventListener('submit', event => {
             event.preventDefault();
-            if (checkFields()) {
-                let body = loginForm.getFormData();
+            if (this.checkFields()) {
+                let body = this.loginForm.getFormData();
+
+                this.showProgressBar();
+
                 new UserService().login(body).then(user => {
-                    clearHelp();
-                    clearFields();
+                    this.clearHelp();
+                    this.clearFields();
 
                     let modalDiv = document.getElementById('modal');
                     let modalLoginDiv = document.getElementById('modal-login');
@@ -117,52 +124,68 @@ export default class LoginForm {
                             div: profileDiv
                         }
                     });
-
-
-                }).catch(errResp => {
-                    CheckFields.fieldSetErr(login);
-                    CheckFields.fieldSetErr(password);
-                    CheckFields.helpSetText(loginHelp, 'wrong data');
-                    CheckFields.helpSetText(passwordHelp, 'wrong data');
+                    new User().obj = user;
+                    this.hideProgressBar();
+                }, response => {
+                    CheckFields.fieldSetErr(this.login);
+                    CheckFields.fieldSetErr(this.password);
+                    CheckFields.helpSetText(this.loginHelp, 'wrong data');
+                    CheckFields.helpSetText(this.passwordHelp, 'wrong data');
+                    this.hideProgressBar();
+                }).catch(err => {
+                    console.error(err);
+                    this.hideProgressBar();
                 });
             }
         });
     }
 
+    showProgressBar() {
+        this.btnLogin.hidden = true;
+        let progressBar = new ProgressBar().render();
+        this.btnLogin.parentNode.insertBefore(progressBar, this.btnLogin.nextSibling);
+    }
+
+    hideProgressBar(){
+        ProgressBar.sleep(500);
+        this.btnLogin.hidden = false;
+        this.btnLogin.parentNode.removeChild(this.btnLogin.nextElementSibling);
+    }
+
     checkFields() {
         let check = true;
-        if (CheckFields.checkEmpty(login.value)) {
-            CheckFields.fieldSetErr(login);
-            CheckFields.helpSetText(loginHelp, 'empty field');
+        if (CheckFields.checkEmpty(this.login.value)) {
+            CheckFields.fieldSetErr(this.login);
+            CheckFields.helpSetText(this.loginHelp, 'empty field');
             check = false;
         } else {
-            CheckFields.helpSetText(loginHelp, '');
-            CheckFields.fieldRemoveErr(login);
+            CheckFields.helpSetText(this.loginHelp, '');
+            CheckFields.fieldRemoveErr(this.login);
         }
-        if (CheckFields.checkEmpty(password.value)) {
-            CheckFields.fieldSetErr(password);
-            CheckFields.helpSetText(passwordHelp, 'empty field');
+        if (CheckFields.checkEmpty(this.password.value)) {
+            CheckFields.fieldSetErr(this.password);
+            CheckFields.helpSetText(this.passwordHelp, 'empty field');
             check = false;
         } else {
-            CheckFields.helpSetText(passwordHelp, '');
-            CheckFields.fieldRemoveErr(password);
+            CheckFields.helpSetText(this.passwordHelp, '');
+            CheckFields.fieldRemoveErr(this.password);
         }
         return check;
     }
 
     clearHelp() {
-        CheckFields.helpSetText(loginHelp, '');
-        CheckFields.helpSetText(passwordHelp, '');
+        CheckFields.helpSetText(this.loginHelp, '');
+        CheckFields.helpSetText(this.passwordHelp, '');
     }
 
     clearFields() {
-        CheckFields.fieldSetText(login, '');
-        CheckFields.fieldSetText(password, '');
+        CheckFields.fieldSetText(this.login, '');
+        CheckFields.fieldSetText(this.password, '');
 
-        CheckFields.fieldRemoveOk(login);
-        CheckFields.fieldRemoveOk(password);
+        CheckFields.fieldRemoveOk(this.login);
+        CheckFields.fieldRemoveOk(this.password);
 
-        CheckFields.fieldRemoveErr(login);
-        CheckFields.fieldRemoveErr(password);
+        CheckFields.fieldRemoveErr(this.login);
+        CheckFields.fieldRemoveErr(this.password);
     }
 }
