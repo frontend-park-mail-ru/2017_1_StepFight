@@ -1,5 +1,5 @@
 :root{
-    --bg-color: #8c72d3;
+    --bg-color: #081b32;
 }
 
 html {
@@ -8,7 +8,7 @@ html {
 
 body {
     background-size: 100%;
-    background: #d7d7d7 url("../../img/menu/menubg.jpg");
+    background: var(--bg-color) /*url("../../img/menu/menubg.jpg")*/;
     margin: 0;
     box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.15) inset;
     height: 100%;

@@ -8,7 +8,7 @@ export default class Button {
         this.el = document.createElement(options.type);
     }
 
-    setAttrs(attrs) {
+    _setAttrs(attrs) {
         Object.keys(attrs).forEach(name => {
             this.el.setAttribute(name, attrs[name]);
         })
@@ -16,7 +16,7 @@ export default class Button {
 
     render() {
         this.el.innerHTML = this.text;
-        this.setAttrs(this.attrs);
+        this._setAttrs(this.attrs);
         return this;
     }
 

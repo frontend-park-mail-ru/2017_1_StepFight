@@ -13,10 +13,10 @@ export default class Profile {
         this.pButton = null;
         this.div = options.data.div;
 
-        this.render();
+        this._render();
     }
 
-    render() {
+    _render() {
         this.pLogin.textContent = `Login: ${this.data.login}`;
         this.pRating.textContent = `Score: ${this.data.rating}`;
         this.pButton = new Button(this.data.button).render();
@@ -25,13 +25,13 @@ export default class Profile {
         this.div.appendChild(this.pRating);
         this.div.appendChild(this.pButton.el);
 
-        this.initListener();
+        this._initListener();
     }
 
-    initListener() {
+    _initListener() {
         this.pButton.el.addEventListener('click', () => {
             new UserService().logOutUser().then(response => {
-                this.clearDiv();
+                this._clearDiv();
                 new User().obj = {};
             }, response => {
 
@@ -41,7 +41,7 @@ export default class Profile {
         });
     }
 
-    clearDiv() {
+    _clearDiv() {
         while (this.div.children.length > 0) {
             this.div.removeChild(this.div.firstChild);
         }

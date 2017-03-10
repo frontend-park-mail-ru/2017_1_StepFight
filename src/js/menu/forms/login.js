@@ -126,15 +126,14 @@ export default class LoginForm {
                     });
                     new User().obj = user;
                     this.hideProgressBar();
-                }, response => {
+                }).catch(e => {
                     CheckFields.fieldSetErr(this.login);
                     CheckFields.fieldSetErr(this.password);
                     CheckFields.helpSetText(this.loginHelp, 'wrong data');
                     CheckFields.helpSetText(this.passwordHelp, 'wrong data');
                     this.hideProgressBar();
-                }).catch(err => {
-                    console.error(err);
-                    this.hideProgressBar();
+                    console.error(e);
+
                 });
             }
         });
@@ -146,7 +145,7 @@ export default class LoginForm {
         this.btnLogin.parentNode.insertBefore(progressBar, this.btnLogin.nextSibling);
     }
 
-    hideProgressBar(){
+    hideProgressBar() {
         ProgressBar.sleep(500);
         this.btnLogin.hidden = false;
         this.btnLogin.parentNode.removeChild(this.btnLogin.nextElementSibling);

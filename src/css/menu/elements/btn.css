@@ -1,7 +1,8 @@
 :root {
-    --btn-border-color: black;
+    --btn-border-color: white;
+    --btn-border-color2: black;
     --btn-text-color: white;
-    --btn-bg-color: rgba(229, 229, 229, 0.56);
+    --btn-bg-color: rgba(229, 229, 229, 0.2);
 
     --btn-border-color-focus: white;
     --btn-text-color-focus: black;
@@ -45,7 +46,7 @@
     padding: 5px;
     color: var(--btn-text-color-focus);
     background-color: var(--btn-bg-color);
-    border: 1px solid var(--btn-border-color);
+    border: 1px solid var(--btn-border-color2);
     border-radius: 2px;
     text-decoration: none;
     font-family: 'Cabin', sans-serif;

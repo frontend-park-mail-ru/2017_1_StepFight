@@ -10,15 +10,15 @@ export default class Input {
         this.help_el = document.createElement('p');
     }
 
-    setAttrs(attrs, elem) {
+    _setAttrs(attrs, elem) {
         Object.keys(attrs).forEach(name => {
             elem.setAttribute(name, attrs[name]);
         })
     }
 
     render() {
-        this.setAttrs(this.attrs, this.el);
-        this.setAttrs(this.help_attrs, this.help_el);
+        this._setAttrs(this.attrs, this.el);
+        this._setAttrs(this.help_attrs, this.help_el);
 
         return this;
     }

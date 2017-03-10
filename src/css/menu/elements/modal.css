@@ -2,7 +2,7 @@
 :root{
     --modal-bg-color: rgba(0, 0, 0, .8);
 
-    --modal-content-bg-color: #fefefe;
+    --modal-content-bg-color: white;
     --modal-content-border-color: black;
 }
 

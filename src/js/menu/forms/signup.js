@@ -118,7 +118,6 @@ export default class SignUpForm {
                 this.showProgressBar();
 
                 new UserService().signup(body).then(response => {
-                    console.log('success reg');
                     this.clearHelp();
                     this.clearFields();
                     this.hideProgressBar();

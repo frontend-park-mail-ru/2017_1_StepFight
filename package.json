@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "node server.js",
     "webpack": "webpack --config webpack.config.js -w"
   },
@@ -14,6 +14,7 @@
   "dependencies": {
     "express": "^4.14.1",
     "handlebars": "^4.0.6",
+    "mocha": "^3.2.0",
     "webpack": "^2.2.1",
     "whatwg-fetch": "^2.0.3"
   }

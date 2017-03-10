@@ -10,46 +10,46 @@ export default class Form {
     }
 
     render() {
-        this.setAttrs(this.data.form.attrs, this.el);
+        this._setAttrs(this.data.form.attrs, this.el);
         let h3 = document.createElement('h3');
-        this.setAttrs(this.data.title.attrs, h3);
+        this._setAttrs(this.data.title.attrs, h3);
         h3.innerHTML = this.data.title.text;
         this.el.appendChild(h3);
 
-        this.fieldsAppendTo(this.getFields(), this.el);
+        this._fieldsAppendTo(this._getFields(), this.el);
 
-        this.controlsAppendTo(this.getControls(), this.el);
+        this._controlsAppendTo(this._getControls(), this.el);
 
         return this;
     }
 
-    getFields() {
+    _getFields() {
         let {fields = []}=this.data;
         return fields.map(data => {
             return new Input(data).render();
         });
     }
 
-    setAttrs(attrs, elem) {
+    _setAttrs(attrs, elem) {
         Object.keys(attrs).forEach(name => {
             elem.setAttribute(name, attrs[name]);
         })
     }
 
-    fieldsAppendTo(array, elem) {
+    _fieldsAppendTo(array, elem) {
         array.forEach(item => {
             elem.appendChild(item.el);
             elem.appendChild(item.help_el);
         })
     }
 
-    controlsAppendTo(array, elem) {
+    _controlsAppendTo(array, elem) {
         array.forEach(item => {
             elem.appendChild(item.el);
         })
     }
 
-    getControls() {
+    _getControls() {
         let {controls = []}=this.data;
         return controls.map(data => {
             return new Button(data).render();

@@ -19,8 +19,8 @@ export default class UserService {
                     console.log(response.status);
                     reject(response);
                 }
-            }, response => {
-                console.log(response.status);
+            }).catch(e => {
+                console.error(e.status);
                 reject({});
             });
         });
@@ -38,8 +38,8 @@ export default class UserService {
                     console.log(response.status);
                     reject(response);
                 }
-            }, response => {
-                console.log(response.status);
+            }).catch(e => {
+                console.error(e.status);
                 reject({});
             });
         });
@@ -57,8 +57,8 @@ export default class UserService {
                     console.error(response.status);
                     reject({result: 'error'});
                 }
-            }, response => {
-                console.error(response.status);
+            }).catch(e => {
+                console.error(e.status);
                 reject({result: 'error'});
             });
         });
@@ -75,12 +75,9 @@ export default class UserService {
                     console.error(response.status);
                     reject(response);
                 }
-            }, response => {
-                console.error(response.status);
+            }).catch(e => {
                 reject({});
-            }).catch(err => {
-                reject({});
-                console.error(err);
+                console.error(e.status);
             });
         });
     }
@@ -96,8 +93,8 @@ export default class UserService {
                     console.error(response.status);
                     reject(response);
                 }
-            }, response => {
-                console.error(response.status);
+            }).catch(e => {
+                console.error(e.status);
                 reject({});
             });
         });
