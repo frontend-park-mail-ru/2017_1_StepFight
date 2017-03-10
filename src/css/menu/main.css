@@ -1,0 +1,34 @@
+:root{
+    --bg-color: #8c72d3;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background-size: 100%;
+    background: #d7d7d7 url("../../img/menu/menubg.jpg");
+    margin: 0;
+    box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.15) inset;
+    height: 100%;
+}
+
+.fcontainer-row {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.fcontainer-column {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.user-profile {
+    background-color: white;
+    margin: 0 auto;
+}

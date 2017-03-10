@@ -1,0 +1,17 @@
+:root{
+    --link-text-color: rgba(97, 97, 97, 0.91);
+
+    --link-text-color-focus: black;
+}
+
+.link {
+    font-family: 'Orbitron', sans-serif;
+    text-decoration: none;
+    -webkit-transition: all 0.5s ease;
+    cursor: pointer;
+    color: var(--link-text-color);
+}
+
+.link:hover {
+    color: var(--link-text-color-focus);
+}

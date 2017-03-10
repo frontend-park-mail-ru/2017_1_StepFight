@@ -1,0 +1,60 @@
+:root {
+    --btn-border-color: black;
+    --btn-text-color: white;
+    --btn-bg-color: rgba(229, 229, 229, 0.56);
+
+    --btn-border-color-focus: white;
+    --btn-text-color-focus: black;
+    --btn-bg-color-focus: rgba(229, 229, 229, 0.9);
+}
+
+.btn-play {
+    margin: 15px auto;
+    width: 180px;
+    height: 180px;
+    border: 2px solid var(--btn-border-color);
+    padding: 10px;
+    border-radius: 2000px;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    color: var(--btn-text-color);
+    display: table;
+    background-color: var(--btn-bg-color);
+    -webkit-transition: all 0.2s linear;
+}
+
+.btn-play:hover, .btn-play:focus {
+    color: var(--btn-text-color-focus);
+    border-color: var(--btn-border-color-focus);
+    background-color: var(--btn-bg-color-focus);
+    cursor: pointer;
+}
+
+.btn-play h1 {
+    font-size: 30px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.btn-play h1:hover, .btn-play h1:focus {
+    cursor: pointer;
+}
+
+.btn {
+    margin-top: 5px;
+    padding: 5px;
+    color: var(--btn-text-color-focus);
+    background-color: var(--btn-bg-color);
+    border: 1px solid var(--btn-border-color);
+    border-radius: 2px;
+    text-decoration: none;
+    font-family: 'Cabin', sans-serif;
+    -webkit-transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: var(--btn-bg-color-focus);
+    border-color: var(--btn-border-color-focus);
+    color: var(--btn-text-color-focus);
+}

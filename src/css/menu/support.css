@@ -1,0 +1,25 @@
+.div-center {
+    margin: 0 auto;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.padding-25{
+    padding: 0 25% 0 25%;
+}
+
+@media (max-width: 767px) {
+    .padding-25{
+        padding: 0;
+    }
+
+    #btn-play{
+        order: -1;
+    }
+}
+
+.hidden {
+    display: none;
+}
