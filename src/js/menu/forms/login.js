@@ -86,7 +86,6 @@ export default class LoginForm {
         this.login = document.getElementById('l-login');
         this.password = document.getElementById('l-password');
         this.loginHelp = document.getElementById('l-login-help');
-        this.passwordHelp = document.getElementById('l-password-help');
         this.btnLogin = document.getElementById('btn-login');
     }
 
@@ -100,7 +99,6 @@ export default class LoginForm {
                 this.showProgressBar();
 
                 new UserService().login(body).then(user => {
-                    this.clearHelp();
                     this.clearFields();
 
                     let modalDiv = document.getElementById('modal');
@@ -127,10 +125,10 @@ export default class LoginForm {
                     new User().obj = user;
                     this.hideProgressBar();
                 }).catch(e => {
-                    CheckFields.fieldSetErr(this.login);
-                    CheckFields.fieldSetErr(this.password);
-                    CheckFields.helpSetText(this.loginHelp, 'wrong data');
-                    CheckFields.helpSetText(this.passwordHelp, 'wrong data');
+                    this.loginForm.fields.forEach(elem => {
+                        elem.setError();
+                        elem.setError('wrong data');
+                    });
                     this.hideProgressBar();
                     console.error(e);
 
@@ -153,38 +151,20 @@ export default class LoginForm {
 
     checkFields() {
         let check = true;
-        if (CheckFields.checkEmpty(this.login.value)) {
-            CheckFields.fieldSetErr(this.login);
-            CheckFields.helpSetText(this.loginHelp, 'empty field');
-            check = false;
-        } else {
-            CheckFields.helpSetText(this.loginHelp, '');
-            CheckFields.fieldRemoveErr(this.login);
-        }
-        if (CheckFields.checkEmpty(this.password.value)) {
-            CheckFields.fieldSetErr(this.password);
-            CheckFields.helpSetText(this.passwordHelp, 'empty field');
-            check = false;
-        } else {
-            CheckFields.helpSetText(this.passwordHelp, '');
-            CheckFields.fieldRemoveErr(this.password);
-        }
+
+        this.loginForm.fields.forEach(elem => {
+            let result = elem.validate();
+            if (check == true) {
+                check = result;
+            }
+        });
+
         return check;
     }
 
-    clearHelp() {
-        CheckFields.helpSetText(this.loginHelp, '');
-        CheckFields.helpSetText(this.passwordHelp, '');
-    }
-
     clearFields() {
-        CheckFields.fieldSetText(this.login, '');
-        CheckFields.fieldSetText(this.password, '');
-
-        CheckFields.fieldRemoveOk(this.login);
-        CheckFields.fieldRemoveOk(this.password);
-
-        CheckFields.fieldRemoveErr(this.login);
-        CheckFields.fieldRemoveErr(this.password);
+        this.loginForm.fields.forEach(elem => {
+           elem.clear();
+        });
     }
 }

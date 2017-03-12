@@ -32,7 +32,7 @@ export default class UserService {
         return new Promise(function (resolve, reject) {
             let headers = {'Content-Type': 'application/json'};
             http.post(address, headers, body).then(response => {
-                if (response.status == '200 OK') {
+                if (response.status === '200 OK') {
                     resolve(response.user);
                 } else {
                     console.log(response.status);
@@ -54,7 +54,6 @@ export default class UserService {
                 if (response.status == '200 OK') {
                     resolve({result: 'success'});
                 } else {
-                    console.error(response.status);
                     reject({result: 'error'});
                 }
             }).catch(e => {

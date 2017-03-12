@@ -12,21 +12,15 @@ export default class CheckFields {
 
     static checkLogin(obj) {
         let arr = [];
-        if (this.checkEmpty(obj.field.value)) {
+        if (!this._checkLatin(obj.field.value)) {
             arr.push({
-                err_text: 'empty field',
+                err_text: 'Only Latin',
+            })
+        }
+        if (obj.field.value.length < 4) {
+            arr.push({
+                err_text: '4 - min length',
             });
-        } else {
-            if (!this._checkLatin(obj.field.value)) {
-                arr.push({
-                    err_text: 'Only Latin',
-                })
-            }
-            if (obj.field.value.length < 4) {
-                arr.push({
-                    err_text: '4 - min length',
-                });
-            }
         }
 
         obj.help.textContent = '';
@@ -58,29 +52,13 @@ export default class CheckFields {
     }
 
     static checkEmpty(value) {
-        return value.length == 0;
+        return value.length === 0;
     }
 
 
     static checkPassword(obj1, obj2) {
         let arr = [];
         let check = true;
-        if (this.checkEmpty(obj1.field.value)) {
-            arr.push({
-                err_text: 'empty field',
-                field: obj1.field,
-                help: obj1.help
-            });
-            check = false;
-        }
-        if (this.checkEmpty(obj2.field.value)) {
-            arr.push({
-                err_text: 'empty field',
-                field: obj2.field,
-                help: obj2.help
-            });
-            check = false;
-        }
 
         if (check) {
             if (!this._checkPassLength(obj1.field.value)) {
@@ -117,11 +95,11 @@ export default class CheckFields {
             }
         });
 
-        if (arr.length == 0) {
+        if (arr.length === 0) {
             this.fieldSetOk(obj1.field);
             this.fieldSetOk(obj2.field);
         }
-        return arr.length == 0;
+        return arr.length === 0;
     }
 
     static helpSetText(elem, value) {

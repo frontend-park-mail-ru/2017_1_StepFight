@@ -6,6 +6,7 @@ import Form from '../elements/form';
 import CheckFields from '../actions/checkFields';
 import UserService from '../../support/service/userService';
 import ProgressBar from '../elements/progressBar';
+import IziToast from 'izitoast';
 
 export default class SignUpForm {
 
@@ -38,7 +39,8 @@ export default class SignUpForm {
                             id: 'r-login',
                             class: 'input',
                             type: 'text',
-                            name: 'login'
+                            name: 'login',
+                            valid: 'login'
                         },
                         help_attrs: {
                             id: 'r-login-help',
@@ -51,7 +53,8 @@ export default class SignUpForm {
                             id: 'r-password',
                             class: 'input',
                             type: 'password',
-                            name: 'password'
+                            name: 'password',
+                            valid: 'password'
                         },
                         help_attrs: {
                             id: 'r-password-help',
@@ -64,7 +67,8 @@ export default class SignUpForm {
                             id: 'r-repeatpassword',
                             class: 'input',
                             type: 'password',
-                            name: 'repeatpassword'
+                            name: 'repeatpassword',
+                            valid: 'repeatpassword'
                         },
                         help_attrs: {
                             id: 'r-repeatpassword-help',
@@ -118,16 +122,13 @@ export default class SignUpForm {
                 this.showProgressBar();
 
                 new UserService().signup(body).then(response => {
-                    this.clearHelp();
                     this.clearFields();
                     this.hideProgressBar();
                     this.openLogin();
-                }, response => {
+                }).catch(err => {
                     CheckFields.fieldRemoveOk(this.login);
                     CheckFields.fieldSetErr(this.login);
                     CheckFields.helpSetText(this.loginHelp, 'login used');
-                    this.hideProgressBar();
-                }).catch(err => {
                     this.hideProgressBar();
                     console.error(err);
                 });
@@ -141,45 +142,39 @@ export default class SignUpForm {
         this.btnSignUp.parentNode.insertBefore(progressBar, this.btnSignUp.nextSibling);
     }
 
-    hideProgressBar(){
+    hideProgressBar() {
         ProgressBar.sleep(500);
         this.btnSignUp.hidden = false;
         this.btnSignUp.parentNode.removeChild(this.btnSignUp.nextElementSibling);
     }
 
-    openLogin(){
+    openLogin() {
         this.signupDiv.classList.add('hidden');
         this.loginDiv.classList.remove('hidden');
-        alert('Successfully registration');
+        IziToast.success({
+            title: 'OK',
+            message: 'Successfully registration',
+        });
     }
 
     checkFields() {
-        let checkLoginArr = CheckFields.checkLogin(
-            {field: this.login, help: this.loginHelp});
-        let checkPasswordArr = CheckFields.checkPassword(
-            {field: this.password, help: this.passwordHelp},
-            {field: this.repeatPassword, help: this.repeatPasswordHelp});
+        let check = true;
+        let prev = null;
 
-        return checkLoginArr && checkPasswordArr;
-    }
+        this.signupForm.fields.forEach(elem => {
+            let result = elem.validate(prev);
+            prev = elem;
+            if (check == true) {
+                check = result;
+            }
+        });
 
-    clearHelp() {
-        CheckFields.helpSetText(this.loginHelp, '');
-        CheckFields.helpSetText(this.passwordHelp, '');
-        CheckFields.helpSetText(this.repeatPasswordHelp, '');
+        return check;
     }
 
     clearFields() {
-        CheckFields.fieldSetText(this.login, '');
-        CheckFields.fieldSetText(this.password, '');
-        CheckFields.fieldSetText(this.repeatPassword, '');
-
-        CheckFields.fieldRemoveOk(this.login);
-        CheckFields.fieldRemoveOk(this.password);
-        CheckFields.fieldRemoveOk(this.repeatPassword);
-
-        CheckFields.fieldRemoveErr(this.login);
-        CheckFields.fieldRemoveErr(this.password);
-        CheckFields.fieldRemoveErr(this.repeatPassword);
+        this.signupForm.fields.forEach(elem => {
+            elem.clear();
+        });
     }
 }

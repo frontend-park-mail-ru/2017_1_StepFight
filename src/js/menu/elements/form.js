@@ -7,6 +7,8 @@ export default class Form {
     constructor(options = {data: {}}) {
         this.data = options.data;
         this.el = document.createElement('form');
+        this.fields = [];
+        this.controls = [];
     }
 
     render() {
@@ -16,9 +18,12 @@ export default class Form {
         h3.innerHTML = this.data.title.text;
         this.el.appendChild(h3);
 
-        this._fieldsAppendTo(this._getFields(), this.el);
 
-        this._controlsAppendTo(this._getControls(), this.el);
+        this.fields = this._getFields();
+        this.controls = this._getControls();
+        this._fieldsAppendTo(this.fields, this.el);
+
+        this._controlsAppendTo(this.controls, this.el);
 
         return this;
     }
