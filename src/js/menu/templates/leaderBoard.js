@@ -23,7 +23,6 @@ export default class LeaderBoard {
                         </ul>
                         {{/if}}`;
         let leaderBoardTemplate = Handlebars.compile(leaderBoardSource);
-        ProgressBar.sleep(500);
         return leaderBoardTemplate(data);
     }
 
@@ -34,19 +33,22 @@ export default class LeaderBoard {
         new UserService().getLeaders().then(response => {
             let leaderBoardContainer = document.getElementById('leaderboard-container');
             let arr = response.leaders;
-            leaderBoardContainer.innerHTML = this.render({
-                titles: {
-                    title: 'Top players:',
-                },
-                leaderboard: arr,
-                control: {
-                    text: 'Refresh',
-                    class: 'link',
-                    id: 'refresh-lb'
-                }
-            });
-            this.initRefreshListener();
-        }, response => {
+            setTimeout(() => {
+                leaderBoardContainer.innerHTML = this.render({
+                    titles: {
+                        title: 'Top players:',
+                    },
+                    leaderboard: arr,
+                    control: {
+                        text: 'Refresh',
+                        class: 'link',
+                        id: 'refresh-lb'
+                    }
+                });
+                this.initRefreshListener();
+            }, 500);
+        }).catch(err => {
+            console.error(err);
             leaderBoardContainer.innerHTML = this.render({
                 titles: {
                     title: 'No connection',
@@ -59,8 +61,6 @@ export default class LeaderBoard {
                 }
             });
             this.initRefreshListener();
-        }).catch(err => {
-            console.error(err);
         });
     }
 

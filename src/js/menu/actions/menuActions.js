@@ -2,6 +2,8 @@
  * Created by Denis on 03.03.2017.
  */
 import User from '../../game/user';
+import AnimModal from '../../support/anim/animModal';
+import ProgressBar from '../elements/progressBar';
 export default class MenuActions {
     constructor() {
         this.btnPlay = document.getElementById('btn-play');
@@ -9,6 +11,8 @@ export default class MenuActions {
         this.btnLeaderBoard = document.getElementById('btn-leaderboard');
         this.btnModalClose = document.getElementById('modal-close');
         this.currModal = null;
+
+        this.modalContent = document.getElementById('modal-content');
 
         this.modalDiv = document.getElementById('modal');
         this.modalLogin = document.getElementById('modal-login');
@@ -27,8 +31,8 @@ export default class MenuActions {
 
     initMenuButtonsListeners() {
         this.btnPlay.addEventListener('click', () => {
-            this.showDiv(this.modalDiv);
-            if(JSON.stringify(new User().obj) === JSON.stringify({})){
+            this.showModalDivWithAnim();
+            if (JSON.stringify(new User().obj) === JSON.stringify({})) {
                 this.showDiv(this.modalLogin);
                 this.setCurrModal(this.modalLogin);
             } else {
@@ -38,19 +42,18 @@ export default class MenuActions {
         });
 
         this.btnAbout.addEventListener('click', () => {
-            this.showDiv(this.modalDiv);
+            this.showModalDivWithAnim();
             this.showDiv(this.modalAbout);
             this.setCurrModal(this.modalAbout);
         });
 
         this.btnLeaderBoard.addEventListener('click', () => {
-            this.showDiv(this.modalDiv);
+            this.showModalDivWithAnim();
             this.showDiv(this.modalLeaderBoard);
             this.setCurrModal(this.modalLeaderBoard);
         });
         this.btnModalClose.addEventListener('click', () => {
-            this.hideDiv(this.modalDiv);
-            this.hideCurrModal();
+            this.hideModalDivWithAnim();
         });
     }
 
@@ -72,6 +75,19 @@ export default class MenuActions {
 
     showDiv(div) {
         div.classList.remove('hidden');
+    }
+
+    hideModalDivWithAnim() {
+        AnimModal.hide(this.modalContent);
+        setTimeout(() => {
+            this.hideDiv(this.modalDiv);
+            this.hideCurrModal();
+        }, 500);
+    }
+
+    showModalDivWithAnim() {
+        this.showDiv(this.modalDiv);
+        AnimModal.show(this.modalContent);
     }
 
     setCurrModal(modal) {

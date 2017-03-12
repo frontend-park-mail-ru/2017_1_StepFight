@@ -128,7 +128,11 @@ export default class SignUpForm {
                 }).catch(err => {
                     CheckFields.fieldRemoveOk(this.login);
                     CheckFields.fieldSetErr(this.login);
-                    CheckFields.helpSetText(this.loginHelp, 'login used');
+                    if(err.result === 'no-conn'){
+                        CheckFields.helpSetText(this.loginHelp, 'check connection');
+                    } else {
+                        CheckFields.helpSetText(this.loginHelp, 'login used');
+                    }
                     this.hideProgressBar();
                     console.error(err);
                 });
@@ -143,17 +147,18 @@ export default class SignUpForm {
     }
 
     hideProgressBar() {
-        ProgressBar.sleep(500);
-        this.btnSignUp.hidden = false;
-        this.btnSignUp.parentNode.removeChild(this.btnSignUp.nextElementSibling);
+        setTimeout(() => {
+            this.btnSignUp.hidden = false;
+            this.btnSignUp.parentNode.removeChild(this.btnSignUp.nextElementSibling);
+        }, 500);
     }
 
     openLogin() {
         this.signupDiv.classList.add('hidden');
         this.loginDiv.classList.remove('hidden');
         IziToast.success({
-            title: 'OK',
-            message: 'Successfully registration',
+            title: 'Successfully registration',
+            position: 'topRight'
         });
     }
 

@@ -58,7 +58,7 @@ export default class UserService {
                 }
             }).catch(e => {
                 console.error(e.status);
-                reject({result: 'error'});
+                reject({result: 'no-conn'});
             });
         });
     }

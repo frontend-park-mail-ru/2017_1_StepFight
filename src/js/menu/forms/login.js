@@ -144,9 +144,10 @@ export default class LoginForm {
     }
 
     hideProgressBar() {
-        ProgressBar.sleep(500);
-        this.btnLogin.hidden = false;
-        this.btnLogin.parentNode.removeChild(this.btnLogin.nextElementSibling);
+        setTimeout(() => {
+            this.btnLogin.hidden = false;
+            this.btnLogin.parentNode.removeChild(this.btnLogin.nextElementSibling);
+        }, 500);
     }
 
     checkFields() {
@@ -164,7 +165,7 @@ export default class LoginForm {
 
     clearFields() {
         this.loginForm.fields.forEach(elem => {
-           elem.clear();
+            elem.clear();
         });
     }
 }
