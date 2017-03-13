@@ -51,7 +51,7 @@ export default class Input {
                 let result = CheckFields.checkPassword(
                     {field: prev.el, help: prev.help_el},
                     {field: this.el, help: this.help_el});
-                if (check == true) {
+                if (check === true) {
                     check = result;
                 }
             }

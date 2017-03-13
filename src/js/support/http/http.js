@@ -21,33 +21,19 @@ export default class Http {
         this._baseUrl = value;
     }
 
-    get(address = '', headers = {}) {
-        return new Promise(function (resolve, reject) {
-            fetch(address, {
-                method: 'GET',
-                mode: 'cors',
-                headers: headers,
-                credentials: 'include'
-            }).then(response => {
-                return response.json();
-            }).then(json => {
-                resolve(json);
-            }).catch(err => {
-                reject({});
-                console.error(err || err.statusText);
-            });
-        });
-    }
+    request(address = '', headers = {}, type = 'GET', body = {}) {
+        let fetchObj = {
+            method: type,
+            mode: 'cors',
+            headers: headers,
+            credentials: 'include'
+        };
+        if (body) {
+            fetchObj.body = JSON.stringify(body);
+        }
 
-    post(address = '', headers = {}, body = {}) {
         return new Promise(function (resolve, reject) {
-            fetch(address, {
-                method: 'POST',
-                mode: 'cors',
-                headers: headers,
-                credentials: 'include',
-                body: JSON.stringify(body)
-            }).then(response => {
+            fetch(address, fetchObj).then(response => {
                 return response.json();
             }).then(json => {
                 resolve(json);

@@ -169,7 +169,7 @@ export default class SignUpForm {
         this.signupForm.fields.forEach(elem => {
             let result = elem.validate(prev);
             prev = elem;
-            if (check == true) {
+            if (check === true) {
                 check = result;
             }
         });

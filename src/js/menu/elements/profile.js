@@ -33,8 +33,6 @@ export default class Profile {
             new UserService().logOutUser().then(response => {
                 this._clearDiv();
                 new User().obj = {};
-            }, response => {
-
             }).catch(err => {
                 console.error(err);
             })

@@ -131,7 +131,6 @@ export default class LoginForm {
                     });
                     this.hideProgressBar();
                     console.error(e);
-
                 });
             }
         });
@@ -155,7 +154,7 @@ export default class LoginForm {
 
         this.loginForm.fields.forEach(elem => {
             let result = elem.validate();
-            if (check == true) {
+            if (check === true) {
                 check = result;
             }
         });

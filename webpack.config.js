@@ -31,6 +31,6 @@ module.exports = {
                     drop_console: false,
                     unsafe: true
                 }
-            })
+            }),
         ]
 };

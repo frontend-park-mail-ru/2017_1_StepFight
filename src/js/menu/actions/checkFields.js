@@ -7,7 +7,7 @@ export default class CheckFields {
     }
 
     static _checkLatin(value) {
-        return value.match(/[а-яА-ЯёЁ]+/) == null;
+        return value.match(/[а-яА-ЯёЁ]+/) === null;
     }
 
     static checkLogin(obj) {
@@ -31,7 +31,7 @@ export default class CheckFields {
             if (obj.help.textContent === '') {
                 obj.help.textContent = item.err_text;
             } else {
-                obj.help.textContent = obj.help.textContent + ', ' + item.err_text;
+                obj.help.textContent = `${obj.help.textContent},${item.err_text}`;
                 console.log(obj.help.textContent);
             }
         });
@@ -52,7 +52,7 @@ export default class CheckFields {
     }
 
     static checkEmpty(value) {
-        return value.length === 0;
+        return value.length == 0;
     }
 
 
@@ -91,15 +91,15 @@ export default class CheckFields {
             if (item.help.textContent === '') {
                 item.help.textContent = item.err_text;
             } else {
-                item.help.textContent = item.help.textContent + ', ' + item.err_text;
+                item.help.textContent = `${item.help.textContent}.${item.err_text}`;
             }
         });
 
-        if (arr.length === 0) {
+        if (arr.length == 0) {
             this.fieldSetOk(obj1.field);
             this.fieldSetOk(obj2.field);
         }
-        return arr.length === 0;
+        return arr.length == 0;
     }
 
     static helpSetText(elem, value) {

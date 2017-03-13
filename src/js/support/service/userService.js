@@ -10,86 +10,73 @@ export default class UserService {
 
     getUser() {
         const address = `${this.url}/user/get`;
-        const http = this.http;
-        return new Promise(function (resolve, reject) {
-            http.get(address, null).then(response => {
-                if (response.status == '200 OK') {
-                    resolve(response.user);
-                } else {
-                    console.log(response.status);
-                    reject(response);
-                }
+        return new Promise((resolve, reject) => {
+            this._createRequest(address, null, 'GET', null).then(response => {
+                resolve(response.user);
             }).catch(e => {
-                console.error(e.status);
-                reject({});
+                reject(e);
             });
         });
     }
 
     login(body) {
         const address = `${this.url}/user/login`;
-        const http = this.http;
-        return new Promise(function (resolve, reject) {
-            let headers = {'Content-Type': 'application/json'};
-            http.post(address, headers, body).then(response => {
-                if (response.status === '200 OK') {
-                    resolve(response.user);
-                } else {
-                    console.log(response.status);
-                    reject(response);
-                }
+        let headers = {'Content-Type': 'application/json'};
+        return new Promise((resolve, reject) => {
+            this._createRequest(address, headers, 'POST', body).then(response => {
+                resolve(response.user);
             }).catch(e => {
-                console.error(e.status);
-                reject({});
+                reject(e);
             });
         });
     }
 
     signup(body) {
         const address = `${this.url}/user/signup`;
-        const http = this.http;
-        return new Promise(function (resolve, reject) {
-            let headers = {'Content-Type': 'application/json'};
-            http.post(address, headers, body).then(response => {
-                if (response.status == '200 OK') {
-                    resolve({result: 'success'});
+        let headers = {'Content-Type': 'application/json'};
+        return new Promise((resolve, reject) => {
+            this._createRequest(address, headers, 'POST', body).then(response => {
+                resolve({result: 'success'});
+            }).catch(e => {
+                if(!e){
+                    reject({result: 'no-conn'});
                 } else {
                     reject({result: 'error'});
                 }
-            }).catch(e => {
-                console.error(e.status);
-                reject({result: 'no-conn'});
             });
         });
     }
 
     getLeaders() {
         const address = `${this.url}/user/leaders`;
-        const http = this.http;
-        return new Promise(function (resolve, reject) {
-            http.get(address, null).then(response => {
-                if (response.status == '200 OK') {
-                    resolve(response);
-                } else {
-                    console.error(response.status);
-                    reject(response);
-                }
+        return new Promise((resolve, reject) => {
+            this._createRequest(address, null, 'GET', null).then(response => {
+                resolve(response);
             }).catch(e => {
-                reject({});
-                console.error(e.status);
+                reject(e);
             });
         });
     }
 
     logOutUser() {
         const address = `${this.url}/user/logout`;
+        return new Promise((resolve, reject) => {
+            this._createRequest(address, null, 'GET', null).then(response => {
+                resolve(response);
+            }).catch(e => {
+                reject(e);
+            });
+        });
+    }
+
+    _createRequest(address, headers = {}, type = 'GET', body = {}) {
         const http = this.http;
         return new Promise(function (resolve, reject) {
-            http.get(address, null).then(response => {
-                if (response.status == '200 OK') {
+            http.request(address, headers, type, body).then(response => {
+                if (response.status === '200 OK') {
                     resolve(response);
                 } else {
-                    console.error(response.status);
+                    console.log(response.status);
                     reject(response);
                 }
             }).catch(e => {
