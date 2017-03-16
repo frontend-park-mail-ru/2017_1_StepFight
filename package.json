@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha ./dist/js/test.bundle.js",
     "start": "node server.js",
     "webpack": "webpack --config webpack.config.js -w"
   },
@@ -18,5 +18,9 @@
     "mocha": "^3.2.0",
     "webpack": "^2.2.1",
     "whatwg-fetch": "^2.0.3"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha-loader": "^1.1.1"
   }
 }

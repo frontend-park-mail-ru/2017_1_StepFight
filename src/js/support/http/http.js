@@ -1,14 +1,15 @@
 /**
  * Created by Denis on 05.03.2017.
  */
+
 export default class Http {
     constructor() {
         if (Http.instance) {
             return Http.instance;
         }
 
-        //this._baseUrl = 'http://localhost:8000/api';
-        this._baseUrl = 'https://tp-server-java.herokuapp.com/api';
+        this._baseUrl = 'http://localhost:8000/api';
+        //this._baseUrl = 'https://tp-server-java.herokuapp.com/api';
 
         Http.instance = this;
     }

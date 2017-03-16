@@ -12,3 +12,5 @@ new SignUpForm();
 new LeaderBoard().refreshLeaderBoard();
 new GetUser().get();
 new MenuAction();
+
+

@@ -60,7 +60,6 @@ export default class Input {
     }
 
     clear() {
-        console.log(this.el);
         CheckFields.helpSetText(this.help_el, '');
         CheckFields.fieldSetText(this.el, '');
         CheckFields.fieldRemoveOk(this.el);

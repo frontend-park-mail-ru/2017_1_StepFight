@@ -9,7 +9,7 @@ module.exports = {
     devtool: debug ? "inline-sourcemap" : null,
     entry: {
         app: ['whatwg-fetch', './src/js/main.js'],
-        test: ['whatwg-fetch', './test/test.js']
+        test: ['chai', 'whatwg-fetch', './test/test.js']
     },
     output: {
         path: "./dist/js",
