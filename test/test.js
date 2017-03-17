@@ -45,6 +45,33 @@ describe('User Service', function () {
             });
         });
     });
+    describe('Get User / Logout User', function () {
+        it('success get', function (done) {
+            new UserService().getUser().then(response => {
+                expect(response.login).to.be.not.empty;
+                done();
+            });
+        });
+        it('success logout', function (done) {
+            new UserService().logOutUser().then(response => {
+                response.status.should.equal('200 OK');
+                done();
+            });
+        });
+        it('error get', function (done) {
+            new UserService().getUser().catch(err=>{
+                done();
+            });
+        });
+    });
+    describe('Get Leaders', function () {
+        it('success get', function (done) {
+            new UserService().getLeaders().then(response => {
+                expect(response.leaders).to.be.array;
+                done();
+            });
+        });
+    });
 });
 mocha.checkLeaks();
 mocha.run();
