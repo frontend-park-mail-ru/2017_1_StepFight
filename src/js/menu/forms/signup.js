@@ -10,9 +10,8 @@ import IziToast from 'izitoast';
 
 export default class SignUpForm {
 
-    constructor() {
-        this.signupDiv = document.querySelector('#div-signup');
-        this.loginDiv = document.querySelector('#div-login');
+    constructor(node) {
+        this.node = node;
         this.render();
     }
 
@@ -89,8 +88,9 @@ export default class SignUpForm {
                     {
                         text: 'Log In',
                         attrs: {
-                            class: 'link',
-                            id: 'btn-to-login'
+                            class: 'link router',
+                            id: 'btn-to-login',
+                            href: '/login'
                         },
                         type: 'p'
                     }
@@ -98,7 +98,7 @@ export default class SignUpForm {
             }
         }).render();
         this.initListener();
-        this.signupDiv.appendChild(this.signupForm.el);
+        this.node.appendChild(this.signupForm.el);
 
         this.login = document.getElementById('r-login');
         this.password = document.getElementById('r-password');
@@ -118,13 +118,15 @@ export default class SignUpForm {
 
             if (this.checkFields()) {
                 let body = this.signupForm.getFormData();
-
                 this.showProgressBar();
 
                 new UserService().signup(body).then(response => {
                     this.clearFields();
                     this.hideProgressBar();
-                    this.openLogin();
+                    IziToast.success({
+                        title: 'Successfully registrated',
+                        position: 'topRight'
+                    });
                 }).catch(err => {
                     CheckFields.fieldRemoveOk(this.login);
                     CheckFields.fieldSetErr(this.login);
@@ -153,14 +155,7 @@ export default class SignUpForm {
         }, 500);
     }
 
-    openLogin() {
-        this.signupDiv.classList.add('hidden');
-        this.loginDiv.classList.remove('hidden');
-        IziToast.success({
-            title: 'Successfully registration',
-            position: 'topRight'
-        });
-    }
+
 
     checkFields() {
         let check = true;

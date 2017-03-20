@@ -2,12 +2,13 @@
     --list-text-color: white;
 
     --list-item-border-color: black;
-    --list-item-text-color: black;
+    --list-item-text-color: white;
 
     --list-badge-bg-color: black;
     --list-budge-text-color: white;
 
-    --list-item-child-bg-color: rgba(229, 229, 229, 0.56);
+    --list-item-child-bg-color1: rgba(137, 76, 255, 0.56);
+    --list-item-child-bg-color2: rgba(161, 200, 255, 0);
 }
 
 .list-group {
@@ -37,5 +38,8 @@
 }
 
 .list-group li:nth-child(2n-1) {
-    background-color: var(--list-item-child-bg-color);
+    background-color: var(--list-item-child-bg-color1);
+}
+.list-group li:nth-child(2n) {
+    background-color: var(--list-item-child-bg-color2);
 }

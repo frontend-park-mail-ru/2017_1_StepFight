@@ -4,13 +4,13 @@
 
 import CheckFields from '../actions/checkFields';
 import UserService from '../../support/service/userService';
-import Profile from '../elements/profile';
 import User from '../../game/user';
 import Form from '../elements/form';
 import ProgressBar from '../elements/progressBar';
+
 export default class LoginForm {
-    constructor() {
-        this.loginDiv = document.querySelector('#div-login');
+    constructor(node) {
+        this.node = node;
         this.render();
     }
 
@@ -71,8 +71,9 @@ export default class LoginForm {
                     {
                         text: 'Sign up',
                         attrs: {
-                            class: 'link',
-                            id: 'btn-to-signup'
+                            class: 'link router',
+                            id: 'btn-to-signup',
+                            href: '/signup'
                         },
                         type: 'p'
                     }
@@ -81,7 +82,7 @@ export default class LoginForm {
         }).render();
         this.initListener();
 
-        this.loginDiv.appendChild(this.loginForm.el);
+        this.node.appendChild(this.loginForm.el);
 
         this.login = document.getElementById('l-login');
         this.password = document.getElementById('l-password');
@@ -100,29 +101,23 @@ export default class LoginForm {
 
                 new UserService().login(body).then(user => {
                     this.clearFields();
-
-                    let modalDiv = document.getElementById('modal');
-                    let modalLoginDiv = document.getElementById('modal-login');
-                    modalDiv.classList.add('hidden');
-                    modalLoginDiv.classList.add('hidden');
-
-                    let profileDiv = document.getElementById('profile');
-                    let profile = new Profile({
-                        data: {
-                            login: user.login,
-                            rating: user.rating,
-                            button: {
-                                text: 'Log Out',
-                                attrs: {
-                                    class: 'link',
-                                    id: 'btn-logout'
-                                },
-                                type: 'h3'
-                            },
-                            div: profileDiv
-                        }
-                    });
                     new User().obj = user;
+                    // let profileDiv = document.getElementById('profile');
+                    // let profile = new Profile({
+                    //     data: {
+                    //         login: user.login,
+                    //         rating: user.rating,
+                    //         button: {
+                    //             text: 'Log Out',
+                    //             attrs: {
+                    //                 class: 'link',
+                    //                 id: 'btn-logout'
+                    //             },
+                    //             type: 'h3'
+                    //         },
+                    //         div: profileDiv
+                    //     }
+                    // });
                     this.hideProgressBar();
                 }).catch(e => {
                     this.loginForm.fields.forEach(elem => {

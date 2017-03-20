@@ -6,20 +6,20 @@
     text-align: center;
 }
 
-.padding-25{
+.padding-25 {
     padding: 0 25% 0 25%;
 }
 
 @media (max-width: 767px) {
-    .padding-25{
+    .padding-25 {
         padding: 0;
     }
 
-    #btn-play{
+    #btn-play {
         order: -1;
     }
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }

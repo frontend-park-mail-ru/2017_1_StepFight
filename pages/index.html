@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../src/css/menu/main.css"/>
     <link rel="stylesheet" href="../src/css/menu/elements/btn.css"/>
     <link rel="stylesheet" href="../src/css/menu/elements/input.css"/>
+    <link rel="stylesheet" href="../src/css/menu/elements/view.css"/>
     <link rel="stylesheet" href="../src/css/menu/elements/link.css"/>
     <link rel="stylesheet" href="../src/css/menu/elements/list.css"/>
     <link rel="stylesheet" href="../src/css/menu/elements/modal.css"/>
@@ -25,47 +26,31 @@
 </head>
 <body>
 
-<div id="profile" class="fcontainer-row user-profile"></div>
-
 <div>
     <div class="fcontainer-row">
-        <h1 class="title-name">Step Fight</h1>
+        <a href="/" class="href__title-name router"><h1>Step Fight</h1></a>
     </div>
-    <div class="fcontainer-row">
-        <div id="btn-leaderboard" class="btn-play">
-            <h1>LEADER BOARD</h1>
-        </div>
-        <div id="btn-play" class="btn-play">
-            <h1>PLAY</h1>
-        </div>
-        <div id="btn-about" class="btn-play">
-            <h1>ABOUT</h1>
-        </div>
+    <div class="fcontainer-row hidden" id="menu-view">
+
+    </div>
+    <div class="hidden view" id="login-view">
+
+    </div>
+    <div class="hidden view" id="signup-view">
+
+    </div>
+    <div id="leaderboard-view" class="hidden view">
+
+    </div>
+    <div id="about-view" class="hidden view">
+
+    </div>
+    <div id="profile-view" class="hidden view">
+
     </div>
 </div>
+<div id="game-view" class="hidden">
 
-
-<div id="modal" class="modal hidden">
-    <div id="modal-content" class="modal-content">
-        <span id="modal-close" class="close">&times;</span>
-        <div id="modal-login" class="hidden">
-            <div id="div-login" class=""></div>
-            <div id="div-signup" class="hidden"></div>
-        </div>
-        <div id="modal-leaderboard" class="hidden">
-            <div class="">
-                <div class="fcontainer-column" id="leaderboard-container">
-
-                </div>
-            </div>
-        </div>
-        <div id="modal-about" class="hidden">
-            <h2 class="text-center">About game</h2>
-        </div>
-        <div id="modal-game" class="hidden">
-            <h2 class="text-center">Play will be soon!</h2>
-        </div>
-    </div>
 </div>
 </body>
 </html>

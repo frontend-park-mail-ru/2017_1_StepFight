@@ -1,7 +1,7 @@
 :root{
-    --link-text-color: rgba(97, 97, 97, 0.91);
+    --link-text-color: rgba(243, 243, 243, 0.91);
 
-    --link-text-color-focus: black;
+    --link-text-color-focus: #894cff;
 }
 
 .link {

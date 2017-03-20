@@ -10,7 +10,7 @@ body {
     background-size: 100%;
     background: var(--bg-color) /*url("../../img/menu/menubg.jpg")*/;
     margin: 0;
-    box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.15) inset;
+    /*box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.15) inset;*/
     height: 100%;
 }
 
@@ -26,9 +26,4 @@ body {
     justify-content: space-around;
     flex-direction: column;
     flex-wrap: wrap;
-}
-
-.user-profile {
-    background-color: white;
-    margin: 0 auto;
 }

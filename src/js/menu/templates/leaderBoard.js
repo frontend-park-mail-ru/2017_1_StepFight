@@ -5,8 +5,8 @@
 import UserService from '../../support/service/userService';
 import ProgressBar from '../elements/progressBar';
 export default class LeaderBoard {
-    constructor() {
-
+    constructor(node) {
+        this.node = node;
     }
 
     render(data) {
@@ -27,14 +27,12 @@ export default class LeaderBoard {
     }
 
     refreshLeaderBoard() {
-        let leaderBoardContainer = document.getElementById('leaderboard-container');
-        this.setProgressBar(leaderBoardContainer);
+        this.setProgressBar(this.node);
 
         new UserService().getLeaders().then(response => {
-            let leaderBoardContainer = document.getElementById('leaderboard-container');
             let arr = response.leaders;
             setTimeout(() => {
-                leaderBoardContainer.innerHTML = this.render({
+                this.node.innerHTML = this.render({
                     titles: {
                         title: 'Top players:',
                     },
@@ -49,7 +47,7 @@ export default class LeaderBoard {
             }, 500);
         }).catch(err => {
             console.error(err);
-            leaderBoardContainer.innerHTML = this.render({
+            this.node.innerHTML = this.render({
                 titles: {
                     title: 'No connection',
                 },

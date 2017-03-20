@@ -1,9 +1,13 @@
-:root{
+:root {
     --text-color-light: white;
     --text-color-dark: black;
 }
 
-.title-name{
+.href__title-name {
+    text-decoration: none;
+}
+
+.href__title-name h1 {
     text-align: center;
     font-family: 'Orbitron', sans-serif;
     text-transform: uppercase;
@@ -14,24 +18,24 @@
     margin-bottom: 20px;
 }
 
-h2{
+h2 {
     font-family: 'Orbitron', sans-serif;
     text-transform: uppercase;
     font-weight: 700;
-    color: var(--text-color-dark);
+    color: var(--text-color-light);
 }
 
-h4, h3, h2{
+h4, h3, h2 {
     font-family: 'Orbitron', sans-serif;
-    color: var(--text-color-dark);
+    color: var(--text-color-light);
 }
 
-.text{
+.text {
     font-family: 'Cabin', sans-serif;
     color: var(--text-color-light);
 }
 
-.p__error{
+.p__error {
     font-family: 'Cabin', sans-serif;
     margin: 0;
     text-align: left;

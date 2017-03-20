@@ -1,4 +1,7 @@
 .game-body{
     margin: 0;
+    width: 100%;
+    height: 500px;
+    background-color: #32d3ac;
     overflow: hidden;
 }

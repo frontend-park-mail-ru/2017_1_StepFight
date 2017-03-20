@@ -1,0 +1,17 @@
+.view {
+    left: 50%;
+    right: 50%;
+    width: 478px;
+    margin: auto auto;
+    text-align: center;
+}
+
+@media (max-width: 540px) {
+    .view {
+        width: auto;
+        margin-left: 15px;
+        margin-right: 15px;
+        left: 15px;
+        right: 15px;
+    }
+}
