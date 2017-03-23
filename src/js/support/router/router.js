@@ -82,7 +82,7 @@ export default class Router {
         let timeOut = 0;
         if (this.currView) {
             new Animation().hide(this.currView.node);
-            timeOut = 700;
+            timeOut = 599;
         }
 
         setTimeout(() => {
