@@ -11,13 +11,13 @@
 
 .btn-play {
     text-decoration: none;
-    width: 180px;
-    height: 180px;
+    width: 150px;
+    height: 150px;
     border: 2px solid var(--btn-border-color);
     padding: 10px;
     border-radius: 2000px;
     text-align: center;
-    margin: auto auto;
+    margin: 5px auto;
     font-family: 'Orbitron', sans-serif;
     color: var(--btn-text-color);
     display: table;
@@ -33,7 +33,7 @@
 }
 
 .btn-play h1 {
-    font-size: 30px;
+    font-size: 26px;
     display: table-cell;
     vertical-align: middle;
 }

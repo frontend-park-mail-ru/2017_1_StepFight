@@ -6,6 +6,7 @@ export default class Button {
         this.text = options.text;
         this.attrs = options.attrs || [];
         this.el = document.createElement(options.type);
+        this._render();
     }
 
     _setAttrs(attrs) {
@@ -14,10 +15,13 @@ export default class Button {
         })
     }
 
-    render() {
+    getElem(){
+        return this;
+    }
+
+    _render() {
         this.el.innerHTML = this.text;
         this._setAttrs(this.attrs);
-        return this;
     }
 
     toString() {

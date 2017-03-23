@@ -10,6 +10,7 @@ export default class Input {
         this.help_attrs = options.help_attrs || [];
         this.el = document.createElement('input');
         this.help_el = document.createElement('p');
+        this._render();
     }
 
     _setAttrs(attrs, elem) {
@@ -18,10 +19,12 @@ export default class Input {
         })
     }
 
-    render() {
+    _render() {
         this._setAttrs(this.attrs, this.el);
         this._setAttrs(this.help_attrs, this.help_el);
+    }
 
+    getElem(){
         return this;
     }
 
@@ -42,7 +45,7 @@ export default class Input {
             const valid = this.el.getAttribute('valid');
             if (valid === 'login') {
                 let result = CheckFields.checkLogin({field: this.el, help: this.help_el});
-                if (check == true) {
+                if (check === true) {
                     check = result;
                 }
             } else if (valid === 'password') {

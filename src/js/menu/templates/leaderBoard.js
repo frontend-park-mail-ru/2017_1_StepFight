@@ -9,7 +9,7 @@ export default class LeaderBoard {
         this.node = node;
     }
 
-    render(data) {
+    _render(data) {
         let leaderBoardSource = `
                         {{#with titles}}
                             <h2>{{title}}</h2>
@@ -27,12 +27,12 @@ export default class LeaderBoard {
     }
 
     refreshLeaderBoard() {
-        this.setProgressBar(this.node);
+        this._setProgressBar(this.node);
 
         new UserService().getLeaders().then(response => {
             let arr = response.leaders;
             setTimeout(() => {
-                this.node.innerHTML = this.render({
+                this.node.innerHTML = this._render({
                     titles: {
                         title: 'Top players:',
                     },
@@ -43,11 +43,11 @@ export default class LeaderBoard {
                         id: 'refresh-lb'
                     }
                 });
-                this.initRefreshListener();
+                this._initRefreshListener();
             }, 500);
         }).catch(err => {
             console.error(err);
-            this.node.innerHTML = this.render({
+            this.node.innerHTML = this._render({
                 titles: {
                     title: 'No connection',
                 },
@@ -58,11 +58,11 @@ export default class LeaderBoard {
                     id: 'refresh-lb'
                 }
             });
-            this.initRefreshListener();
+            this._initRefreshListener();
         });
     }
 
-    initRefreshListener() {
+    _initRefreshListener() {
         let refresh = document.getElementById('refresh-lb');
         if (refresh) {
             refresh.addEventListener('click', () => {
@@ -71,15 +71,15 @@ export default class LeaderBoard {
         }
     }
 
-    clearContainer(container) {
+    _clearContainer(container) {
         while (container.children.length > 1) {
             container.removeChild(container.lastChild);
         }
     }
 
-    setProgressBar(container) {
-        this.clearContainer(container);
-        container.appendChild(new ProgressBar().render());
+    _setProgressBar(container) {
+        this._clearContainer(container);
+        container.appendChild(new ProgressBar().getElem());
     }
 }
 

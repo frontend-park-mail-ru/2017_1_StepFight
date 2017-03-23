@@ -7,7 +7,7 @@ export default class ProgressBar {
         this.el = document.createElement('div');
     }
 
-    render() {
+    getElem() {
         this.el.setAttribute('class', 'loader');
         return this.el;
     }
