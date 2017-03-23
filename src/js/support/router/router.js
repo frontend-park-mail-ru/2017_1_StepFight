@@ -137,6 +137,8 @@ export default class Router {
 
     _onRouteChange(event) {
 
+        console.log(event.target);
+
         if (event.target instanceof HTMLAnchorElement) {
             event.preventDefault();
             this._setCurrView(event.target.getAttribute('href'));

@@ -94,7 +94,7 @@ export default class SignUpView extends BaseView{
                             id: 'btn-to-login',
                             href: '/login'
                         },
-                        type: 'p'
+                        type: 'a'
                     }
                 ]
             }
