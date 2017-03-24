@@ -42,7 +42,6 @@ export default class Router {
     }
 
     _setCurrView(path, isToHistory) {
-        console.log(isToHistory);
         if (isToHistory !== false) {
             history.pushState({opa: 'opa'}, 'title1', path);
         }
@@ -90,8 +89,8 @@ export default class Router {
         this.currView = this._getViewByRoute(path);
 
         if (!this.currView) {
-            path = this.urls.MAIN;
-            this.currView = this._getViewByRoute(path);
+            /*path = this.urls.MAIN;
+            this.currView = this._getViewByRoute(path);*/
             return;
         }
 
