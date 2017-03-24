@@ -6,6 +6,7 @@ import ProgressBar from "../../menu/elements/progressBar";
 import Form from "../../menu/elements/form";
 import UserService from "../../support/service/userService";
 import User from "../../game/user";
+import RouterUrls from "../../support/router/routerUrls";
 
 export default class LoginView extends BaseView {
     constructor(node, router) {
@@ -14,6 +15,7 @@ export default class LoginView extends BaseView {
         this._showViewProgressBar();
         this._render();
         this.router = router;
+        this.urls = new RouterUrls();
     }
 
     _render() {
@@ -75,7 +77,7 @@ export default class LoginView extends BaseView {
                         attrs: {
                             class: 'link router',
                             id: 'btn-to-signup',
-                            href: '/signup'
+                            href: this.urls.SIGNUP
                         },
                         type: 'a'
                     }
@@ -131,7 +133,7 @@ export default class LoginView extends BaseView {
                 new UserService().login(body).then(user => {
                     this._clearFields();
                     new User().obj = user;
-                    this.router._setCurrView('/profile');
+                    this.router._setCurrView(this.urls.PROFILE);
 
                     this._hideProgressBar();
                 }).catch(e => {

@@ -7,6 +7,7 @@ import ProgressBar from "../../menu/elements/progressBar";
 import CheckFields from "../../menu/actions/checkFields";
 import IziToast from 'izitoast';
 import UserService from "../../support/service/userService";
+import RouterUrls from "../../support/router/routerUrls";
 
 export default class SignUpView extends BaseView{
     constructor(node, router){
@@ -15,6 +16,7 @@ export default class SignUpView extends BaseView{
         this._showViewProgressBar();
         this._render();
         this.router = router;
+        this.urls = new RouterUrls();
     }
 
     _render() {
@@ -92,7 +94,7 @@ export default class SignUpView extends BaseView{
                         attrs: {
                             class: 'link router',
                             id: 'btn-to-login',
-                            href: '/login'
+                            href: this.urls.LOGIN
                         },
                         type: 'a'
                     }
@@ -156,7 +158,7 @@ export default class SignUpView extends BaseView{
                         title: 'Successfully registrated',
                         position: 'topRight'
                     });
-                    this.router._setCurrView('/login');
+                    this.router._setCurrView(this.urls.LOGIN);
                 }).catch(err => {
                     CheckFields.fieldRemoveOk(this.login);
                     CheckFields.fieldSetErr(this.login);

@@ -11,6 +11,7 @@ import User from "../../game/user";
 import UserService from "../service/userService";
 import GameView from "../../views/game/gameView";
 import Animation from "../anim/animation";
+import RouterUrls from "./routerUrls";
 
 
 export default class Router {
@@ -25,16 +26,17 @@ export default class Router {
         this.routes = {};
         this.currView = null;
         this.init();
+        this.urls = new RouterUrls();
     }
 
     init() {
-        this._register('/', new MenuView(document.getElementById('menu-view')));
-        this._register('/game', new GameView(document.getElementById('game-view')));
-        this._register('/login', new LoginView(document.getElementById('login-view'), this));
-        this._register('/signup', new SignUpView(document.getElementById('signup-view'), this));
-        this._register('/leaderboard', new LeaderBoardView(document.getElementById('leaderboard-view')));
-        this._register('/about', new AboutView(document.getElementById('about-view')));
-        this._register('/profile', new ProfileView(document.getElementById('profile-view'), this));
+        this._register(this.urls.MAIN, new MenuView(document.getElementById('menu-view')));
+        this._register(this.urls.GAME, new GameView(document.getElementById('game-view')));
+        this._register(this.urls.LOGIN, new LoginView(document.getElementById('login-view'), this));
+        this._register(this.urls.SIGNUP, new SignUpView(document.getElementById('signup-view'), this));
+        this._register(this.urls.LEADERBOARD, new LeaderBoardView(document.getElementById('leaderboard-view')));
+        this._register(this.urls.ABOUT, new AboutView(document.getElementById('about-view')));
+        this._register(this.urls.PROFILE, new ProfileView(document.getElementById('profile-view'), this));
         this._setCurrView(document.location.pathname);
         this._start();
     }
@@ -44,21 +46,21 @@ export default class Router {
     }
 
     _checkUser(path) {
-        if (path === '/login' || path === '/signup') {
+        if (path === this.urls.LOGIN || path === this.urls.SIGNUP) {
             this._getUser().then(user => {
                 new User().obj = user;
-                this._go('/profile');
+                this._go(this.urls.PROFILE);
             }).catch(err => {
                 this._go(path);
             });
-        } else if (path === '/profile') {
+        } else if (path === this.urls.PROFILE) {
             this._getUser().then(user => {
                 new User().obj = user;
                 this._go(path);
             }).catch(err => {
-                this._go('/login');
+                this._go(this.urls.LOGIN);
             });
-        } else /*if (path === '/' || path === '/leaderboard' || path === '/about')*/ {
+        } else {
             this._go(path);
         }
     }
@@ -92,16 +94,17 @@ export default class Router {
             this.currView = this._getViewByRoute(path);
 
             if (!this.currView) {
-                path = '/';
+                path = this.urls.MAIN;
                 this.currView = this._getViewByRoute(path);
                 return;
             }
 
-            if (path === '/profile') {
+            if (path === this.urls.PROFILE) {
                 this.currView.refresh();
             }
 
             history.pushState({opa: 'opa'}, 'title1', path);
+
             new Animation().show(this.currView.node);
             this.currView.toggleView();
         }, timeOut);
@@ -124,21 +127,10 @@ export default class Router {
      * Запустить процес маршрутизации
      */
     _start() {
-        /*let self = this;
-         document.querySelectorAll('.router').forEach(elem => {
-         elem.addEventListener('click', function () {
-         event.preventDefault();
-         console.log(this.getAttribute('href'));
-         self._setCurrView(this.getAttribute('href'));
-         });
-         });*/
         this.node.addEventListener('click', event => this._onRouteChange(event));
     }
 
     _onRouteChange(event) {
-
-        console.log(event.target);
-
         if (event.target instanceof HTMLAnchorElement) {
             event.preventDefault();
             this._setCurrView(event.target.getAttribute('href'));
@@ -146,12 +138,5 @@ export default class Router {
             event.preventDefault();
             this._setCurrView(event.target.parentElement.getAttribute('href'));
         }
-
-        // this._setCurrView(event.target.getAttribute('href'));
-
-        /* if (this._setCurrView(event.target.getAttribute('href'))) {
-         event.preventDefault();
-         }*/
-
     }
 }

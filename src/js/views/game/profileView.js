@@ -6,12 +6,14 @@ import UserService from '../../support/service/userService';
 import User from '../../game/user';
 import ProgressBar from "../../menu/elements/progressBar";
 import Diamond from "../../menu/elements/diamond";
+import RouterUrls from "../../support/router/routerUrls";
 
 export default class ProfileView extends BaseView {
     constructor(node, router) {
         super(node);
         this.router = router;
         this.node = node;
+        this.urls = new RouterUrls();
         //this.refreshProfile();
         this._showViewProgressBar();
         this._render();
@@ -52,7 +54,7 @@ export default class ProfileView extends BaseView {
     _initListener() {
         document.getElementById('btn-logout').addEventListener('click', event => {
             new UserService().logOutUser().then(response => {
-                this.router._setCurrView('/login');
+                this.router._setCurrView(this.urls.LOGIN);
             }).catch(err => {
 
             });
@@ -89,7 +91,7 @@ export default class ProfileView extends BaseView {
         controllersDiv.setAttribute('class', 'fcontainer-row');
 
         let hrefPlay = document.createElement('a');
-        hrefPlay.setAttribute('href', '/game');
+        hrefPlay.setAttribute('href', this.urls.GAME);
         hrefPlay.setAttribute('class', 'router btn-play');
         let h1 = document.createElement('h1');
         h1.innerHTML = 'Start game';
