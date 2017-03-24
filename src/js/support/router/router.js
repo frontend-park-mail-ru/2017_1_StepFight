@@ -25,8 +25,8 @@ export default class Router {
         this.node = node;
         this.routes = {};
         this.currView = null;
-        this.init();
         this.urls = new RouterUrls();
+        this.init();
     }
 
     init() {
@@ -41,7 +41,11 @@ export default class Router {
         this._start();
     }
 
-    _setCurrView(path) {
+    _setCurrView(path, isToHistory) {
+        console.log(isToHistory);
+        if (isToHistory !== false) {
+            history.pushState({opa: 'opa'}, 'title1', path);
+        }
         this._checkUser(path);
     }
 
@@ -80,34 +84,22 @@ export default class Router {
      * @param {string} path
      */
     _go(path) {
-
-        let timeOut = 0;
         if (this.currView) {
-            new Animation().hide(this.currView.node);
-            timeOut = 599;
+            this.currView.toggleView();
+        }
+        this.currView = this._getViewByRoute(path);
+
+        if (!this.currView) {
+            path = this.urls.MAIN;
+            this.currView = this._getViewByRoute(path);
+            return;
         }
 
-        setTimeout(() => {
-            if (this.currView) {
-                this.currView.toggleView();
-            }
-            this.currView = this._getViewByRoute(path);
+        if (path === this.urls.PROFILE) {
+            this.currView.refresh();
+        }
 
-            if (!this.currView) {
-                path = this.urls.MAIN;
-                this.currView = this._getViewByRoute(path);
-                return;
-            }
-
-            if (path === this.urls.PROFILE) {
-                this.currView.refresh();
-            }
-
-            history.pushState({opa: 'opa'}, 'title1', path);
-
-            new Animation().show(this.currView.node);
-            this.currView.toggleView();
-        }, timeOut);
+        this.currView.toggleView();
     }
 
     /**

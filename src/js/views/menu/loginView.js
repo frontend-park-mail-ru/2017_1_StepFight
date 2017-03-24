@@ -12,10 +12,10 @@ export default class LoginView extends BaseView {
     constructor(node, router) {
         super(node);
         this.node = node;
-        this._showViewProgressBar();
-        this._render();
         this.router = router;
         this.urls = new RouterUrls();
+        this._showViewProgressBar();
+        this._render();
     }
 
     _render() {

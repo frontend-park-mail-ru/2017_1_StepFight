@@ -6,7 +6,7 @@ import Router from './support/router/router';
 let router = new Router(window.document.documentElement);
 
 window.onpopstate = function (event) {
-    router._setCurrView(document.location.pathname);
+    router._setCurrView(document.location.pathname, false);
 };
 
 
