@@ -1,20 +1,24 @@
 /**
- * Created by Denis on 02.03.2017.
+ * Created by Denis on 19.03.2017.
  */
+import BaseView from '../baseView';
+import ProgressBar from "../../menu/elements/progressBar";
+import Form from "../../menu/elements/form";
+import UserService from "../../support/service/userService";
+import User from "../../game/user";
+import RouterUrls from "../../support/router/routerUrls";
 
-import CheckFields from '../actions/checkFields';
-import UserService from '../../support/service/userService';
-import Profile from '../elements/profile';
-import User from '../../game/user';
-import Form from '../elements/form';
-import ProgressBar from '../elements/progressBar';
-export default class LoginForm {
-    constructor() {
-        this.loginDiv = document.querySelector('#div-login');
-        this.render();
+export default class LoginView extends BaseView {
+    constructor(node, router) {
+        super(node);
+        this.node = node;
+        this.router = router;
+        this.urls = new RouterUrls();
+        this._showViewProgressBar();
+        this._render();
     }
 
-    render() {
+    _render() {
         this.loginForm = new Form({
             data: {
                 title: {
@@ -71,85 +75,89 @@ export default class LoginForm {
                     {
                         text: 'Sign up',
                         attrs: {
-                            class: 'link',
-                            id: 'btn-to-signup'
+                            class: 'link router',
+                            id: 'btn-to-signup',
+                            href: this.urls.SIGNUP
                         },
-                        type: 'p'
+                        type: 'a'
                     }
                 ]
             }
-        }).render();
-        this.initListener();
+        }).getElem();
 
-        this.loginDiv.appendChild(this.loginForm.el);
+        setTimeout(() => {
+            this._hideViewProgressBar();
+            this.node.appendChild(this.loginForm.el);
 
-        this.login = document.getElementById('l-login');
-        this.password = document.getElementById('l-password');
-        this.loginHelp = document.getElementById('l-login-help');
-        this.btnLogin = document.getElementById('btn-login');
+            this.login = document.getElementById('l-login');
+            this.password = document.getElementById('l-password');
+            this.loginHelp = document.getElementById('l-login-help');
+            this.btnLogin = document.getElementById('btn-login');
+            this.btnToSignUp = document.getElementById('btn-to-signup');
+
+            this._initListener();
+        }, 500);
     }
 
-    initListener() {
-        //Submit form
-        this.loginForm.el.addEventListener('submit', event => {
-            event.preventDefault();
-            if (this.checkFields()) {
-                let body = this.loginForm.getFormData();
-
-                this.showProgressBar();
-
-                new UserService().login(body).then(user => {
-                    this.clearFields();
-
-                    let modalDiv = document.getElementById('modal');
-                    let modalLoginDiv = document.getElementById('modal-login');
-                    modalDiv.classList.add('hidden');
-                    modalLoginDiv.classList.add('hidden');
-
-                    let profileDiv = document.getElementById('profile');
-                    let profile = new Profile({
-                        data: {
-                            login: user.login,
-                            rating: user.rating,
-                            button: {
-                                text: 'Log Out',
-                                attrs: {
-                                    class: 'link',
-                                    id: 'btn-logout'
-                                },
-                                type: 'h3'
-                            },
-                            div: profileDiv
-                        }
-                    });
-                    new User().obj = user;
-                    this.hideProgressBar();
-                }).catch(e => {
-                    this.loginForm.fields.forEach(elem => {
-                        elem.setError();
-                        elem.setError('wrong data');
-                    });
-                    this.hideProgressBar();
-                    console.error(e);
-                });
-            }
-        });
+    _showViewProgressBar() {
+        let progressBar = new ProgressBar().getElem();
+        this.node.appendChild(progressBar);
     }
 
-    showProgressBar() {
+    _hideViewProgressBar() {
+        this.node.removeChild(this.node.lastChild);
+    }
+
+    _showProgressBar() {
         this.btnLogin.hidden = true;
-        let progressBar = new ProgressBar().render();
+        let progressBar = new ProgressBar().getElem();
         this.btnLogin.parentNode.insertBefore(progressBar, this.btnLogin.nextSibling);
     }
 
-    hideProgressBar() {
+    _hideProgressBar() {
         setTimeout(() => {
             this.btnLogin.hidden = false;
             this.btnLogin.parentNode.removeChild(this.btnLogin.nextElementSibling);
         }, 500);
     }
 
-    checkFields() {
+    _initListener() {
+        //Submit form
+        this.loginForm.el.addEventListener('submit', event => {
+            event.preventDefault();
+            if (this._checkFields()) {
+                let body = this.loginForm.getFormData();
+
+                this._showProgressBar();
+
+                new UserService().login(body).then(user => {
+                    this._clearFields();
+                    new User().obj = user;
+                    this.router._setCurrView(this.urls.PROFILE);
+
+                    this._hideProgressBar();
+                }).catch(e => {
+                    this.loginForm.fields.forEach(elem => {
+                        elem.setError();
+                        elem.setError('wrong data');
+                    });
+                    this._hideProgressBar();
+                    console.error(e);
+                });
+            }
+        });
+        this.btnToSignUp.addEventListener('click', event=>{
+            this._clearFields();
+        })
+    }
+
+    _clearFields() {
+        this.loginForm.fields.forEach(elem => {
+            elem.clear();
+        });
+    }
+
+    _checkFields() {
         let check = true;
 
         this.loginForm.fields.forEach(elem => {
@@ -160,11 +168,5 @@ export default class LoginForm {
         });
 
         return check;
-    }
-
-    clearFields() {
-        this.loginForm.fields.forEach(elem => {
-            elem.clear();
-        });
     }
 }

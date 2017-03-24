@@ -2,21 +2,22 @@
     --btn-border-color: white;
     --btn-border-color2: black;
     --btn-text-color: white;
-    --btn-bg-color: rgba(229, 229, 229, 0.2);
+    --btn-bg-color: rgba(131, 73, 246, 0.86);
 
     --btn-border-color-focus: white;
-    --btn-text-color-focus: black;
-    --btn-bg-color-focus: rgba(229, 229, 229, 0.9);
+    --btn-text-color-focus: #191919;
+    --btn-bg-color-focus: rgb(255, 255, 255);
 }
 
 .btn-play {
-    margin: 15px auto;
-    width: 180px;
-    height: 180px;
+    text-decoration: none;
+    width: 150px;
+    height: 150px;
     border: 2px solid var(--btn-border-color);
     padding: 10px;
     border-radius: 2000px;
     text-align: center;
+    margin: 5px auto;
     font-family: 'Orbitron', sans-serif;
     color: var(--btn-text-color);
     display: table;
@@ -32,7 +33,7 @@
 }
 
 .btn-play h1 {
-    font-size: 30px;
+    font-size: 26px;
     display: table-cell;
     vertical-align: middle;
 }
@@ -44,7 +45,7 @@
 .btn {
     margin-top: 5px;
     padding: 5px;
-    color: var(--btn-text-color-focus);
+    color: var(--btn-text-color);
     background-color: var(--btn-bg-color);
     border: 1px solid var(--btn-border-color2);
     border-radius: 2px;

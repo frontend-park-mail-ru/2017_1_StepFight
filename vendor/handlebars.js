@@ -379,7 +379,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      _utils.extend(this.partials, name);
 	    } else {
 	      if (typeof partial === 'undefined') {
-	        throw new _exception2['default']('Attempting to register a partial called "' + name + '" as undefined');
+	        throw new _exception2['default']('Attempting to _register a partial called "' + name + '" as undefined');
 	      }
 	      this.partials[name] = partial;
 	    }
@@ -860,7 +860,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      conditional = conditional.call(this);
 	    }
 
-	    // Default behavior is to render the positive path if the value is truthy and not empty.
+	    // Default behavior is to _render the positive path if the value is truthy and not empty.
 	    // The `includeZero` option may be set to treat the condtional as purely not empty based on the
 	    // behavior of isEmpty. Effectively this determines if 0 is handled by the positive path or negative.
 	    if (!options.hash.includeZero && !conditional || _utils.isEmpty(conditional)) {
@@ -2860,7 +2860,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function Compiler() {}
 
-	// the foundHelper register will disambiguate helper lookup from finding a
+	// the foundHelper _register will disambiguate helper lookup from finding a
 	// function in a context. This is necessary for mustache compatibility, which
 	// requires that context functions in blocks are evaluated by blockHelperMissing,
 	// and then proceed as if the resulting value was provided to blockHelperMissing.
@@ -4448,7 +4448,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      options.inverse = inverse || 'container.noop';
 	    }
 
-	    // The parameters go on to the stack in order (making sure that they are evaluated in order)
+	    // The parameters _go on to the stack in order (making sure that they are evaluated in order)
 	    // so we need to pop them off the stack in reverse order
 	    var i = paramSize;
 	    while (i--) {

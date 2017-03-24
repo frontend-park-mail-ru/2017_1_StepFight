@@ -1,22 +1,25 @@
 /**
- * Created by Denis on 02.03.2017.
+ * Created by Denis on 19.03.2017.
  */
-
-import Form from '../elements/form';
-import CheckFields from '../actions/checkFields';
-import UserService from '../../support/service/userService';
-import ProgressBar from '../elements/progressBar';
+import BaseView from '../baseView';
+import Form from "../../menu/elements/form";
+import ProgressBar from "../../menu/elements/progressBar";
+import CheckFields from "../../menu/actions/checkFields";
 import IziToast from 'izitoast';
+import UserService from "../../support/service/userService";
+import RouterUrls from "../../support/router/routerUrls";
 
-export default class SignUpForm {
-
-    constructor() {
-        this.signupDiv = document.querySelector('#div-signup');
-        this.loginDiv = document.querySelector('#div-login');
-        this.render();
+export default class SignUpView extends BaseView{
+    constructor(node, router){
+        super(node);
+        this.node = node;
+        this.router = router;
+        this.urls = new RouterUrls();
+        this._showViewProgressBar();
+        this._render();
     }
 
-    render() {
+    _render() {
         this.signupForm = new Form({
             data: {
                 title: {
@@ -89,42 +92,73 @@ export default class SignUpForm {
                     {
                         text: 'Log In',
                         attrs: {
-                            class: 'link',
-                            id: 'btn-to-login'
+                            class: 'link router',
+                            id: 'btn-to-login',
+                            href: this.urls.LOGIN
                         },
-                        type: 'p'
+                        type: 'a'
                     }
                 ]
             }
-        }).render();
-        this.initListener();
-        this.signupDiv.appendChild(this.signupForm.el);
+        }).getElem();
+        setTimeout(()=>{
+            this._hideViewProgressBar();
+            this.node.appendChild(this.signupForm.el);
 
-        this.login = document.getElementById('r-login');
-        this.password = document.getElementById('r-password');
-        this.repeatPassword = document.getElementById('r-repeatpassword');
+            this.login = document.getElementById('r-login');
+            this.password = document.getElementById('r-password');
+            this.repeatPassword = document.getElementById('r-repeatpassword');
 
-        this.loginHelp = document.getElementById('r-login-help');
-        this.passwordHelp = document.getElementById('r-password-help');
-        this.repeatPasswordHelp = document.getElementById('r-repeatpassword-help');
+            this.loginHelp = document.getElementById('r-login-help');
+            this.passwordHelp = document.getElementById('r-password-help');
+            this.repeatPasswordHelp = document.getElementById('r-repeatpassword-help');
 
-        this.btnSignUp = document.getElementById('btn-signup');
+            this.btnSignUp = document.getElementById('btn-signup');
+
+            this.btnToLogin = document.getElementById('btn-to-login');
+            this._initListener();
+        }, 500);
     }
 
-    initListener() {
+    _showViewProgressBar() {
+        let progressBar = new ProgressBar().getElem();
+        this.node.appendChild(progressBar);
+    }
+
+    _hideViewProgressBar() {
+        this.node.removeChild(this.node.lastChild);
+    }
+
+    _showProgressBar() {
+        this.btnSignUp.hidden = true;
+        let progressBar = new ProgressBar().getElem();
+        this.btnSignUp.parentNode.insertBefore(progressBar, this.btnSignUp.nextSibling);
+    }
+
+    _hideProgressBar() {
+        setTimeout(() => {
+            this.btnSignUp.hidden = false;
+            this.btnSignUp.parentNode.removeChild(this.btnSignUp.nextElementSibling);
+        }, 500);
+    }
+
+    _initListener() {
         //Submit form
         this.signupForm.el.addEventListener('submit', event => {
             event.preventDefault();
 
-            if (this.checkFields()) {
+            if (this._checkFields()) {
                 let body = this.signupForm.getFormData();
-
-                this.showProgressBar();
+                this._showProgressBar();
 
                 new UserService().signup(body).then(response => {
-                    this.clearFields();
-                    this.hideProgressBar();
-                    this.openLogin();
+                    this._clearFields();
+                    this._hideProgressBar();
+                    IziToast.success({
+                        title: 'Successfully registrated',
+                        position: 'topRight'
+                    });
+                    this.router._setCurrView(this.urls.LOGIN);
                 }).catch(err => {
                     CheckFields.fieldRemoveOk(this.login);
                     CheckFields.fieldSetErr(this.login);
@@ -133,36 +167,17 @@ export default class SignUpForm {
                     } else {
                         CheckFields.helpSetText(this.loginHelp, 'login used');
                     }
-                    this.hideProgressBar();
+                    this._hideProgressBar();
                     console.error(err);
                 });
             }
         });
+        this.btnToLogin.addEventListener('click', event=>{
+            this._clearFields();
+        })
     }
 
-    showProgressBar() {
-        this.btnSignUp.hidden = true;
-        let progressBar = new ProgressBar().render();
-        this.btnSignUp.parentNode.insertBefore(progressBar, this.btnSignUp.nextSibling);
-    }
-
-    hideProgressBar() {
-        setTimeout(() => {
-            this.btnSignUp.hidden = false;
-            this.btnSignUp.parentNode.removeChild(this.btnSignUp.nextElementSibling);
-        }, 500);
-    }
-
-    openLogin() {
-        this.signupDiv.classList.add('hidden');
-        this.loginDiv.classList.remove('hidden');
-        IziToast.success({
-            title: 'Successfully registration',
-            position: 'topRight'
-        });
-    }
-
-    checkFields() {
+    _checkFields() {
         let check = true;
         let prev = null;
 
@@ -177,7 +192,7 @@ export default class SignUpForm {
         return check;
     }
 
-    clearFields() {
+    _clearFields() {
         this.signupForm.fields.forEach(elem => {
             elem.clear();
         });

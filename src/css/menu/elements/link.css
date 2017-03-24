@@ -1,7 +1,7 @@
-:root{
-    --link-text-color: rgba(97, 97, 97, 0.91);
+:root {
+    --link-text-color: rgba(243, 243, 243, 0.91);
 
-    --link-text-color-focus: black;
+    --link-text-color-focus: #894cff;
 }
 
 .link {
@@ -10,8 +10,32 @@
     -webkit-transition: all 0.5s ease;
     cursor: pointer;
     color: var(--link-text-color);
+    margin: 15px 5px 5px;
 }
 
 .link:hover {
+    color: var(--link-text-color-focus);
+}
+
+.link__logout {
+    font-family: 'Orbitron', sans-serif;
+    text-decoration: none;
+    -webkit-transition: all 0.5s ease;
+    cursor: pointer;
+    font-size: 30px;
+    background: #615b8b;
+    border-radius: 3px;
+    color: white;
+    padding: 3px 25px;
+    margin: auto auto;
+    text-align: center;
+}
+
+.link__logout:hover{
+    background: white;
+    color: black;
+}
+
+.link-profile:hover {
     color: var(--link-text-color-focus);
 }

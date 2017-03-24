@@ -9,6 +9,6 @@
 # Для сборки проекта:
 # `npm run webpack`
 # Для запуска проекта:
-# `npm start`
+# `npm _start`
 
 # [Попробовать](https://tp-front-end-js-game.herokuapp.com)

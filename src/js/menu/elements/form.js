@@ -9,9 +9,10 @@ export default class Form {
         this.el = document.createElement('form');
         this.fields = [];
         this.controls = [];
+        this._render();
     }
 
-    render() {
+    _render() {
         this._setAttrs(this.data.form.attrs, this.el);
         let h3 = document.createElement('h3');
         this._setAttrs(this.data.title.attrs, h3);
@@ -24,14 +25,16 @@ export default class Form {
         this._fieldsAppendTo(this.fields, this.el);
 
         this._controlsAppendTo(this.controls, this.el);
+    }
 
+    getElem(){
         return this;
     }
 
     _getFields() {
         let {fields = []}=this.data;
         return fields.map(data => {
-            return new Input(data).render();
+            return new Input(data).getElem();
         });
     }
 
@@ -57,7 +60,7 @@ export default class Form {
     _getControls() {
         let {controls = []}=this.data;
         return controls.map(data => {
-            return new Button(data).render();
+            return new Button(data).getElem();
         });
     }
 
