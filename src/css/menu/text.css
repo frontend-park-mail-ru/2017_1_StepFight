@@ -17,6 +17,11 @@
     border-width: 5px;
     margin-bottom: 20px;
 }
+.href__title-name h1:hover {
+    color: var(--text-color-light);
+    border-color: var(--btn-border-color-focus);
+    text-shadow: 10px 10px 40px #6e47ff;
+}
 
 h2 {
     font-family: 'Orbitron', sans-serif;

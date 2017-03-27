@@ -88,25 +88,33 @@ export default class ProfileView extends BaseView {
 
         /* create controllers div*/
         let controllersDiv = document.createElement('div');
-        controllersDiv.setAttribute('class', 'fcontainer-row');
+        controllersDiv.setAttribute('class', 'profile__container fcontainer-row');
 
         let hrefPlay = document.createElement('a');
         hrefPlay.setAttribute('href', this.urls.GAME);
-        hrefPlay.setAttribute('class', 'router btn-play');
+        hrefPlay.setAttribute('class', 'router btn__profile');
         let h1 = document.createElement('h1');
-        h1.innerHTML = 'Start game';
+        h1.innerHTML = 'Multiplayer';
         hrefPlay.appendChild(h1);
+
+        let hrefPlay1 = document.createElement('a');
+        hrefPlay1.setAttribute('href', this.urls.GAME);
+        hrefPlay1.setAttribute('class', 'router btn__profile');
+        h1 = document.createElement('h1');
+        h1.innerHTML = 'Single play';
+        hrefPlay1.appendChild(h1);
 
         let hrefLogout = document.createElement('a');
         hrefLogout.setAttribute('class', 'router link__logout');
         hrefLogout.setAttribute('id', 'btn-logout');
         hrefLogout.innerText = 'Log out';
         controllersDiv.appendChild(hrefPlay);
+        controllersDiv.appendChild(hrefPlay1);
         controllersDiv.appendChild(hrefLogout);
 
         /*create user div*/
         let userDiv = document.createElement('div');
-        userDiv.setAttribute('class', 'fcontainer-column container__profile');
+        userDiv.setAttribute('class', 'fcontainer-column');
 
         let elem = document.createElement('h2');
         elem.setAttribute('class', 'text__profile-login');
@@ -136,7 +144,7 @@ export default class ProfileView extends BaseView {
 
         /*create resources div*/
         let resourcesDiv = document.createElement('div');
-        resourcesDiv.setAttribute('class', 'fcontainer-column container__profile');
+        resourcesDiv.setAttribute('class', 'fcontainer-column');
 
         let arrCrystals = [
             {value: user.crystal_green, color: 'rgb(29, 140, 114)'},

@@ -17,12 +17,26 @@
     color: var(--link-text-color-focus);
 }
 
+.link__refresh {
+    font-family: 'Orbitron', sans-serif;
+    text-decoration: none;
+    -webkit-transition: all 0.5s ease;
+    cursor: pointer;
+    color: #ff66a2;
+    margin: 15px 5px 5px;
+    font-size: 21px;
+}
+
+.link__refresh:hover{
+    color: var(--link-text-color-focus);
+}
+
 .link__logout {
     font-family: 'Orbitron', sans-serif;
     text-decoration: none;
     -webkit-transition: all 0.5s ease;
     cursor: pointer;
-    font-size: 30px;
+    font-size: 20px;
     background: #615b8b;
     border-radius: 3px;
     color: white;

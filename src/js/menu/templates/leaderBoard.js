@@ -18,7 +18,8 @@ export default class LeaderBoard {
                         {{#if leaderboard}}
                         <ul class="list-group">
                             {{#each leaderboard}}
-                            <li class="list-group-item">{{login}}<span class="badge">{{rating}}</span></li>
+                            <li class="list-group-item">{{login}}<span class="badge">{{rating}}</span>
+                            <span class="position">{{position}}</span></li>
                             {{/each}}
                         </ul>
                         {{/if}}`;
@@ -31,6 +32,11 @@ export default class LeaderBoard {
 
         new UserService().getLeaders().then(response => {
             let arr = response.leaders;
+            let iter = 1;
+            arr.forEach(elem=>{
+               elem.position = `${iter}.`;
+               iter++;
+            });
             setTimeout(() => {
                 this.node.innerHTML = this._render({
                     titles: {
@@ -39,7 +45,7 @@ export default class LeaderBoard {
                     leaderboard: arr,
                     control: {
                         text: 'Refresh',
-                        class: 'link',
+                        class: 'link__refresh',
                         id: 'refresh-lb'
                     }
                 });

@@ -17,7 +17,7 @@
 .view__profile{
     left: 30%;
     right: 30%;
-    width: 750px;
+    width: 900px;
     margin: auto auto;
     text-align: center;
 }
@@ -32,6 +32,3 @@
     }
 }
 
-.container__profile{
-    margin: 15px;
-}

@@ -19,6 +19,7 @@ body {
     justify-content: space-around;
     flex-direction: row;
     flex-wrap: wrap;
+    margin: 5px;
 }
 
 .fcontainer-column {
@@ -26,4 +27,5 @@ body {
     justify-content: space-around;
     flex-direction: column;
     flex-wrap: wrap;
+    margin: 5px;
 }

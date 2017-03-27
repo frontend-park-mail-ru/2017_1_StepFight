@@ -14,7 +14,7 @@ export default class MenuView extends BaseView {
                     type: 'a',
                     attrs: {
                         href: this.urls.LEADERBOARD,
-                        class: 'btn-play router'
+                        class: 'btn__play router'
                     },
                     element: {
                         type: 'h1',
@@ -25,7 +25,7 @@ export default class MenuView extends BaseView {
                     type: 'a',
                     attrs: {
                         href: this.urls.LOGIN,
-                        class: 'btn-play router'
+                        class: 'btn__main-play router'
                     },
                     element: {
                         type: 'h1',
@@ -36,7 +36,7 @@ export default class MenuView extends BaseView {
                     type: 'a',
                     attrs: {
                         href: this.urls.ABOUT,
-                        class: 'btn-play router'
+                        class: 'btn__play router'
                     },
                     element: {
                         type: 'h1',
