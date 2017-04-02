@@ -2,7 +2,7 @@
  * Created by Denis on 10.03.2017.
  */
 import chai from 'chai';
-import UserService from '../src/js/support/service/userService';
+import UserService from '../src/js/support/service/UserService';
 
 mocha.setup('bdd');
 let expect = chai.expect;

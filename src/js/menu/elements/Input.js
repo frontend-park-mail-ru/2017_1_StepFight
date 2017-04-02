@@ -1,7 +1,7 @@
 /**
  * Created by Denis on 02.03.2017.
  */
-import CheckFields from '../actions/checkFields';
+import CheckFields from '../actions/CheckFields';
 
 export default class Input {
     constructor(options) {

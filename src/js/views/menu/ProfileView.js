@@ -1,19 +1,18 @@
 /**
  * Created by Denis on 19.03.2017.
  */
-import BaseView from '../baseView';
-import UserService from '../../support/service/userService';
-import User from '../../game/user';
-import ProgressBar from "../../menu/elements/progressBar";
-import Diamond from "../../menu/elements/diamond";
-import RouterUrls from "../../support/router/routerUrls";
+import BaseView from '../BaseView';
+import UserService from '../../support/service/UserService';
+import User from '../../game/object/User';
+import ProgressBar from "../../menu/elements/ProgressBar";
+import Diamond from "../../menu/elements/Diamond";
+import RouterUrls from "../../support/router/RouterUrls";
 
 export default class ProfileView extends BaseView {
-    constructor(node, router) {
+    constructor(node) {
         super(node);
-        this.router = router;
+        this.router = window.router;
         this.node = node;
-        this.urls = new RouterUrls();
         //this.refreshProfile();
         this._showViewProgressBar();
         this._render();
@@ -23,7 +22,8 @@ export default class ProfileView extends BaseView {
     _getUser() {
         return new Promise(function (resolve, reject) {
             new UserService().getUser().then(user => {
-                new User().obj = user;
+                //new User().obj = user;
+                window.USER = user;
                 resolve(user);
             }).catch(err => {
                 reject({});
@@ -54,7 +54,7 @@ export default class ProfileView extends BaseView {
     _initListener() {
         document.getElementById('btn-logout').addEventListener('click', event => {
             new UserService().logOutUser().then(response => {
-                this.router._setCurrView(this.urls.LOGIN);
+                this.router._setCurrView(window.LOGIN);
             }).catch(err => {
 
             });
@@ -90,27 +90,27 @@ export default class ProfileView extends BaseView {
         let controllersDiv = document.createElement('div');
         controllersDiv.setAttribute('class', 'profile__container fcontainer-row');
 
-        let hrefPlay = document.createElement('a');
-        hrefPlay.setAttribute('href', this.urls.GAME);
-        hrefPlay.setAttribute('class', 'router btn__profile');
+        let hrefPlayM = document.createElement('a');
+        hrefPlayM.setAttribute('href', window.MULTIPLAYER);
+        hrefPlayM.setAttribute('class', 'router btn__profile');
         let h1 = document.createElement('h1');
         h1.innerHTML = 'Multiplayer';
-        hrefPlay.appendChild(h1);
+        hrefPlayM.appendChild(h1);
 
-        let hrefPlay1 = document.createElement('a');
-        hrefPlay1.setAttribute('href', this.urls.GAME);
-        hrefPlay1.setAttribute('class', 'router btn__profile');
+        let hrefPlayS = document.createElement('a');
+        hrefPlayS.setAttribute('href', window.SINGLEPLAYER);
+        hrefPlayS.setAttribute('class', 'router btn__profile');
         h1 = document.createElement('h1');
         h1.innerHTML = 'Single play';
-        hrefPlay1.appendChild(h1);
+        hrefPlayS.appendChild(h1);
 
-        let hrefLogout = document.createElement('a');
+        /*let hrefLogout = document.createElement('a');
         hrefLogout.setAttribute('class', 'router link__logout');
         hrefLogout.setAttribute('id', 'btn-logout');
-        hrefLogout.innerText = 'Log out';
-        controllersDiv.appendChild(hrefPlay);
-        controllersDiv.appendChild(hrefPlay1);
-        controllersDiv.appendChild(hrefLogout);
+        hrefLogout.innerText = 'Log out';*/
+        controllersDiv.appendChild(hrefPlayM);
+        controllersDiv.appendChild(hrefPlayS);
+        /*controllersDiv.appendChild(hrefLogout);*/
 
         /*create user div*/
         let userDiv = document.createElement('div');
@@ -165,9 +165,15 @@ export default class ProfileView extends BaseView {
             resourcesDiv.appendChild(div);
         });
 
-        profile.appendChild(controllersDiv);
         profile.appendChild(userDiv);
         profile.appendChild(resourcesDiv);
+        profile.appendChild(controllersDiv);
+
+        let hrefLogout = document.createElement('a');
+        hrefLogout.setAttribute('class', 'router link__logout');
+        hrefLogout.setAttribute('id', 'btn-logout');
+        hrefLogout.innerText = 'Log out';
+        profile.appendChild(hrefLogout);
 
         return profile;
     }

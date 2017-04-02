@@ -860,7 +860,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      conditional = conditional.call(this);
 	    }
 
-	    // Default behavior is to _render the positive path if the value is truthy and not empty.
+	    // Default behavior is to _renderState the positive path if the value is truthy and not empty.
 	    // The `includeZero` option may be set to treat the condtional as purely not empty based on the
 	    // behavior of isEmpty. Effectively this determines if 0 is handled by the positive path or negative.
 	    if (!options.hash.includeZero && !conditional || _utils.isEmpty(conditional)) {

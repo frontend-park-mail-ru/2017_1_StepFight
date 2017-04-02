@@ -13,4 +13,8 @@ export default class BaseView {
     toggleView() {
         this.node.classList.toggle('hidden');
     }
+
+    destroyView(){
+
+    }
 }

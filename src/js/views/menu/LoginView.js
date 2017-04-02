@@ -1,19 +1,18 @@
 /**
  * Created by Denis on 19.03.2017.
  */
-import BaseView from '../baseView';
-import ProgressBar from "../../menu/elements/progressBar";
-import Form from "../../menu/elements/form";
-import UserService from "../../support/service/userService";
-import User from "../../game/user";
-import RouterUrls from "../../support/router/routerUrls";
+import BaseView from '../BaseView';
+import ProgressBar from "../../menu/elements/ProgressBar";
+import Form from "../../menu/elements/Form";
+import UserService from "../../support/service/UserService";
+import User from "../../game/object/User";
+import RouterUrls from "../../support/router/RouterUrls";
 
 export default class LoginView extends BaseView {
-    constructor(node, router) {
+    constructor(node) {
         super(node);
         this.node = node;
-        this.router = router;
-        this.urls = new RouterUrls();
+        this.router = window.router;
         this._showViewProgressBar();
         this._render();
     }
@@ -77,7 +76,7 @@ export default class LoginView extends BaseView {
                         attrs: {
                             class: 'link router',
                             id: 'btn-to-signup',
-                            href: this.urls.SIGNUP
+                            href: window.SIGNUP
                         },
                         type: 'a'
                     }
@@ -132,8 +131,9 @@ export default class LoginView extends BaseView {
 
                 new UserService().login(body).then(user => {
                     this._clearFields();
-                    new User().obj = user;
-                    this.router._setCurrView(this.urls.PROFILE);
+                    //new User().obj = user;
+                    window.USER = user;
+                    this.router._setCurrView(window.PROFILE);
 
                     this._hideProgressBar();
                 }).catch(e => {

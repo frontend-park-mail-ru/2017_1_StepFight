@@ -1,19 +1,18 @@
 /**
  * Created by Denis on 19.03.2017.
  */
-import BaseView from '../baseView';
-import RouterUrls from "../../support/router/routerUrls";
+import BaseView from '../BaseView';
+import RouterUrls from "../../support/router/RouterUrls";
 export default class MenuView extends BaseView {
     constructor(node) {
         super(node);
         this.node = node;
-        this.urls = new RouterUrls();
         this.render({
             elements: [
                 {
                     type: 'a',
                     attrs: {
-                        href: this.urls.LEADERBOARD,
+                        href: window.LEADERBOARD,
                         class: 'btn__play router'
                     },
                     element: {
@@ -24,7 +23,7 @@ export default class MenuView extends BaseView {
                 {
                     type: 'a',
                     attrs: {
-                        href: this.urls.LOGIN,
+                        href: window.LOGIN,
                         class: 'btn__main-play router'
                     },
                     element: {
@@ -35,7 +34,7 @@ export default class MenuView extends BaseView {
                 {
                     type: 'a',
                     attrs: {
-                        href: this.urls.ABOUT,
+                        href: window.ABOUT,
                         class: 'btn__play router'
                     },
                     element: {

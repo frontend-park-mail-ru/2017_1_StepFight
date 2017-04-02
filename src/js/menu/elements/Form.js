@@ -1,8 +1,8 @@
 /**
  * Created by Denis on 02.03.2017.
  */
-import Button from './btn'
-import Input from './input'
+import Button from './Btn'
+import Input from './Input'
 export default class Form {
     constructor(options = {data: {}}) {
         this.data = options.data;

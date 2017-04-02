@@ -1,7 +1,7 @@
 /**
  * Created by Denis on 05.03.2017.
  */
-import Http from '../http/http';
+import Http from '../http/Http';
 export default class UserService {
     constructor() {
         this.http = new Http();

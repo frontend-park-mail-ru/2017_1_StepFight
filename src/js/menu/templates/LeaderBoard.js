@@ -2,8 +2,8 @@
  * Created by Denis on 04.03.2017.
  */
 
-import UserService from '../../support/service/userService';
-import ProgressBar from '../elements/progressBar';
+import UserService from '../../support/service/UserService';
+import ProgressBar from '../elements/ProgressBar';
 export default class LeaderBoard {
     constructor(node) {
         this.node = node;

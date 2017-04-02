@@ -1,20 +1,19 @@
 /**
  * Created by Denis on 19.03.2017.
  */
-import BaseView from '../baseView';
-import Form from "../../menu/elements/form";
-import ProgressBar from "../../menu/elements/progressBar";
-import CheckFields from "../../menu/actions/checkFields";
+import BaseView from '../BaseView';
+import Form from "../../menu/elements/Form";
+import ProgressBar from "../../menu/elements/ProgressBar";
+import CheckFields from "../../menu/actions/CheckFields";
 import IziToast from 'izitoast';
-import UserService from "../../support/service/userService";
-import RouterUrls from "../../support/router/routerUrls";
+import UserService from "../../support/service/UserService";
+import RouterUrls from "../../support/router/RouterUrls";
 
 export default class SignUpView extends BaseView{
-    constructor(node, router){
+    constructor(node){
         super(node);
         this.node = node;
-        this.router = router;
-        this.urls = new RouterUrls();
+        this.router = window.router;
         this._showViewProgressBar();
         this._render();
     }
@@ -94,7 +93,7 @@ export default class SignUpView extends BaseView{
                         attrs: {
                             class: 'link router',
                             id: 'btn-to-login',
-                            href: this.urls.LOGIN
+                            href: window.LOGIN
                         },
                         type: 'a'
                     }
@@ -158,7 +157,7 @@ export default class SignUpView extends BaseView{
                         title: 'Successfully registrated',
                         position: 'topRight'
                     });
-                    this.router._setCurrView(this.urls.LOGIN);
+                    this.router._setCurrView(window.LOGIN);
                 }).catch(err => {
                     CheckFields.fieldRemoveOk(this.login);
                     CheckFields.fieldSetErr(this.login);

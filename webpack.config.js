@@ -8,7 +8,7 @@ module.exports = {
     context: __dirname,
     devtool: debug ? "inline-sourcemap" : null,
     entry: {
-        app: ['whatwg-fetch', './src/js/main.js'],
+        app: ['whatwg-fetch', './src/js/Application.js'],
         test: ['chai', 'whatwg-fetch', './test/test.js']
     },
     output: {

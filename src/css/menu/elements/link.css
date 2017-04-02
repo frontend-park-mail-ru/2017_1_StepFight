@@ -32,6 +32,9 @@
 }
 
 .link__logout {
+    position: absolute;
+    top: 15px;
+    right: 15px;
     font-family: 'Orbitron', sans-serif;
     text-decoration: none;
     -webkit-transition: all 0.5s ease;
