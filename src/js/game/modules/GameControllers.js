@@ -3,7 +3,6 @@
  */
 export default class GameControllers{
     constructor(node){
-        console.log('GameControllers.c');
         this.node = node;
 
         this.previous = {};
@@ -24,11 +23,6 @@ export default class GameControllers{
     }
 
 
-    /**
-     * Обработчик события
-     * @param  {string} type
-     * @param  {MouseEvent} event
-     */
     _keyHandler(type, event) {
         console.log(type);
         console.log(event);

@@ -18,11 +18,14 @@ export default class ProfileView extends BaseView {
         this._render();
     }
 
-
+    /**
+     * Получить юзера
+     * @return {Promise}
+     * @private
+     */
     _getUser() {
         return new Promise(function (resolve, reject) {
             new UserService().getUser().then(user => {
-                //new User().obj = user;
                 window.USER = user;
                 resolve(user);
             }).catch(err => {
@@ -31,6 +34,10 @@ export default class ProfileView extends BaseView {
         });
     }
 
+    /**
+     * Отрисовка профайла
+     * @private
+     */
     _render() {
         this._getUser().then(user => {
             this.profile = this._createProfile(user);
@@ -51,6 +58,10 @@ export default class ProfileView extends BaseView {
         });
     }
 
+    /**
+     * Запуск слушателей
+     * @private
+     */
     _initListener() {
         document.getElementById('btn-logout').addEventListener('click', event => {
             new UserService().logOutUser().then(response => {
@@ -61,27 +72,48 @@ export default class ProfileView extends BaseView {
         });
     }
 
+    /**
+     * Показать прогресс бар вьюшки
+     * @private
+     */
     _showViewProgressBar() {
         let progressBar = new ProgressBar().getElem();
         this.node.appendChild(progressBar);
     }
 
+    /**
+     * Спрятать прогресс бар вьюшки
+     * @private
+     */
     _hideViewProgressBar() {
         this.node.removeChild(this.node.lastChild);
     }
 
+    /**
+     * Отчистка контейнера
+     * @private
+     */
     _clearContainer() {
         while (this.node.children.length > 0) {
             this.node.removeChild(this.node.lastChild);
         }
     }
 
+    /**
+     * Обновить вьюшку
+     */
     refresh() {
         this._clearContainer();
         this._showViewProgressBar();
         this._render();
     }
 
+    /**
+     * Создание элементов профайла
+     * @param user
+     * @return {Element}
+     * @private
+     */
     _createProfile(user) {
         let profile = document.createElement('div');
         profile.setAttribute('class', 'fcontainer-row');
@@ -104,13 +136,8 @@ export default class ProfileView extends BaseView {
         h1.innerHTML = 'Single play';
         hrefPlayS.appendChild(h1);
 
-        /*let hrefLogout = document.createElement('a');
-        hrefLogout.setAttribute('class', 'router link__logout');
-        hrefLogout.setAttribute('id', 'btn-logout');
-        hrefLogout.innerText = 'Log out';*/
         controllersDiv.appendChild(hrefPlayM);
         controllersDiv.appendChild(hrefPlayS);
-        /*controllersDiv.appendChild(hrefLogout);*/
 
         /*create user div*/
         let userDiv = document.createElement('div');

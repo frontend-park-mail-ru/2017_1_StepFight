@@ -18,22 +18,24 @@ import GameManager from "../../game/modules/GameManager";
 export default class Router {
 
     /**
-     *
-     * @constructor Route
-     * @param {Node} node
+     * Конструктор
+     * @param node - область действия
      */
     constructor(node) {
         this.node = node;
         this.routes = {};
         this.currView = null;
+        window.router = this;
         this.init();
         window.onpopstate = (event) => {
             this._setCurrView(document.location.pathname, false);
         };
     }
 
+    /**
+     * Инициализация всех вьюшек
+     */
     init() {
-        window.router = this;
         let gameView = new GameView(document.getElementById('game-view'));
         this._register(window.MAIN, new MenuView(document.getElementById('menu-view')));
         this._register(window.SINGLEPLAYER, gameView);
@@ -47,6 +49,12 @@ export default class Router {
         this._start();
     }
 
+    /**
+     * Установить текущую вьюшку
+     * @param path
+     * @param isToHistory
+     * @private
+     */
     _setCurrView(path, isToHistory) {
         if (isToHistory !== false) {
             history.pushState({opa: 'opa'}, 'title1', path);
@@ -54,10 +62,14 @@ export default class Router {
         this._checkUser(path);
     }
 
+    /**
+     * Проверка, залогинен ли юзер
+     * @param path
+     * @private
+     */
     _checkUser(path) {
         if (path === window.LOGIN || path === window.SIGNUP) {
             this._getUser().then(user => {
-                //new User().obj = user;
                 window.USER = user;
                 this._go(window.PROFILE);
             }).catch(err => {
@@ -65,7 +77,6 @@ export default class Router {
             });
         } else if (path === window.PROFILE) {
             this._getUser().then(user => {
-                //new User().obj = user;
                 window.USER = user;
                 this._go(path);
             }).catch(err => {
@@ -73,7 +84,6 @@ export default class Router {
             });
         } else if (path === window.SINGLEPLAYER) {
             this._getUser().then(user => {
-                //new User().obj = user;
                 window.USER = user;
                 new GameManager(user, this.getViewByRoute(path), window.SINGLEPLAYER_STRATEGY);
                 this._go(window.SINGLEPLAYER);
@@ -83,7 +93,6 @@ export default class Router {
             });
         } else if (path === window.MULTIPLAYER) {
             this._getUser().then(user => {
-                //new User().obj = user;
                 window.USER = user;
                 new GameManager(user, this.getViewByRoute(path), window.MULTIPLAYER_STRATEGY);
                 this._go(window.MULTIPLAYER);
@@ -95,14 +104,14 @@ export default class Router {
         }
     }
 
+    /**
+     * Получить юзера
+     * @return {Promise}
+     * @private
+     */
     _getUser() {
         return new Promise(function (resolve, reject) {
-            /*let user = new User();
-            if (user) {
-                console.error(user);
-                resolve(user);
-            }*/
-            if(window.USER){
+            if (window.USER) {
                 resolve(window.USER);
             }
             new UserService().getUser().then(user => {
@@ -114,12 +123,11 @@ export default class Router {
     }
 
     /**
-     * Перейти по маршруту
+     * Перейти по маршруту и поменять текущую вьюшку
      * @param {string} path
      */
     _go(path) {
-        //console.log(this.currView.constructor.name);
-        if(this.currView !== null && this.currView.constructor.name === GameView.name){
+        if (this.currView !== null && this.currView.constructor.name === GameView.name) {
             this.currView.clear();
         }
 
@@ -129,8 +137,6 @@ export default class Router {
         this.currView = this.getViewByRoute(path);
 
         if (!this.currView) {
-            /*path = window.MAIN;
-             this.currView = this.getViewByRoute(path);*/
             return;
         }
 
@@ -150,6 +156,11 @@ export default class Router {
         this.routes[route] = view;
     }
 
+    /**
+     * Получение маршрута
+     * @param href
+     * @return {*}
+     */
     getViewByRoute(href) {
         return this.routes[href];
     }
@@ -161,6 +172,11 @@ export default class Router {
         this.node.addEventListener('click', event => this._onRouteChange(event));
     }
 
+    /**
+     * Проверка на смененный маршрут
+     * @param event
+     * @private
+     */
     _onRouteChange(event) {
         if (event.target instanceof HTMLAnchorElement) {
             event.preventDefault();

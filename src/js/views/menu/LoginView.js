@@ -17,6 +17,10 @@ export default class LoginView extends BaseView {
         this._render();
     }
 
+    /**
+     * Отрисовка вьюшки
+     * @private
+     */
     _render() {
         this.loginForm = new Form({
             data: {
@@ -98,21 +102,37 @@ export default class LoginView extends BaseView {
         }, 500);
     }
 
+    /**
+     * Показать прогресс бар вьюшки
+     * @private
+     */
     _showViewProgressBar() {
         let progressBar = new ProgressBar().getElem();
         this.node.appendChild(progressBar);
     }
 
+    /**
+     * Спрятать прогресс бар вьюшки
+     * @private
+     */
     _hideViewProgressBar() {
         this.node.removeChild(this.node.lastChild);
     }
 
+    /**
+     * Показать прогресс бар формы
+     * @private
+     */
     _showProgressBar() {
         this.btnLogin.hidden = true;
         let progressBar = new ProgressBar().getElem();
         this.btnLogin.parentNode.insertBefore(progressBar, this.btnLogin.nextSibling);
     }
 
+    /**
+     * Спрятать прогресс бар формы
+     * @private
+     */
     _hideProgressBar() {
         setTimeout(() => {
             this.btnLogin.hidden = false;
@@ -120,6 +140,10 @@ export default class LoginView extends BaseView {
         }, 500);
     }
 
+    /**
+     * Запуск слушателей на форму
+     * @private
+     */
     _initListener() {
         //Submit form
         this.loginForm.el.addEventListener('submit', event => {
@@ -151,12 +175,21 @@ export default class LoginView extends BaseView {
         })
     }
 
+    /**
+     * Отчистка полей формы
+     * @private
+     */
     _clearFields() {
         this.loginForm.fields.forEach(elem => {
             elem.clear();
         });
     }
 
+    /**
+     * Проверка полей формы
+     * @return {boolean}
+     * @private
+     */
     _checkFields() {
         let check = true;
 

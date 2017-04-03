@@ -1,6 +1,6 @@
 .profile__container{
     position: absolute;
-    bottom: 0;
+    bottom: 15px;
     width: 35%;
     max-height: 100%;
     border-radius: 5px;

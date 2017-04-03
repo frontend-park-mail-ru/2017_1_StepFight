@@ -10,6 +10,9 @@ export default class GameView extends BaseView{
         this.node = node;
     }
 
+    /**
+     * Удаляем все элементы из вьюшки
+     */
     clear(){
         while (this.node.firstChild) {
             this.node.removeChild(this.node.firstChild);

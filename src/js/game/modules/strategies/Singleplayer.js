@@ -3,7 +3,7 @@
  */
 export default class SinglePlayerStrategy{
     constructor() {
-        console.log('SinglePlayerStrategy.c');
+
     }
 
     gameLoop(){
@@ -13,4 +13,6 @@ export default class SinglePlayerStrategy{
     startGameLoop() {
         this.inteval = setInterval(() => this.gameLoop(), 100);
     }
+
+
 }

@@ -47,23 +47,44 @@ export default class MenuView extends BaseView {
 
     }
 
+    /**
+     * Отрисовка меню
+     * @param instr
+     */
     render(instr) {
         let elemArray = this._getElems(instr.elements);
         this._elemsAppendTo(elemArray, this.node);
     }
 
+    /**
+     * Установка массив атрибкутов
+     * @param attrs
+     * @param elem
+     * @private
+     */
     _setAttrs(attrs, elem) {
         Object.keys(attrs).forEach(name => {
             elem.setAttribute(name, attrs[name]);
         });
     }
 
+    /**
+     * Добавить массив элементов
+     * @param array
+     * @param elem
+     * @private
+     */
     _elemsAppendTo(array, elem) {
         array.forEach(item => {
             elem.appendChild(item);
         })
     }
 
+    /**
+     * Получить массив элементов
+     * @param elements - инструкции по созданию
+     * @private
+     */
     _getElems(elements) {
         return elements.map(data => {
             let elem = document.createElement(data.type);
