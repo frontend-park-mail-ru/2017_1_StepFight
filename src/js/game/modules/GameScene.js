@@ -15,69 +15,24 @@ export default class GameScene {
         this._renderContainer();
     }
 
-    _setSize(){
+    _setSize() {
         const height = window.innerHeight;
         this.fieldSize = (height / this.HDim) | 0;
         this.WIDTH = this.fieldSize * this.WDim;
         this.HEGHT = this.fieldSize / 3 * 2 * this.HDim
     }
 
-    _renderContainer(){
+    _renderContainer() {
         this.scene = new THREE.Scene();
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setClearColor(0xEEEEEE, 1);
-        this.renderer.setSize( this.WIDTH, this.HEGHT);
+        this.renderer.setSize(this.WIDTH, this.HEGHT);
         this.renderer.domElement.setAttribute('class', 'game-area');
         this.renderer.domElement.setAttribute('id', 'game-area');
 
+        this._addCamera();
 
         this.node.appendChild(this.renderer.domElement);
-    }
-
-    _renderField(){
-        let axes = new THREE.AxisHelper( 20 );
-        this.scene.add(axes);
-
-        let planeGeometry = new THREE.PlaneGeometry(60,20,1,1);
-        let planeMaterial = new THREE.MeshBasicMaterial({color: 0xcccccc});
-        let plane = new THREE.Mesh(planeGeometry,planeMaterial);
-        plane.rotation.x=-0.5*Math.PI;
-        plane.position.x = 0;
-        plane.position.y = -10;
-        plane.position.z = 0;
-        this.scene.add(plane);
-    }
-
-    _renderHelpFigure(){
-        let cubeGeometry = new THREE.CubeGeometry(4,4,4);
-        let cubeMaterial = new THREE.MeshBasicMaterial(
-            {color: 0xff0000, wireframe: true});
-        let cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-        cube.position.x = -4;
-        cube.position.y = -7;
-        cube.position.z = 0;
-        this.scene.add(cube);
-
-        let sphereGeometry = new THREE.SphereGeometry(4,20,20);
-        let sphereMaterial = new THREE.MeshBasicMaterial(
-            {color: 0x7777ff, wireframe: true});
-        let sphere = new THREE.Mesh(sphereGeometry,sphereMaterial);
-        sphere.position.x = 20;
-        sphere.position.y = -6;
-        sphere.position.z = 2;
-        this.scene.add(sphere);
-    }
-
-    refreshScene(){
-        let camera = new THREE.PerspectiveCamera(45
-            , this.WIDTH / this.HEGHT , 0.1, 1000);
-
-        camera.position.x = 0; // красная
-        camera.position.y = 20; // зеленая
-        camera.position.z = 35; // синяя
-        camera.lookAt(this.scene.position);
-
-        this.renderer.render(this.scene, camera);
     }
 
     /**
@@ -96,15 +51,15 @@ export default class GameScene {
     _renderState() {
         switch (this.state) {
             case window.STATEWAIT: {
-                this._renderWait();
+                this._renderWaitState();
                 break;
             }
             case window.STATEGAME: {
-                this._renderGame();
+                this._renderGameState();
                 break;
             }
             case window.STATERESULT: {
-                this._renderResult();
+                this._renderResultState();
                 break;
             }
         }
@@ -114,16 +69,84 @@ export default class GameScene {
      * Отрисовка ждущего режима
      * @private
      */
-    _renderWait() {
+    _renderWaitState() {
         this.clear();
 
+        let spotLight = new THREE.SpotLight(0xffffff);
+        spotLight.position.set(0, 20, 30);
+        this.scene.add(spotLight);
+
+        let octahedronGeometry = new THREE.OctahedronGeometry(4, 0);
+        let octahedronMaterial = new THREE.MeshLambertMaterial(
+            {color: 0xff0000});
+        let octahedron = new THREE.Mesh(octahedronGeometry, octahedronMaterial);
+        octahedron.position.x = 0;
+        octahedron.position.y = 0;
+        octahedron.position.z = 0;
+        this.scene.add(octahedron);
+
+        let render = () => {
+            window.requestAnimationFrame(render);
+            octahedron.rotation.y += 0.02;
+            this.refreshScene();
+        };
+        render();
     }
+
+    _renderField() {
+        let axes = new THREE.AxisHelper(20);
+        this.scene.add(axes);
+
+        let planeGeometry = new THREE.PlaneGeometry(60, 20, 1, 1);
+        let planeMaterial = new THREE.MeshBasicMaterial({color: 0xcccccc});
+        let plane = new THREE.Mesh(planeGeometry, planeMaterial);
+        plane.rotation.x = -0.5 * Math.PI;
+        plane.position.x = 0;
+        plane.position.y = -10;
+        plane.position.z = 0;
+        this.scene.add(plane);
+    }
+
+    _renderHelpFigure() {
+        let cubeGeometry = new THREE.CubeGeometry(4, 4, 4);
+        let cubeMaterial = new THREE.MeshBasicMaterial(
+            {color: 0xff0000, wireframe: true});
+        let cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+        cube.position.x = -4;
+        cube.position.y = -7;
+        cube.position.z = 0;
+        this.scene.add(cube);
+
+        let sphereGeometry = new THREE.SphereGeometry(4, 20, 20);
+        let sphereMaterial = new THREE.MeshBasicMaterial(
+            {color: 0x7777ff, wireframe: true});
+        let sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        sphere.position.x = 20;
+        sphere.position.y = -6;
+        sphere.position.z = 2;
+        this.scene.add(sphere);
+    }
+
+    _addCamera() {
+        this.camera = new THREE.PerspectiveCamera(45
+            , this.WIDTH / this.HEGHT, 0.1, 1000);
+
+        this.camera.position.x = 0; // красная
+        this.camera.position.y = 20; // зеленая
+        this.camera.position.z = 35; // синяя
+        this.camera.lookAt(this.scene.position);
+    }
+
+    refreshScene() {
+        this.renderer.render(this.scene, this.camera);
+    }
+
 
     /**
      * Отрисовка игрового режима
      * @private
      */
-    _renderGame() {
+    _renderGameState() {
         this.clear();
         //this._resizer();
 
@@ -131,9 +154,9 @@ export default class GameScene {
         this._renderHelpFigure();
         this.refreshScene();
         /*this._renderNames();
-        //this._renderActionContainer();
-        this._renderHealthBar();
-        this._renderField();*/
+         //this._renderActionContainer();
+         this._renderHealthBar();
+         this._renderField();*/
     }
 
     /**
@@ -141,81 +164,80 @@ export default class GameScene {
      * @private
      */
     /*_renderNames() {
-        let meLogin = new PIXI.Text(this.players.me, {
-            fontFamily: 'Orbitron',
-            fontSize: 15,
-            fill: 'black',
-            align: 'left'
-        });
-        meLogin.x = 10;
-        meLogin.y = 10;
+     let meLogin = new PIXI.Text(this.players.me, {
+     fontFamily: 'Orbitron',
+     fontSize: 15,
+     fill: 'black',
+     align: 'left'
+     });
+     meLogin.x = 10;
+     meLogin.y = 10;
 
-        let opponentLogin = new PIXI.Text(this.players.opponent, {
-            fontFamily: 'Orbitron',
-            fontSize: 15,
-            fill: 'black',
-            align: 'right'
-        });
-        opponentLogin.x = this.app.renderer.width - opponentLogin.width - 10;
-        opponentLogin.y = 10;
+     let opponentLogin = new PIXI.Text(this.players.opponent, {
+     fontFamily: 'Orbitron',
+     fontSize: 15,
+     fill: 'black',
+     align: 'right'
+     });
+     opponentLogin.x = this.app.renderer.width - opponentLogin.width - 10;
+     opponentLogin.y = 10;
 
-        this.app.stage.addChild(meLogin, opponentLogin);
-    }*/
+     this.app.stage.addChild(meLogin, opponentLogin);
+     }*/
 
     /**
      * Отрисовка баланса здоровья
      * @private
      */
     /*_renderHealthBar() {
-        //Create the health bar
-        this.opponentHealthBar = new PIXI.Container();
-        this.opponentHealthBar.position.set(this.app.renderer.width - 12, 40);
-        this.app.stage.addChild(this.opponentHealthBar);
+     //Create the health bar
+     this.opponentHealthBar = new PIXI.Container();
+     this.opponentHealthBar.position.set(this.app.renderer.width - 12, 40);
+     this.app.stage.addChild(this.opponentHealthBar);
 
-        this.myHealthBar = new PIXI.Container();
-        this.myHealthBar.position.set(12, 40);
-        this.app.stage.addChild(this.myHealthBar);
+     this.myHealthBar = new PIXI.Container();
+     this.myHealthBar.position.set(12, 40);
+     this.app.stage.addChild(this.myHealthBar);
 
-        //Create the front red rectangle
-        let opponentOuterBar = new PIXI.Graphics();
-        opponentOuterBar.beginFill(0x081b32);
-        opponentOuterBar.drawRect(0, 0, -100, 8);
-        opponentOuterBar.endFill();
-        this.opponentHealthBar.addChild(opponentOuterBar);
+     //Create the front red rectangle
+     let opponentOuterBar = new PIXI.Graphics();
+     opponentOuterBar.beginFill(0x081b32);
+     opponentOuterBar.drawRect(0, 0, -100, 8);
+     opponentOuterBar.endFill();
+     this.opponentHealthBar.addChild(opponentOuterBar);
 
-        let myOuterBar = new PIXI.Graphics();
-        myOuterBar.beginFill(0x081b32);
-        myOuterBar.drawRect(0, 0, 100, 8);
-        myOuterBar.endFill();
-        this.myHealthBar.addChild(myOuterBar);
+     let myOuterBar = new PIXI.Graphics();
+     myOuterBar.beginFill(0x081b32);
+     myOuterBar.drawRect(0, 0, 100, 8);
+     myOuterBar.endFill();
+     this.myHealthBar.addChild(myOuterBar);
 
-        this.opponentHealthBar.outer = opponentOuterBar;
-        this.myHealthBar.outer = myOuterBar;
-    }*/
+     this.opponentHealthBar.outer = opponentOuterBar;
+     this.myHealthBar.outer = myOuterBar;
+     }*/
 
     /**
      * Установить текущее здоровье
      * @param health
      */
     /*setMyHealth(health) {
-        this.opponentHealthBar.outer.width = health;
-    }*/
+     this.opponentHealthBar.outer.width = health;
+     }*/
 
     /**
      * Установить текущее здоровье противника
      * @param health
      */
     /*setOpponentHealth(health) {
-        this.myHealthBar.outer.width = health;
-    }*/
-
+     this.myHealthBar.outer.width = health;
+     }*/
 
 
     /**
      * Отрисовка послеигрового режима (результаты, итоги)
      * @private
      */
-    _renderResult() {
+    _renderResultState() {
         this.clear();
 
     }
