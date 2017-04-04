@@ -1,8 +1,11 @@
 /**
  * Created by Denis on 29.03.2017.
  */
-import * as PIXI from "pixi.js/lib/core/index";
-import * as THREE from "../../../../vendor/three";
+// import * as THREE from "../../../../vendor/three";
+import * as THREE from 'three';
+const OrbitControls = require('three-orbit-controls')(THREE);
+// import * as OrbitControls from 'three-orbit-controls';
+
 export default class GameScene {
     constructor(node) {
         this.HDim = 34;
@@ -19,18 +22,44 @@ export default class GameScene {
         const height = window.innerHeight;
         this.fieldSize = (height / this.HDim) | 0;
         this.WIDTH = this.fieldSize * this.WDim;
-        this.HEGHT = this.fieldSize / 3 * 2 * this.HDim
+        this.HEGHT = this.fieldSize / 3 * 2 * this.HDim;
+    }
+
+    _onWindowResize() {
+        let height = window.innerHeight;
+        this.fieldSize = (height / this.HDim) | 0;
+        this.WIDTH = this.fieldSize * this.WDim;
+        this.HEGHT = this.fieldSize / 3 * 2 * this.HDim;
+
+        if (!this.camera || !this.renderer) return;
+
+        this.camera.aspect = this.WIDTH / this.HEGHT;
+        this.camera.updateProjectionMatrix();
+
+        this.renderer.setSize(this.WIDTH, this.HEGHT);
+    }
+
+    _initListeners() {
+        window.addEventListener('resize', this._onWindowResize.bind(this), false);
+        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     }
 
     _renderContainer() {
         this.scene = new THREE.Scene();
-        this.renderer = new THREE.WebGLRenderer();
-        this.renderer.setClearColor(0xEEEEEE, 1);
+        this.renderer = new THREE.WebGLRenderer({
+            antialias: true,
+            alpha: true
+        });
+        this.scene.fog = new THREE.FogExp2(0x1E2630, 0.002);
+        this.renderer.setClearColor(this.scene.fog.color);
+        //this.renderer.setClearColor(0xEEEEEE, 1);
         this.renderer.setSize(this.WIDTH, this.HEGHT);
         this.renderer.domElement.setAttribute('class', 'game-area');
         this.renderer.domElement.setAttribute('id', 'game-area');
 
         this._addCamera();
+        this._animate();
+        this._initListeners();
 
         this.node.appendChild(this.renderer.domElement);
     }
@@ -97,20 +126,55 @@ export default class GameScene {
         let axes = new THREE.AxisHelper(20);
         this.scene.add(axes);
 
-        let planeGeometry = new THREE.PlaneGeometry(60, 20, 1, 1);
-        let planeMaterial = new THREE.MeshBasicMaterial({color: 0xcccccc});
+        //dome
+        let geometry = new THREE.IcosahedronGeometry(700, 1);
+        let domeMaterial = new THREE.MeshPhongMaterial({
+            color: 0xfb3550,
+            shading: THREE.FlatShading,
+            side: THREE.BackSide
+        });
+        let dome = new THREE.Mesh(geometry, domeMaterial);
+        this.scene.add(dome);
+
+        //light
+        let light = new THREE.DirectionalLight(0xffffff);
+        light.position.set(1, 1, 1);
+        this.scene.add(light);
+        light = new THREE.DirectionalLight(0x002288);
+        light.position.set(-1, -1, 0);
+        this.scene.add(light);
+        light = new THREE.SpotLight(0x222222);
+        this.scene.add(light);
+
+        /*let object3d  = new THREE.DirectionalLight('white', 0.15);
+         object3d.position.set(6,3,9);
+         object3d.name = 'Back light';
+         this.scene.add(object3d);
+
+         let spotLight = new THREE.SpotLight(0xffffff);
+         spotLight.position.set(0, 20, 30);
+         this.scene.add(spotLight);*/
+
+        let planeGeometry = new THREE.PlaneGeometry(60, 20, 10, 10);
+        let planeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff, wireframe: true});
         let plane = new THREE.Mesh(planeGeometry, planeMaterial);
         plane.rotation.x = -0.5 * Math.PI;
         plane.position.x = 0;
         plane.position.y = -10;
         plane.position.z = 0;
         this.scene.add(plane);
+
+        /*let gridXZ = new THREE.GridHelper(500, 10);
+         this.scene.add(gridXZ);*/
     }
 
     _renderHelpFigure() {
         let cubeGeometry = new THREE.CubeGeometry(4, 4, 4);
-        let cubeMaterial = new THREE.MeshBasicMaterial(
-            {color: 0xff0000, wireframe: true});
+        let cubeMaterial = new THREE.MeshLambertMaterial(
+            {
+                color: 0xff0000,
+                shading: THREE.FlatShading,
+            });
         let cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
         cube.position.x = -4;
         cube.position.y = -7;
@@ -118,8 +182,8 @@ export default class GameScene {
         this.scene.add(cube);
 
         let sphereGeometry = new THREE.SphereGeometry(4, 20, 20);
-        let sphereMaterial = new THREE.MeshBasicMaterial(
-            {color: 0x7777ff, wireframe: true});
+        let sphereMaterial = new THREE.MeshLambertMaterial(
+            {color: 0x7777ff});
         let sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
         sphere.position.x = 20;
         sphere.position.y = -6;
@@ -135,6 +199,15 @@ export default class GameScene {
         this.camera.position.y = 20; // зеленая
         this.camera.position.z = 35; // синяя
         this.camera.lookAt(this.scene.position);
+    }
+
+    _animate() {
+        let render = () => {
+            window.requestAnimationFrame(render);
+            //this.controls.update();
+            this.refreshScene();
+        };
+        render();
     }
 
     refreshScene() {
