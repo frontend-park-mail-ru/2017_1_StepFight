@@ -3,6 +3,8 @@
  */
 // import * as THREE from "../../../../vendor/three";
 import * as THREE from 'three';
+import * as OIMO from 'oimo';
+
 import ObjPerson from "./ObjPerson";
 const OrbitControls = require('three-orbit-controls')(THREE);
 // import * as OrbitControls from 'three-orbit-controls';
@@ -46,6 +48,9 @@ export default class GameScene {
     }
 
     _renderContainer() {
+        this.worldBodies = [];
+        this.worldMeshes = [];
+
         this.scene = new THREE.Scene();
         this.renderer = new THREE.WebGLRenderer({
             antialias: true,
@@ -58,11 +63,13 @@ export default class GameScene {
         this.renderer.domElement.setAttribute('class', 'game-area');
         this.renderer.domElement.setAttribute('id', 'game-area');
 
+        this.node.appendChild(this.renderer.domElement);
+
+        this.world = new OIMO.World(1 / 60, 2, 8);
+
         this._addCamera();
         this._animate();
         this._initListeners();
-
-        this.node.appendChild(this.renderer.domElement);
     }
 
     /**
@@ -110,9 +117,7 @@ export default class GameScene {
         let octahedronMaterial = new THREE.MeshLambertMaterial(
             {color: 0xff0000});
         let octahedron = new THREE.Mesh(octahedronGeometry, octahedronMaterial);
-        octahedron.position.x = 0;
-        octahedron.position.y = 0;
-        octahedron.position.z = 0;
+        octahedron.position.set(0, 0, 0);
         this.scene.add(octahedron);
 
         let render = () => {
@@ -161,10 +166,18 @@ export default class GameScene {
         let planeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff, wireframe: true});
         let plane = new THREE.Mesh(planeGeometry, planeMaterial);
         plane.rotation.x = -0.5 * Math.PI;
-        plane.position.x = 0;
-        plane.position.y = -10;
-        plane.position.z = 0;
+        plane.position.set(0, -10, 0);
         this.scene.add(plane);
+
+        this.world.add({
+            size: [1000, 10, 1000],
+            pos: [0, -10, 0],
+            world: this.world,
+            density: 1,
+            collidesWith: 0xffffffff
+        });
+
+        this.world.gravity = new OIMO.Vec3(0, -9.8, 0);
 
         /*let gridXZ = new THREE.GridHelper(500, 10);
          this.scene.add(gridXZ);*/
@@ -200,8 +213,8 @@ export default class GameScene {
             , this.WIDTH / this.HEGHT, 0.1, 1000);
 
         this.camera.position.x = 0; // красная
-        this.camera.position.y = 0; // зеленая
-        this.camera.position.z = 50; // синяя
+        this.camera.position.y = 25; // зеленая
+        this.camera.position.z = 80; // синяя
         this.camera.lookAt(this.scene.position);
     }
 
@@ -215,6 +228,19 @@ export default class GameScene {
     }
 
     refreshScene() {
+        if (this.world) {
+            this.world.step();
+            for (let i = 0, len = this.worldBodies.length; i < len; i++) {
+                let b = this.worldBodies[i];
+                let m = this.worldMeshes[i];
+
+                if (!b.sleeping) {
+                    m.position.copy(b.getPosition());
+                    m.quaternion.copy(b.getQuaternion());
+                }
+            }
+        }
+
         this.renderer.render(this.scene, this.camera);
     }
 
