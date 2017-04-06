@@ -3,6 +3,7 @@
  */
 // import * as THREE from "../../../../vendor/three";
 import * as THREE from 'three';
+import ObjPerson from "./ObjPerson";
 const OrbitControls = require('three-orbit-controls')(THREE);
 // import * as OrbitControls from 'three-orbit-controls';
 
@@ -129,7 +130,7 @@ export default class GameScene {
         //dome
         let geometry = new THREE.IcosahedronGeometry(700, 1);
         let domeMaterial = new THREE.MeshPhongMaterial({
-            color: 0xfb3550,
+            color: 0x35FBE0,
             shading: THREE.FlatShading,
             side: THREE.BackSide
         });
@@ -140,10 +141,11 @@ export default class GameScene {
         let light = new THREE.DirectionalLight(0xffffff);
         light.position.set(1, 1, 1);
         this.scene.add(light);
-        light = new THREE.DirectionalLight(0x002288);
-        light.position.set(-1, -1, 0);
+        light = new THREE.DirectionalLight(0xffffff);
+        light.position.set(1, -1, 0);
         this.scene.add(light);
-        light = new THREE.SpotLight(0x222222);
+        light = new THREE.SpotLight(0xffffff);
+        light.position.set(-1, 1, 0);
         this.scene.add(light);
 
         /*let object3d  = new THREE.DirectionalLight('white', 0.15);
@@ -155,7 +157,7 @@ export default class GameScene {
          spotLight.position.set(0, 20, 30);
          this.scene.add(spotLight);*/
 
-        let planeGeometry = new THREE.PlaneGeometry(60, 20, 10, 10);
+        let planeGeometry = new THREE.PlaneGeometry(1000, 1000, 40, 40);
         let planeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff, wireframe: true});
         let plane = new THREE.Mesh(planeGeometry, planeMaterial);
         plane.rotation.x = -0.5 * Math.PI;
@@ -169,26 +171,28 @@ export default class GameScene {
     }
 
     _renderHelpFigure() {
-        let cubeGeometry = new THREE.CubeGeometry(4, 4, 4);
-        let cubeMaterial = new THREE.MeshLambertMaterial(
-            {
-                color: 0xff0000,
-                shading: THREE.FlatShading,
-            });
-        let cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-        cube.position.x = -4;
-        cube.position.y = -7;
-        cube.position.z = 0;
-        this.scene.add(cube);
+        this.mePerson = new ObjPerson(this.scene, this);
+        this.mePerson.render();
+        /*let cubeGeometry = new THREE.CubeGeometry(4, 4, 4);
+         let cubeMaterial = new THREE.MeshLambertMaterial(
+         {
+         color: 0xff0000,
+         shading: THREE.FlatShading,
+         });
+         let cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+         cube.position.x = -4;
+         cube.position.y = -7;
+         cube.position.z = 0;
+         this.scene.add(cube);
 
-        let sphereGeometry = new THREE.SphereGeometry(4, 20, 20);
-        let sphereMaterial = new THREE.MeshLambertMaterial(
-            {color: 0x7777ff});
-        let sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-        sphere.position.x = 20;
-        sphere.position.y = -6;
-        sphere.position.z = 2;
-        this.scene.add(sphere);
+         let sphereGeometry = new THREE.SphereGeometry(4, 20, 20);
+         let sphereMaterial = new THREE.MeshLambertMaterial(
+         {color: 0x7777ff});
+         let sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+         sphere.position.x = 20;
+         sphere.position.y = -6;
+         sphere.position.z = 2;
+         this.scene.add(sphere);*/
     }
 
     _addCamera() {
@@ -196,8 +200,8 @@ export default class GameScene {
             , this.WIDTH / this.HEGHT, 0.1, 1000);
 
         this.camera.position.x = 0; // красная
-        this.camera.position.y = 20; // зеленая
-        this.camera.position.z = 35; // синяя
+        this.camera.position.y = 0; // зеленая
+        this.camera.position.z = 50; // синяя
         this.camera.lookAt(this.scene.position);
     }
 
@@ -226,6 +230,7 @@ export default class GameScene {
         this._renderField();
         this._renderHelpFigure();
         this.refreshScene();
+        this.mePerson.depnut();
         /*this._renderNames();
          //this._renderActionContainer();
          this._renderHealthBar();
