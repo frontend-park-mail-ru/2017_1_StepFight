@@ -56,7 +56,7 @@ export default class GameScene {
             antialias: true,
             alpha: true
         });
-        this.scene.fog = new THREE.FogExp2(0x1E2630, 0.002);
+        this.scene.fog = new THREE.FogExp2(0xffffff/*0x1E2630*/, 0.002);
         this.renderer.setClearColor(this.scene.fog.color);
         //this.renderer.setClearColor(0xEEEEEE, 1);
         this.renderer.setSize(this.WIDTH, this.HEGHT);
@@ -143,13 +143,13 @@ export default class GameScene {
         this.scene.add(dome);
 
         //light
-        let light = new THREE.DirectionalLight(0xffffff);
+        let light = new THREE.DirectionalLight(0x4198B5);
         light.position.set(1, 1, 1);
         this.scene.add(light);
-        light = new THREE.DirectionalLight(0xffffff);
+        light = new THREE.DirectionalLight(0x4198B5);
         light.position.set(1, -1, 0);
         this.scene.add(light);
-        light = new THREE.SpotLight(0xffffff);
+        light = new THREE.SpotLight(0x4198B5);
         light.position.set(-1, 1, 0);
         this.scene.add(light);
 
@@ -177,7 +177,7 @@ export default class GameScene {
             collidesWith: 0xffffffff
         });
 
-        this.world.gravity = new OIMO.Vec3(0, -9.8, 0);
+        this.world.gravity = new OIMO.Vec3(0, 0, 0);
 
         /*let gridXZ = new THREE.GridHelper(500, 10);
          this.scene.add(gridXZ);*/
@@ -252,6 +252,7 @@ export default class GameScene {
     _renderGameState() {
         this.clear();
         //this._resizer();
+        this._renderTextArea();
 
         this._renderField();
         this._renderHelpFigure();
@@ -261,6 +262,26 @@ export default class GameScene {
          //this._renderActionContainer();
          this._renderHealthBar();
          this._renderField();*/
+    }
+
+    _renderTextArea(){
+        let container = document.createElement('div');
+        container.setAttribute('id', 'command-div');
+        container.setAttribute('class', 'fcontainer-column');
+
+        let commandBox= document.createElement('textarea');
+        commandBox.setAttribute('id', 'commands');
+        commandBox.setAttribute('class', 'command-box');
+        commandBox.setAttribute('placeholder', 'Your commands');
+
+        let btnStep = document.createElement('div');
+        btnStep.setAttribute('id', 'btnNextStep');
+        btnStep.setAttribute('class', 'btn');
+        btnStep.innerText = 'Create step';
+
+        container.appendChild(commandBox);
+        container.appendChild(btnStep);
+        this.node.appendChild(container);
     }
 
     /**

@@ -24,12 +24,12 @@ export default class GameManager {
      */
     _start(){
         //TODO start strategy
-        //this.scene.setState(window.STATEWAIT);
+        this.scene.setState(window.STATEWAIT);
         setTimeout(()=>{
             this.opponent = this._getOpponent();
             this.scene.setNames(this.user.login, this.opponent.login);
             this.scene.setState(window.STATEGAME);
-        }, 1);
+        }, 1000);
 
        /* setTimeout(()=>{
             this.opponent = this._getOpponent();
