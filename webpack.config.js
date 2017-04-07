@@ -7,10 +7,13 @@ let webpack = require('webpack');
 module.exports = {
     context: __dirname,
     devtool: debug ? "inline-sourcemap" : null,
-    entry: ["whatwg-fetch", "./src/js/main.js"],
+    entry: {
+        app: ['whatwg-fetch', './src/js/Application.js'],
+        test: ['chai', 'whatwg-fetch', './test/test.js']
+    },
     output: {
         path: "./dist/js",
-        filename: "scripts.min.js"
+        filename: '[name].bundle.js'
     },
     plugins: debug ? [] : [
             new webpack.optimize.DedupePlugin(),
@@ -28,6 +31,6 @@ module.exports = {
                     drop_console: false,
                     unsafe: true
                 }
-            })
+            }),
         ]
 };

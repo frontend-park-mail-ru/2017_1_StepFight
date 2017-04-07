@@ -2,14 +2,14 @@
  * Created by Denis on 04.03.2017.
  */
 
-import UserService from '../../support/service/userService';
-import ProgressBar from '../elements/progressBar';
+import UserService from '../../support/service/UserService';
+import ProgressBar from '../elements/ProgressBar';
 export default class LeaderBoard {
-    constructor() {
-
+    constructor(node) {
+        this.node = node;
     }
 
-    render(data) {
+    _render(data) {
         let leaderBoardSource = `
                         {{#with titles}}
                             <h2>{{title}}</h2>
@@ -18,36 +18,42 @@ export default class LeaderBoard {
                         {{#if leaderboard}}
                         <ul class="list-group">
                             {{#each leaderboard}}
-                            <li class="list-group-item">{{login}}<span class="badge">{{rating}}</span></li>
+                            <li class="list-group-item">{{login}}<span class="badge">{{rating}}</span>
+                            <span class="position">{{position}}</span></li>
                             {{/each}}
                         </ul>
                         {{/if}}`;
         let leaderBoardTemplate = Handlebars.compile(leaderBoardSource);
-        ProgressBar.sleep(500);
         return leaderBoardTemplate(data);
     }
 
     refreshLeaderBoard() {
-        let leaderBoardContainer = document.getElementById('leaderboard-container');
-        this.setProgressBar(leaderBoardContainer);
+        this._setProgressBar(this.node);
 
         new UserService().getLeaders().then(response => {
-            let leaderBoardContainer = document.getElementById('leaderboard-container');
             let arr = response.leaders;
-            leaderBoardContainer.innerHTML = this.render({
-                titles: {
-                    title: 'Top players:',
-                },
-                leaderboard: arr,
-                control: {
-                    text: 'Refresh',
-                    class: 'link',
-                    id: 'refresh-lb'
-                }
+            let iter = 1;
+            arr.forEach(elem=>{
+               elem.position = `${iter}.`;
+               iter++;
             });
-            this.initRefreshListener();
-        }, response => {
-            leaderBoardContainer.innerHTML = this.render({
+            setTimeout(() => {
+                this.node.innerHTML = this._render({
+                    titles: {
+                        title: 'Top players:',
+                    },
+                    leaderboard: arr,
+                    control: {
+                        text: 'Refresh',
+                        class: 'link__refresh',
+                        id: 'refresh-lb'
+                    }
+                });
+                this._initRefreshListener();
+            }, 500);
+        }).catch(err => {
+            console.error(err);
+            this.node.innerHTML = this._render({
                 titles: {
                     title: 'No connection',
                 },
@@ -58,13 +64,11 @@ export default class LeaderBoard {
                     id: 'refresh-lb'
                 }
             });
-            this.initRefreshListener();
-        }).catch(err => {
-            console.error(err);
+            this._initRefreshListener();
         });
     }
 
-    initRefreshListener() {
+    _initRefreshListener() {
         let refresh = document.getElementById('refresh-lb');
         if (refresh) {
             refresh.addEventListener('click', () => {
@@ -73,15 +77,15 @@ export default class LeaderBoard {
         }
     }
 
-    clearContainer(container) {
+    _clearContainer(container) {
         while (container.children.length > 1) {
             container.removeChild(container.lastChild);
         }
     }
 
-    setProgressBar(container) {
-        this.clearContainer(container);
-        container.appendChild(new ProgressBar().render());
+    _setProgressBar(container) {
+        this._clearContainer(container);
+        container.appendChild(new ProgressBar().getElem());
     }
 }
 

@@ -6,18 +6,22 @@ export default class Button {
         this.text = options.text;
         this.attrs = options.attrs || [];
         this.el = document.createElement(options.type);
+        this._render();
     }
 
-    setAttrs(attrs) {
+    _setAttrs(attrs) {
         Object.keys(attrs).forEach(name => {
             this.el.setAttribute(name, attrs[name]);
         })
     }
 
-    render() {
-        this.el.innerHTML = this.text;
-        this.setAttrs(this.attrs);
+    getElem(){
         return this;
+    }
+
+    _render() {
+        this.el.innerHTML = this.text;
+        this._setAttrs(this.attrs);
     }
 
     toString() {

@@ -1,21 +1,23 @@
 :root {
-    --btn-border-color: black;
+    --btn-border-color: white;
+    --btn-border-color2: black;
     --btn-text-color: white;
-    --btn-bg-color: rgba(229, 229, 229, 0.56);
+    --btn-bg-color: rgba(131, 73, 246, 0.86);
 
     --btn-border-color-focus: white;
-    --btn-text-color-focus: black;
-    --btn-bg-color-focus: rgba(229, 229, 229, 0.9);
+    --btn-text-color-focus: #191919;
+    --btn-bg-color-focus: rgb(255, 255, 255);
 }
 
-.btn-play {
-    margin: 15px auto;
-    width: 180px;
-    height: 180px;
+.btn__play, .btn__main-play, .btn__profile {
+    text-decoration: none;
+    width: 150px;
+    height: 150px;
     border: 2px solid var(--btn-border-color);
     padding: 10px;
     border-radius: 2000px;
     text-align: center;
+    margin: 5px auto;
     font-family: 'Orbitron', sans-serif;
     color: var(--btn-text-color);
     display: table;
@@ -23,29 +25,50 @@
     -webkit-transition: all 0.2s linear;
 }
 
-.btn-play:hover, .btn-play:focus {
-    color: var(--btn-text-color-focus);
-    border-color: var(--btn-border-color-focus);
-    background-color: var(--btn-bg-color-focus);
-    cursor: pointer;
+.btn__main-play {
+    width: 200px;
+    height: 200px;
+    margin: auto auto;
+    background-color: #991b4e;
 }
 
-.btn-play h1 {
-    font-size: 30px;
+.btn__profile{
+    width: 100px;
+    height: 100px;
+    margin: 5px auto;
+}
+.btn__profile h1{
+    font-size: 16px;
     display: table-cell;
     vertical-align: middle;
 }
 
-.btn-play h1:hover, .btn-play h1:focus {
+.btn__play:hover, .btn__play:focus,
+.btn__main-play:hover, .btn__main-play:focus,
+.btn__profile:hover, .btn__profile:focus {
+    color: var(--btn-text-color-focus);
+    border-color: var(--btn-border-color-focus);
+    background-color: var(--btn-bg-color-focus);
+    cursor: pointer;
+    text-shadow: 10px 10px 40px #6e47ff;
+}
+
+.btn__play h1, .btn__main-play h1{
+    font-size: 26px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.btn__play h1:hover, .btn__play h1:focus {
     cursor: pointer;
 }
 
 .btn {
     margin-top: 5px;
     padding: 5px;
-    color: var(--btn-text-color-focus);
+    color: var(--btn-text-color);
     background-color: var(--btn-bg-color);
-    border: 1px solid var(--btn-border-color);
+    border: 1px solid var(--btn-border-color2);
     border-radius: 2px;
     text-decoration: none;
     font-family: 'Cabin', sans-serif;

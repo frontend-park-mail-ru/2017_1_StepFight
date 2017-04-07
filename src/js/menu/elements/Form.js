@@ -1,58 +1,66 @@
 /**
  * Created by Denis on 02.03.2017.
  */
-import Button from './btn'
-import Input from './input'
+import Button from './Btn'
+import Input from './Input'
 export default class Form {
     constructor(options = {data: {}}) {
         this.data = options.data;
         this.el = document.createElement('form');
+        this.fields = [];
+        this.controls = [];
+        this._render();
     }
 
-    render() {
-        this.setAttrs(this.data.form.attrs, this.el);
+    _render() {
+        this._setAttrs(this.data.form.attrs, this.el);
         let h3 = document.createElement('h3');
-        this.setAttrs(this.data.title.attrs, h3);
+        this._setAttrs(this.data.title.attrs, h3);
         h3.innerHTML = this.data.title.text;
         this.el.appendChild(h3);
 
-        this.fieldsAppendTo(this.getFields(), this.el);
 
-        this.controlsAppendTo(this.getControls(), this.el);
+        this.fields = this._getFields();
+        this.controls = this._getControls();
+        this._fieldsAppendTo(this.fields, this.el);
 
+        this._controlsAppendTo(this.controls, this.el);
+    }
+
+    getElem(){
         return this;
     }
 
-    getFields() {
+    _getFields() {
         let {fields = []}=this.data;
         return fields.map(data => {
-            return new Input(data).render();
+            return new Input(data).getElem();
         });
     }
 
-    setAttrs(attrs, elem) {
+    _setAttrs(attrs, elem) {
         Object.keys(attrs).forEach(name => {
             elem.setAttribute(name, attrs[name]);
         })
     }
 
-    fieldsAppendTo(array, elem) {
+    _fieldsAppendTo(array, elem) {
         array.forEach(item => {
             elem.appendChild(item.el);
             elem.appendChild(item.help_el);
         })
     }
 
-    controlsAppendTo(array, elem) {
+    _controlsAppendTo(array, elem) {
         array.forEach(item => {
             elem.appendChild(item.el);
         })
     }
 
-    getControls() {
+    _getControls() {
         let {controls = []}=this.data;
         return controls.map(data => {
-            return new Button(data).render();
+            return new Button(data).getElem();
         });
     }
 
