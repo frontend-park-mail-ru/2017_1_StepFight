@@ -31,6 +31,8 @@ export default class GameScene {
 
     _onWindowResize() {
         let height = window.innerHeight;
+        let width = window.innerWidth;
+
         this.fieldSize = (height / this.HDim) | 0;
         this.WIDTH = this.fieldSize * this.WDim;
         this.HEGHT = this.fieldSize / 3 * 2 * this.HDim;

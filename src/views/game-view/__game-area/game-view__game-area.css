@@ -1,5 +1,6 @@
 .game-view__game-area{
     margin: auto auto;
+    border-radius: 3px;
 }
 
 @media (max-width: 1000px) {

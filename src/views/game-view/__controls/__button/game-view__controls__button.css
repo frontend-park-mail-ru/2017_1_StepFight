@@ -22,6 +22,6 @@
 @media (max-width: 1150px) {
     .game-view__controls__button {
         height: inherit;
-        margin: 0 0 5px 0;
+        margin: 0;
     }
 }
