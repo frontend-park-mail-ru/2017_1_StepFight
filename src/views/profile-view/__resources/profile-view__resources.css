@@ -1,7 +1,7 @@
 .profile-view__resources{
     display: flex;
     justify-content: space-around;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
     margin: 15px 5px;
 }

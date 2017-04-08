@@ -42,7 +42,7 @@ export default class MenuView extends BaseView {
                     type: 'a',
                     attrs: {
                         href: this.storage.urls.LOGIN,
-                        class: 'menu-view__controls-block__button'
+                        class: 'menu-view__controls-block__button_main'
                     },
                     element: {
                         type: 'h1',

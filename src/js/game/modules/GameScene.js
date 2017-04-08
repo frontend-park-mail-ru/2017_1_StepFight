@@ -61,7 +61,7 @@ export default class GameScene {
         this.renderer.setClearColor(this.scene.fog.color);
         //this.renderer.setClearColor(0xEEEEEE, 1);
         this.renderer.setSize(this.WIDTH, this.HEGHT);
-        this.renderer.domElement.setAttribute('class', 'game-area');
+        this.renderer.domElement.setAttribute('class', 'game-view__game-area');
         this.renderer.domElement.setAttribute('id', 'game-area');
 
         this.node.appendChild(this.renderer.domElement);
@@ -276,9 +276,11 @@ export default class GameScene {
         commandBox.setAttribute('placeholder', 'Your commands');
 
         let btnStep = document.createElement('div');
-        btnStep.setAttribute('id', 'btnNextStep');
+        btnStep.setAttribute('id', 'btn-next-step');
         btnStep.setAttribute('class', 'game-view__controls__button');
-        btnStep.innerText = 'Create step';
+        let text = document.createElement('p');
+        text.innerText = 'Create step';
+        btnStep.appendChild(text);
 
         container.appendChild(commandBox);
         container.appendChild(btnStep);

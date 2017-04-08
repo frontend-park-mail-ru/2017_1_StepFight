@@ -9,10 +9,19 @@
     font-family: 'Cabin', sans-serif;
     -webkit-transition: all 0.5s ease;
     cursor: pointer;
+    width: inherit;
+    text-align: center;
 }
 
 .game-view__controls__button:hover {
     background-color: white;
     border-color: white;
     color: #191919;
+}
+
+@media (max-width: 1150px) {
+    .game-view__controls__button {
+        height: inherit;
+        margin: 0 0 5px 0;
+    }
 }
