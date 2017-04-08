@@ -1,0 +1,18 @@
+.form__button {
+    margin-top: 5px;
+    padding: 5px;
+    color: white;
+    background-color: rgba(131, 73, 246, 0.86);
+    border: 1px solid black;
+    border-radius: 2px;
+    text-decoration: none;
+    font-family: 'Cabin', sans-serif;
+    -webkit-transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+.form__button:hover {
+    background-color: white;
+    border-color: white;
+    color: #191919;
+}

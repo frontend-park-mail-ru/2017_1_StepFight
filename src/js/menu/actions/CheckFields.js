@@ -36,11 +36,11 @@ export default class CheckFields {
             }
         });
 
-        if (arr.length == 0) {
+        if (arr.length === 0) {
             this.fieldSetOk(obj.field);
         }
 
-        return arr.length == 0;
+        return arr.length === 0;
     }
 
     static _checkPassLength(value) {
@@ -52,7 +52,7 @@ export default class CheckFields {
     }
 
     static checkEmpty(value) {
-        return value.length == 0;
+        return value.length === 0;
     }
 
 
@@ -95,11 +95,11 @@ export default class CheckFields {
             }
         });
 
-        if (arr.length == 0) {
+        if (arr.length === 0) {
             this.fieldSetOk(obj1.field);
             this.fieldSetOk(obj2.field);
         }
-        return arr.length == 0;
+        return arr.length === 0;
     }
 
     static helpSetText(elem, value) {
@@ -111,19 +111,19 @@ export default class CheckFields {
     }
 
     static fieldSetErr(elem) {
-        elem.classList.add('input__error');
+        elem.classList.add('form__input_error');
     }
 
     static fieldRemoveErr(elem) {
-        elem.classList.remove('input__error');
+        elem.classList.remove('form__input_error');
     }
 
     static fieldSetOk(elem) {
-        elem.classList.add('input__ok');
+        elem.classList.add('form__input_ok');
     }
 
     static fieldRemoveOk(elem) {
-        elem.classList.remove('input__ok');
+        elem.classList.remove('form__input_ok');
     }
 
 }

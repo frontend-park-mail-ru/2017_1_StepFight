@@ -10,12 +10,13 @@ const OrbitControls = require('three-orbit-controls')(THREE);
 // import * as OrbitControls from 'three-orbit-controls';
 
 export default class GameScene {
-    constructor(node) {
+    constructor(node, storage) {
         this.HDim = 34;
         this.WDim = 50;
 
         this.router = window.router;
         this.node = node;
+        this.storage = storage;
 
         this._setSize();
         this._renderContainer();
@@ -87,15 +88,15 @@ export default class GameScene {
      */
     _renderState() {
         switch (this.state) {
-            case window.STATEWAIT: {
+            case this.storage.gameStates.STATEWAIT: {
                 this._renderWaitState();
                 break;
             }
-            case window.STATEGAME: {
+            case this.storage.gameStates.STATEGAME: {
                 this._renderGameState();
                 break;
             }
-            case window.STATERESULT: {
+            case this.storage.gameStates.STATERESULT: {
                 this._renderResultState();
                 break;
             }
@@ -267,16 +268,16 @@ export default class GameScene {
     _renderTextArea(){
         let container = document.createElement('div');
         container.setAttribute('id', 'command-div');
-        container.setAttribute('class', 'fcontainer-column');
+        container.setAttribute('class', 'game-view__controls');
 
         let commandBox= document.createElement('textarea');
         commandBox.setAttribute('id', 'commands');
-        commandBox.setAttribute('class', 'command-box');
+        commandBox.setAttribute('class', 'game-view__controls__textarea');
         commandBox.setAttribute('placeholder', 'Your commands');
 
         let btnStep = document.createElement('div');
         btnStep.setAttribute('id', 'btnNextStep');
-        btnStep.setAttribute('class', 'btn');
+        btnStep.setAttribute('class', 'game-view__controls__button');
         btnStep.innerText = 'Create step';
 
         container.appendChild(commandBox);

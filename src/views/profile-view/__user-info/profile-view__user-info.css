@@ -1,0 +1,7 @@
+.profile-view__user-info{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 15px auto;
+}

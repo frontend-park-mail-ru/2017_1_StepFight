@@ -1,0 +1,5 @@
+.form__input_error {
+    border: 1px solid  #c35465;
+    background-color: #fff4f4;
+    outline-color: #c35465;
+}

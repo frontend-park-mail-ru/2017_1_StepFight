@@ -1,0 +1,13 @@
+.form__input {
+    padding: 5px;
+    margin-top: 5px;
+    border: 1px solid black;
+    border-radius: 2px;
+    -webkit-transition: all 0.5s ease;
+}
+
+.form__input:focus {
+    border: 1px solid black;
+    height: 25px;
+    outline-color: black;
+}

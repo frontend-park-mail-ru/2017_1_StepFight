@@ -1,0 +1,51 @@
+.profile-view__controllers__button h1{
+    font-size: 16px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.profile-view__controllers__button {
+    text-decoration: none;
+    width: 100px;
+    height: 100px;
+    border: 2px solid white;
+    padding: 10px;
+    border-radius: 2000px;
+    text-align: center;
+    margin: 5px 5px;
+    font-family: 'Orbitron', sans-serif;
+    color: white;
+    display: table;
+    background-color: rgba(131, 73, 246, 0.86);
+    -webkit-transition: all 0.2s linear;
+}
+
+.profile-view__controllers__button:hover,
+.profile-view__controllers__button:focus {
+    color: #191919;
+    border-color: white;
+    background-color: white;
+    cursor: pointer;
+    text-shadow: 10px 10px 40px #6e47ff;
+}
+
+.profile-view__controllers__button_logout{
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    font-family: 'Orbitron', sans-serif;
+    text-decoration: none;
+    -webkit-transition: all 0.5s ease;
+    cursor: pointer;
+    font-size: 20px;
+    background: #615b8b;
+    border-radius: 3px;
+    color: white;
+    padding: 3px 25px;
+    margin: auto auto;
+    text-align: center;
+}
+.profile-view__controllers__button_logout:hover{
+    background: white;
+    color: black;
+}

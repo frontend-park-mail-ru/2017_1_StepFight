@@ -5,15 +5,15 @@ import GameScene from "./GameScene";
 import SinglePlayerStrategy from "./strategies/Singleplayer";
 import MultiPlayerStrategy from "./strategies/Multiplayer";
 export default class GameManager {
-    constructor(user, view, strategy) {
+    constructor(storage, view, strategy) {
         this._subscribed = [];
 
-        this.user = user;
-        this.strategy = strategy === window.SINGLEPLAYER_STRATEGY ? new SinglePlayerStrategy() : new MultiPlayerStrategy();
+        this.storage = storage;
+        this.strategy = strategy === this.storage.gameStates.SINGLEPLAYER_STRATEGY ? new SinglePlayerStrategy() : new MultiPlayerStrategy();
         this.node = view.node;
         this.view = view;
 
-        this.scene = new GameScene(view.node);
+        this.scene = new GameScene(view.node, this.storage);
 
         this._start();
     }
@@ -24,11 +24,11 @@ export default class GameManager {
      */
     _start(){
         //TODO start strategy
-        this.scene.setState(window.STATEWAIT);
+        this.scene.setState(this.storage.gameStates.STATEWAIT);
         setTimeout(()=>{
             this.opponent = this._getOpponent();
-            this.scene.setNames(this.user.login, this.opponent.login);
-            this.scene.setState(window.STATEGAME);
+            this.scene.setNames(this.storage.user.login, this.opponent.login);
+            this.scene.setState(this.storage.gameStates.STATEGAME);
         }, 1000);
 
        /* setTimeout(()=>{
