@@ -14,7 +14,6 @@ export default class GameScene {
         this.HDim = 34;
         this.WDim = 50;
 
-        this.router = window.router;
         this.node = node;
         this.storage = storage;
 
@@ -25,7 +24,8 @@ export default class GameScene {
     _setSize() {
         const height = window.innerHeight;
         this.fieldSize = (height / this.HDim) | 0;
-        this.WIDTH = this.fieldSize * this.WDim;
+        //this.WIDTH = this.fieldSize * this.WDim;
+        this.WIDTH = window.innerWidth;
         this.HEGHT = this.fieldSize / 3 * 2 * this.HDim;
     }
 
@@ -34,7 +34,9 @@ export default class GameScene {
         let width = window.innerWidth;
 
         this.fieldSize = (height / this.HDim) | 0;
-        this.WIDTH = this.fieldSize * this.WDim;
+        //this.WIDTH = this.fieldSize * this.WDim;
+        this.WIDTH = window.innerWidth;
+
         this.HEGHT = this.fieldSize / 3 * 2 * this.HDim;
 
         if (!this.camera || !this.renderer) return;
@@ -66,7 +68,11 @@ export default class GameScene {
         this.renderer.domElement.setAttribute('class', 'game-view__game-area');
         this.renderer.domElement.setAttribute('id', 'game-area');
 
-        this.node.appendChild(this.renderer.domElement);
+        this.container = document.createElement('div');
+        this.container.setAttribute('class', 'game-view__container');
+        this.container.appendChild(this.renderer.domElement);
+        // this.node.appendChild(this.renderer.domElement);
+        this.node.appendChild(this.container);
 
         this.world = new OIMO.World(1 / 60, 2, 8);
 
@@ -286,7 +292,7 @@ export default class GameScene {
 
         container.appendChild(commandBox);
         container.appendChild(btnStep);
-        this.node.appendChild(container);
+        this.container.appendChild(container);
     }
 
     /**

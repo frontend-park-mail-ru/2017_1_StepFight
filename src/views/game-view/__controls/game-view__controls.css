@@ -2,16 +2,8 @@
     text-align: center;
     display: flex;
     justify-content: space-around;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
     margin: auto auto;
-}
-
-@media (max-width: 1150px) {
-    .game-view__controls {
-        margin: 15px;
-        left: 15px;
-        right: 15px;
-        flex-direction: row;
-    }
+    padding: 5px;
 }

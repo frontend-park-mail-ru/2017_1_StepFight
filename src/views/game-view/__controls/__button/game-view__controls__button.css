@@ -1,5 +1,4 @@
 .game-view__controls__button{
-    margin-top: 5px;
     padding: 5px;
     color: white;
     background-color: rgba(131, 73, 246, 0.86);
@@ -11,6 +10,7 @@
     cursor: pointer;
     width: inherit;
     text-align: center;
+    margin: 0 0 0 5px;
 }
 
 .game-view__controls__button:hover {
@@ -19,9 +19,11 @@
     color: #191919;
 }
 
-@media (max-width: 1150px) {
+@media (max-width: 550px) {
     .game-view__controls__button {
-        height: inherit;
-        margin: 0;
+        width: 100%;
+        left: 15px;
+        right: 15px;
+        margin: 5px 0 0 0;
     }
 }

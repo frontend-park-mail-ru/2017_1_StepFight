@@ -1,0 +1,12 @@
+.game-view__container {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 550px) {
+    .game-view__container {
+        flex-direction: row;
+    }
+}
