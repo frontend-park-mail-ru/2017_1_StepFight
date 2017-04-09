@@ -1,8 +1,14 @@
-.game-view__controls__textarea{
+.game-controls__textarea{
     border-radius: 5px;
     font-family: 'Orbitron', sans-serif;
     resize: none;
     padding: 5px;
     min-height: 100px;
     width: 500px;
+}
+
+@media (max-width: 1000px) {
+    .game-controls__textarea {
+        width: inherit;
+    }
 }

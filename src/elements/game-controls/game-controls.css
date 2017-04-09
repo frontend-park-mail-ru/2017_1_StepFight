@@ -1,0 +1,18 @@
+.game-controls{
+    text-align: center;
+    display: flex;
+    /*justify-content: space-around;*/
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: auto auto;
+    padding: 5px;
+}
+
+@media (max-width: 1000px) {
+    .game-controls {
+        left: 15px;
+        right: 15px;
+        margin: 0;
+        padding: 0;
+    }
+}

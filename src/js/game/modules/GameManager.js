@@ -27,18 +27,9 @@ export default class GameManager {
         this.scene.setState(this.storage.gameStates.STATEWAIT);
         setTimeout(()=>{
             this.opponent = this._getOpponent();
-            this.scene.setNames(this.storage.user.login, this.opponent.login);
+            this.scene.setPlayers(this.storage.user, this.opponent);
             this.scene.setState(this.storage.gameStates.STATEGAME);
         }, 1000);
-
-       /* setTimeout(()=>{
-            this.opponent = this._getOpponent();
-            this.scene.setUserResult({
-                result: 'win',
-                divscore: 1
-            }, this.user);
-            this.scene.setState(window.STATERESULT);
-        }, 2000);*/
     }
 
     /**
