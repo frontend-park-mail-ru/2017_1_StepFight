@@ -154,6 +154,7 @@ export default class GameScene {
         this._renderField();
         this._renderPlayers();
         this.refreshScene();
+
         this.mePerson.depnut();
 
          this._renderNames();
@@ -205,7 +206,10 @@ export default class GameScene {
 
     _renderPlayers() {
         this.mePerson = new ObjPerson(this.scene, this);
-        this.mePerson.render();
+        this.mePerson.render('right');
+
+        this.opponentPerson = new ObjPerson(this.scene, this);
+        this.opponentPerson.render('left');
     }
 
     _addCamera() {
@@ -247,6 +251,10 @@ export default class GameScene {
         let render = () => {
             if (this.camera.position.z > 60) {
                 this.camera.position.z -= 10;
+                this.camera.lookAt(this.scene.position);
+                window.requestAnimationFrame(render);
+            } else if(this.camera.position.y < 30){
+                this.camera.position.y += 1;
                 this.camera.lookAt(this.scene.position);
                 window.requestAnimationFrame(render);
             }

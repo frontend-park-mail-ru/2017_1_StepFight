@@ -123,11 +123,13 @@ export default class Router {
                 return Storage.urls.LOGIN;
             }
         } else if (path === Storage.urls.GAME) {
-            if (Storage.user) {
+            //!!! for debug only !!!
+            return Storage.urls.GAME;
+            /*if (Storage.user) {
                 return Storage.urls.GAME;
             } else {
                 return Storage.urls.MAIN;
-            }
+            }*/
         } else {
             return path;
         }
