@@ -155,7 +155,7 @@ export default class GameScene {
         this._renderPlayers();
         this.refreshScene();
 
-        this.mePerson.depnut();
+        // this.mePerson.depnut();
 
          this._renderNames();
          this._renderHealthBars();

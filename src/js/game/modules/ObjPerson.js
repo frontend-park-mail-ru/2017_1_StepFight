@@ -9,6 +9,27 @@ export default class ObjPerson {
         this.material = new THREE.MeshLambertMaterial(
             {color: 0x7777ff /*shading: THREE.FlatShading,*/, skinning: true});
 
+        this.bonesNames = {
+            main: 0,
+            bodyBottom: 1,
+            bodyTop: 2,
+            head: 3,
+            collaboneLeft: 4,
+            armLeftTop: 5,
+            armLeftMiddle: 6,
+            armLeftBottom: 7,
+            collaboneRight: 8,
+            armRightTop: 9,
+            armRightMiddle: 10,
+            armRightBottom: 11,
+            legLeftTop: 12,
+            legLeftMiddle: 13,
+            legLeftBottom: 14,
+            legRightTop: 15,
+            legRightMiddle: 16,
+            legRightBottom: 17,
+        };
+
         this.personConst = {
             startPosition: {
                 x: 10,
@@ -32,6 +53,7 @@ export default class ObjPerson {
         this.partOf = partOf;
         this._renderBodyOnStart();
     }
+
 
     _renderBodyOnStart() {
         let loader = new THREE.JSONLoader();
@@ -58,29 +80,40 @@ export default class ObjPerson {
             );
 
 
-            this.person.skeleton.bones[17].position.y += -2;
-            this.person.skeleton.bones[15].rotation.x += Math.PI / 6;
-            this.person.skeleton.bones[16].rotation.x += -Math.PI / 4;
-           /* this.person.skeleton.bones[16].position.y += -1;
-            this.person.skeleton.bones[15].position.y += -1;
-
-            this.person.skeleton.bones[14].position.y += 0;
-            this.person.skeleton.bones[13].position.y += 1.5;
-            this.person.skeleton.bones[12].position.y += 1;
-
-            this.person.skeleton.bones[12].rotation.z += Math.PI / 2;*/
-
-            /*this.person.skeleton.bones[5].rotation.y += Math.PI / 2;
-            this.person.skeleton.bones[5].rotation.z += Math.PI / 2;
-            this.person.skeleton.bones[6].rotation.y += 3 * Math.PI / 2;
-            this.person.skeleton.bones[7].rotation.y += Math.PI ;*/
-
-            // this.person.skeleton.bones[5].position.y += 3 ;
+/*
+            this.person.skeleton.bones[this.bonesNames.bodyTop].rotation.y += Math.PI/2;
+*/
 
             this.scene.add(this.person);
 
             console.log(this.person);
         }));
+    }
+
+    getBones(){
+        return this.person.skeleton.bones;
+    }
+
+    getBonesNames(){
+        return this.bonesNames;
+    }
+
+
+    _moveToPos(position){
+        let flag = true;
+        let render = () => {
+            window.requestAnimationFrame(render);
+            step = /*Math.PI / 96*/ 0.01;
+
+            /*while(flag){
+                if(position.x < this.getBones()[this.bonesNames.armRightBottom].position.x){
+                    this.getBones()[this.bonesNames.armRightBottom].position -= step;
+                } else {
+                    this.getBones()[this.bonesNames.armRightBottom].position += step;
+                }
+            }*/
+        };
+        render();
     }
 
     depnut() {
