@@ -29,13 +29,13 @@ export default class GameControls {
     }
 
     initListener(callback) {
-        this.btnStep.addEventListener('click', (event) => {
+        this.createStep = function(){
             callback();
-        })
+        };
+        this.btnStep.addEventListener('click', this.createStep);
     }
 
     deleteListener() {
-        this.btnStep.removeEventListener('click', (event) => {
-        });
+        this.btnStep.removeEventListener('click', this.createStep);
     }
 }

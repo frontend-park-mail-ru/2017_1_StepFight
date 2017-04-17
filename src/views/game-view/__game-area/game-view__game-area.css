@@ -9,3 +9,10 @@
         width: inherit;
     }
 }
+
+.game-view__game-area_info{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -9999;
+}

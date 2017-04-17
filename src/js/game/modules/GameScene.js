@@ -3,7 +3,7 @@
  */
 // import * as THREE from "../../../../vendor/three";
 import * as THREE from "three";
-import * as OIMO from "oimo";
+//import * as OIMO from "oimo";
 
 import ObjPerson from "./ObjPerson";
 import GameControls from "../../../elements/game-controls/GameControls";
@@ -43,6 +43,10 @@ export default class GameScene {
         this.camera.updateProjectionMatrix();
 
         this.renderer.setSize(this.WIDTH, this.HEGHT);
+
+        /*-------2d canvas-----------*/
+        /*this.renderer2D.style.width = this.WIDTH + 'px';
+        this.renderer2D.style.height = this.HEGHT + 'px';*/
     }
 
     _initListeners() {
@@ -52,14 +56,15 @@ export default class GameScene {
 
     _renderContainer() {
         /* init figures arr*/
-        this.worldBodies = [];
-        this.worldMeshes = [];
+        /*this.worldBodies = [];
+        this.worldMeshes = [];*/
 
         this.scene = new THREE.Scene();
         this.renderer = new THREE.WebGLRenderer({
             antialias: true,
             alpha: true
         });
+
         this.scene.fog = new THREE.FogExp2(0xffffff, 0.002);
         this.renderer.setClearColor(this.scene.fog.color);
 
@@ -70,9 +75,18 @@ export default class GameScene {
         this.container.setAttribute('class', 'game-view__container');
 
         this.container.appendChild(this.renderer.domElement);
+
+
+        /*----------create 2d canvas-----------*/
+        /*this.renderer2D = document.createElement('canvas');
+        this.renderer2D.setAttribute('class', 'game-view__game-area_info');
+        this.renderer2D.style.width = this.WIDTH + 'px';
+        this.renderer2D.style.height =  '80px';
+        this.container.appendChild(this.renderer2D);*/
+        /*---------------------*/
         this.node.appendChild(this.container);
 
-        this.world = new OIMO.World(1 / 60, 2, 8);
+        //this.world = new OIMO.World(1 / 60, 2, 8);
 
         this._addCamera();
         this._animate();
@@ -193,7 +207,7 @@ export default class GameScene {
         plane.position.set(0, -10, 0);
         this.scene.add(plane);
 
-        this.world.add({
+        /*this.world.add({
             size: [1000, 10, 1000],
             pos: [0, -10, 0],
             world: this.world,
@@ -201,15 +215,15 @@ export default class GameScene {
             collidesWith: 0xffffffff
         });
 
-        this.world.gravity = new OIMO.Vec3(0, 0, 0);
+        this.world.gravity = new OIMO.Vec3(0, -9.8, 0);*/
     }
 
     _renderPlayers() {
         this.mePerson = new ObjPerson(this.scene, this);
-        this.mePerson.render('right');
+        this.mePerson.render('left');
 
         this.opponentPerson = new ObjPerson(this.scene, this);
-        this.opponentPerson.render('left');
+        this.opponentPerson.render('right');
     }
 
     _addCamera() {
@@ -229,7 +243,7 @@ export default class GameScene {
     }
 
     refreshScene() {
-        if (this.world) {
+        /*if (this.world) {
             this.world.step();
             for (let i = 0, len = this.worldBodies.length; i < len; i++) {
                 let b = this.worldBodies[i];
@@ -240,7 +254,7 @@ export default class GameScene {
                     m.quaternion.copy(b.getQuaternion());
                 }
             }
-        }
+        }*/
 
         this.renderer.render(this.scene, this.camera);
     }

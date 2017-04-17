@@ -58,7 +58,7 @@ export default class ObjPerson {
     _renderBodyOnStart() {
         let loader = new THREE.JSONLoader();
         loader.load('/src/three-models/player.json', (model => {
-            const color = this.partOf === 'left' ? 0xFF0037 : 0x00FF51;
+            const color = this.partOf === 'left' ? 0x00FF51 : 0xFF0037;
             let mat = new THREE.MeshLambertMaterial({color: color, shading: THREE.FlatShading, skinning: true});
             this.person = new THREE.SkinnedMesh(model, mat);
 
@@ -80,38 +80,39 @@ export default class ObjPerson {
             );
 
 
-/*
-            this.person.skeleton.bones[this.bonesNames.bodyTop].rotation.y += Math.PI/2;
-*/
+            /*
+             this.person.skeleton.bones[this.bonesNames.bodyTop].rotation.y += Math.PI/2;
+             */
 
             this.scene.add(this.person);
+            //this._addInWorld(this.person);
 
             console.log(this.person);
         }));
     }
 
-    getBones(){
+    getBones() {
         return this.person.skeleton.bones;
     }
 
-    getBonesNames(){
+    getBonesNames() {
         return this.bonesNames;
     }
 
 
-    _moveToPos(position){
+    _moveToPos(position) {
         let flag = true;
         let render = () => {
             window.requestAnimationFrame(render);
             step = /*Math.PI / 96*/ 0.01;
 
             /*while(flag){
-                if(position.x < this.getBones()[this.bonesNames.armRightBottom].position.x){
-                    this.getBones()[this.bonesNames.armRightBottom].position -= step;
-                } else {
-                    this.getBones()[this.bonesNames.armRightBottom].position += step;
-                }
-            }*/
+             if(position.x < this.getBones()[this.bonesNames.armRightBottom].position.x){
+             this.getBones()[this.bonesNames.armRightBottom].position -= step;
+             } else {
+             this.getBones()[this.bonesNames.armRightBottom].position += step;
+             }
+             }*/
         };
         render();
     }
@@ -132,20 +133,45 @@ export default class ObjPerson {
     /**
      * Добавить в мир физики
      * @param elem
-     * Position params:
-     * @param x
-     * @param y
-     * @param z
      * @private
      */
-    _addInWorld(elem, x, y, z) {
+    _addInWorld(elem) {
+        /*const pos = this.partOf === 'left' ? -1 : 1;
+
         let body = this.sceneContext.world.add({
             type: 'box',
-            pos: [x, y, z],
+            pos: [
+                this.personConst.startPosition.x * pos,
+                this.personConst.startPosition.y,
+                this.personConst.startPosition.z
+            ],
+            rot: [
+                this.personConst.startRotation.x,
+                this.personConst.startRotation.y,
+                this.personConst.startRotation.z * pos
+            ],
+            size: [
+                15,15,15
+            ],
             move: true,
             world: this.sceneContext.world,
+            collidesWith: 0x00BFFF
         });
+
+        this.person.position.copy(body.getPosition());
+        this.person.quaternion.copy(body.getQuaternion());
+        this.person.scale.set(
+            this.personConst.startScale.x,
+            this.personConst.startScale.y,
+            this.personConst.startScale.z
+        );
+        this.person.rotation.set(
+            this.personConst.startRotation.x,
+            this.personConst.startRotation.y,
+            this.personConst.startRotation.z * pos
+        );
+
         this.sceneContext.worldBodies.push(body);
-        this.sceneContext.worldMeshes.push(elem);
+        this.sceneContext.worldMeshes.push(elem);*/
     }
 }

@@ -25,9 +25,6 @@ export default class SinglePlayerStrategy {
         this.scene.gameControls.initListener(()=>{
             console.log("CLICK BITCH~");
         });
-
-        this.scene.gameControls.deleteListener();
-
     }
 
     finishGameLoop() {
