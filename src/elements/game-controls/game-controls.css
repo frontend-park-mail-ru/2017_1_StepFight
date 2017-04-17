@@ -16,3 +16,22 @@
         padding: 0;
     }
 }
+
+.game-controls_actions{
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: auto auto;
+    padding: 5px;
+}
+
+@media (max-width: 1000px) {
+    .game-controls_actions {
+        left: 15px;
+        right: 15px;
+        margin: 0;
+        padding: 0;
+    }
+}

@@ -1,0 +1,48 @@
+.game-controls__action-button{
+    height: 80px;
+    width: 80px;
+    margin: 5px;
+    background-color: white;
+    border-radius: 3px;
+    line-height: 80px;
+    font-family: 'Cabin', sans-serif;
+    -webkit-transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+.game-controls__action-button_empty:hover{
+    background-color: #8e69ff;
+    color: white;
+}
+
+.game-controls__action-button_fill:hover{
+    background-color: #1c8c2e;
+    color: white;
+}
+
+.game-controls__action-button_empty{
+    word-break: break-all;
+    height: 80px;
+    width: 150px;
+    margin: 5px;
+    background-color: white;
+    border-radius: 3px;
+    line-height: 80px;
+    font-family: 'Cabin', sans-serif;
+    -webkit-transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+.game-controls__action-button_fill{
+    word-break: break-all;
+    background-color: #7dff7c;
+    color: black;
+    height: 80px;
+    width: 150px;
+    margin: 5px;
+    border-radius: 3px;
+    line-height: 80px;
+    font-family: 'Cabin', sans-serif;
+    -webkit-transition: all 0.5s ease;
+    cursor: pointer;
+}

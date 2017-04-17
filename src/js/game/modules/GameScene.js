@@ -7,6 +7,7 @@ import * as THREE from "three";
 
 import ObjPerson from "./ObjPerson";
 import GameControls from "../../../elements/game-controls/GameControls";
+import GameAction from "../../../elements/game-choose-action/GameChooseAction";
 const OrbitControls = require('three-orbit-controls')(THREE);
 // import * as OrbitControls from 'three-orbit-controls';
 
@@ -164,6 +165,7 @@ export default class GameScene {
         this.clear();
         this._animCamera();
         this._renderControlArea();
+        this._renderGameActionModal();
 
         this._renderField();
         this._renderPlayers();
@@ -277,8 +279,13 @@ export default class GameScene {
     }
 
     _renderControlArea() {
-        this.gameControls = new GameControls(this.container);
+        this.gameControls = new GameControls(this.container, this);
         this.gameControls.render();
+    }
+
+    _renderGameActionModal(){
+        this.gameActionModal = new GameAction(this.node);
+        this.gameActionModal.render();
     }
 
     /**

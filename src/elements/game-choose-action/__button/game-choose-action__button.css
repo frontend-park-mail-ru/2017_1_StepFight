@@ -1,0 +1,30 @@
+.game-choose-action__button{
+    padding: 5px;
+    color: white;
+    background-color: rgba(131, 73, 246, 0.86);
+    border: 1px solid black;
+    border-radius: 5px;
+    text-decoration: none;
+    font-family: 'Cabin', sans-serif;
+    -webkit-transition: all 0.5s ease;
+    cursor: pointer;
+    width: 95%;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin: 100px 0 0 0;
+}
+
+.game-choose-action__button:hover {
+    background-color: white;
+    border-color: black;
+    color: #191919;
+}
+
+@media (max-width: 550px) {
+    .game-choose-action__button {
+        width: inherit;
+        left: 15px;
+        right: 15px;
+    }
+}
