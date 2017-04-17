@@ -15,6 +15,7 @@ export default class GameView extends BaseView{
     }
 
     render(){
-        new GameManager(this.storage, this, this.storage.gameStates.SINGLEPLAYER_STRATEGY);
+        this.gameManager = new GameManager(this.router, this.storage, this, this.storage.gameStates.SINGLEPLAYER_STRATEGY);
+        this.gameManager.start();
     }
 }

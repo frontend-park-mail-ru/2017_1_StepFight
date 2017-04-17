@@ -2,8 +2,9 @@
  * Created by Denis on 02.04.2017.
  */
 export default class MultiPlayerStrategy{
-    constructor() {
-        console.log('MultiPlayerStrategy.c');
+    constructor(scene, manager) {
+        this.scene = scene;
+        this.manager = manager;
     }
 
     gameLoop(){
@@ -12,5 +13,9 @@ export default class MultiPlayerStrategy{
 
     startGameLoop() {
         this.inteval = setInterval(() => this.gameLoop(), 100);
+    }
+
+    finishGameLoop(){
+        clearInterval(this.inteval);
     }
 }

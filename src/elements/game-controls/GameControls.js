@@ -1,30 +1,41 @@
 /**
  * Created by Denis on 08.04.2017.
  */
-export default class GameControls{
-    constructor(node){
+export default class GameControls {
+    constructor(node) {
         this.node = node;
     }
 
-    render(){
+    render() {
         let container = document.createElement('div');
         container.setAttribute('id', 'command-div');
         container.setAttribute('class', 'game-controls');
 
-        let commandBox= document.createElement('textarea');
+        let commandBox = document.createElement('textarea');
         commandBox.setAttribute('id', 'commands');
         commandBox.setAttribute('class', 'game-controls__textarea');
         commandBox.setAttribute('placeholder', 'Your commands');
 
-        let btnStep = document.createElement('div');
-        btnStep.setAttribute('id', 'btn-next-step');
-        btnStep.setAttribute('class', 'game-controls__button');
+        this.btnStep = document.createElement('div');
+        this.btnStep.setAttribute('id', 'btn-next-step');
+        this.btnStep.setAttribute('class', 'game-controls__button');
         let text = document.createElement('p');
         text.innerText = 'Create step';
-        btnStep.appendChild(text);
+        this.btnStep.appendChild(text);
 
         container.appendChild(commandBox);
-        container.appendChild(btnStep);
+        container.appendChild(this.btnStep);
         this.node.appendChild(container);
+    }
+
+    initListener(callback) {
+        this.btnStep.addEventListener('click', (event) => {
+            callback();
+        })
+    }
+
+    deleteListener() {
+        this.btnStep.removeEventListener('click', (event) => {
+        });
     }
 }

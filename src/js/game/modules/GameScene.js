@@ -299,10 +299,4 @@ export default class GameScene {
     setPlayers(me, opponent) {
         this.players = {me: me, opponent: opponent};
     }
-
-    setUserResult(objResult, user) {
-        this.objResult = objResult;
-    }
-
-
 }

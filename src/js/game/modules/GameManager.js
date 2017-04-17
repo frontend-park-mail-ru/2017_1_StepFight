@@ -5,31 +5,57 @@ import GameScene from "./GameScene";
 import SinglePlayerStrategy from "./strategies/Singleplayer";
 import MultiPlayerStrategy from "./strategies/Multiplayer";
 export default class GameManager {
-    constructor(storage, view, strategy) {
+    constructor(router, storage, view, strategy) {
         this._subscribed = [];
 
+        this.router = router;
         this.storage = storage;
-        this.strategy = strategy === this.storage.gameStates.SINGLEPLAYER_STRATEGY ? new SinglePlayerStrategy() : new MultiPlayerStrategy();
         this.node = view.node;
         this.view = view;
 
         this.scene = new GameScene(view.node, this.storage);
-
-        this._start();
+        this.strategy =
+            strategy === this.storage.gameStates.SINGLEPLAYER_STRATEGY
+                ? new SinglePlayerStrategy(this.scene, this) : new MultiPlayerStrategy(this.scene, this);
     }
 
     /**
      * Начать игровой процесс
-     * @private
      */
-    _start(){
+    start(){
         //TODO start strategy
         this.scene.setState(this.storage.gameStates.STATEWAIT);
-        setTimeout(()=>{
-            this.opponent = this._getOpponent();
-            this.scene.setPlayers(this.storage.user, this.opponent);
-            this.scene.setState(this.storage.gameStates.STATEGAME);
-        }, 1000);
+
+        if(this.checkUser()){
+            setTimeout(()=>{
+                this.opponent = this._getOpponent();
+                this.strategy.setPlayers(
+                    //TODO fix this
+                    {login: /*this.storage.user.login*/'debug', health: 100},
+                    {login: this.opponent.login, health: 100});
+                this.scene.setState(this.storage.gameStates.STATEGAME);
+                this.strategy.startGameLoop();
+            }, 1000);
+        } else {
+            this.router.go(this.storage.urls.LOGIN, true);
+        }
+    }
+
+    /**
+     * Завершить игровой процесс
+     */
+    finish(){
+        this.scene.setState(this.storage.gameStates.STATERESULT);
+    }
+
+    checkUser(){
+        //TODO delete this
+        return true;
+        try{
+            return this.storage.user.login !== null;
+        } catch (e){
+            return false;
+        }
     }
 
     /**
