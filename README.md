@@ -9,4 +9,4 @@
 #### Для запуска проекта:
  `npm start`
 
-# [Попробовать](https://tp-front-end-js-game.herokuapp.com)
+# [Попробовать](stepfighting.herokuapp.com)
