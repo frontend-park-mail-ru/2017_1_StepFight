@@ -9,4 +9,4 @@
 #### Для запуска проекта:
  `npm start`
 
-# [Попробовать](stepfighting.herokuapp.com)
+# [Попробовать](https://stepfighting.herokuapp.com)
