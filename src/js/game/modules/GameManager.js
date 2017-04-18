@@ -48,6 +48,10 @@ export default class GameManager {
         this.scene.setState(this.storage.gameStates.STATERESULT);
     }
 
+    /**
+     * Проверить user-а на существования
+     * @return {boolean}
+     */
     checkUser(){
         //TODO delete this
         return true;

@@ -7,6 +7,9 @@ export default class BaseView {
         this.node = node;
     }
 
+    /**
+     * Удалить view
+     */
     destroyView(){
         while (this.node.firstChild) {
             this.node.removeChild(this.node.firstChild);

@@ -49,12 +49,20 @@ export default class ObjPerson {
         }
     }
 
+    /**
+     * Отрисовка персонажа
+     * @param partOf - с какой части поля
+     */
     render(partOf) {
         this.partOf = partOf;
         this._renderBodyOnStart();
     }
 
 
+    /**
+     * Отрисовка персонажа на начальных позициях
+     * @private
+     */
     _renderBodyOnStart() {
         let loader = new THREE.JSONLoader();
         loader.load('/src/three-models/player.json', (model => {

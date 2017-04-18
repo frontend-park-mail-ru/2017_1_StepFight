@@ -5,9 +5,14 @@ export default class GameControls {
     constructor(node, sceneContext) {
         this.node = node;
         this.sceneContext = sceneContext;
+
+        /*Массив хранит кнопки действий*/
         this.actionButtons = new Array(5);
     }
 
+    /**
+     * Отрисовка элемент
+     */
     render() {
         let container = document.createElement('div');
         container.setAttribute('class', 'game-controls');
@@ -37,6 +42,10 @@ export default class GameControls {
         this.node.appendChild(container);
     }
 
+    /**
+     * Инициализация слушателей на кнопку "сделать шаг"
+     * @param callback
+     */
     initDoStepListener(callback) {
         this.createStep = function () {
             callback();
@@ -44,10 +53,17 @@ export default class GameControls {
         this.btnStep.addEventListener('click', this.createStep);
     }
 
+    /**
+     * Удалить слушателя на кнопку "сделать шаг"
+     */
     deleteDoStepListener() {
         this.btnStep.removeEventListener('click', this.createStep);
     }
 
+    /**
+     * Инициализация слушателей на кнопку "выбрать действие"
+     * @param callback
+     */
     initActionListener(callback) {
         this.sceneContext.gameActionModal.initButtonsAction((action) => {
             if(this.index !== null && typeof this.index !== 'undefined'){
@@ -64,6 +80,9 @@ export default class GameControls {
         this.actionContainer.addEventListener('click', this.actionCallback.bind(this));
     }
 
+    /**
+     * Удалить слушателя на кнопку "выбрать действие"
+     */
     deleteActionListener() {
         this.actionContainer.removeEventListener('click', this.actionCallback);
         this.sceneContext.gameActionModal.deleteButtonAction();

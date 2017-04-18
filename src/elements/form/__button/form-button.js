@@ -9,22 +9,31 @@ export default class FormButton {
         this._render();
     }
 
-    _setAttrs(attrs) {
-        Object.keys(attrs).forEach(name => {
-            this.el.setAttribute(name, attrs[name]);
+    /**
+     * Установить элементу атрибуты
+     * @param attributes - массив атрибутов
+     * @private
+     */
+    _setAttributes(attributes) {
+        Object.keys(attributes).forEach(name => {
+            this.el.setAttribute(name, attributes[name]);
         })
     }
 
+    /**
+     * возвращает объект кнопки
+     * @return {FormButton}
+     */
     getElem(){
         return this;
     }
 
+    /**
+     * Отрисовка
+     * @private
+     */
     _render() {
         this.el.innerHTML = this.text;
-        this._setAttrs(this.attrs);
-    }
-
-    toString() {
-        return this.el.outerHTML;
+        this._setAttributes(this.attrs);
     }
 }

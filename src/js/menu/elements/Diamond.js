@@ -7,10 +7,20 @@ export default class Diamond {
         this._render(color || 'white', strokeWidth || '2');
     }
 
+    /**
+     * Возвращает элемент 
+     * @return {Diamond}
+     */
     getElem() {
         return this;
     }
 
+    /**
+     * Отрисовка элемент
+     * @param color
+     * @param strokeWidth
+     * @private
+     */
     _render(color, strokeWidth) {
         this.el = document.createElement('canvas');
         this.el.setAttribute('width', '50');

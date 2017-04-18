@@ -7,6 +7,9 @@ export default class GameChooseAction{
         this.action = {};
     }
 
+    /**
+     * Метод отрисовки
+     */
     render(){
         this.container = document.createElement('div');
         this.container.setAttribute('class', 'game-choose-action hidden');
@@ -27,14 +30,24 @@ export default class GameChooseAction{
         contentContainer.appendChild(this.btnChoose);
     }
 
+    /**
+     * Показать элемент
+     */
     show(){
         this.container.classList.remove('hidden');
     }
 
+    /**
+     * Спрятать элемент
+     */
     hide(){
         this.container.classList.add('hidden');
     }
 
+    /**
+     * Инициализация слушателей на кнопках [закрытие, подтверждение действия]
+     * @param callback
+     */
     initButtonsAction(callback){
         this.actionCallbackClose = function () {
             this.hide();
@@ -59,6 +72,9 @@ export default class GameChooseAction{
         this.btnChoose.addEventListener('click', this.actionCallbackChoose.bind(this));
     }
 
+    /**
+     * Удалить слушатели
+     */
     deleteButtonAction(){
         this.btnClose.removeEventListener('click', this.actionCallbackClose);
         this.btnChoose.removeEventListener('click', this.actionCallbackChoose);

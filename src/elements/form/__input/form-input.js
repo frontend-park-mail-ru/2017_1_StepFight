@@ -13,25 +13,40 @@ export default class Input {
         this._render();
     }
 
-    _setAttrs(attrs, elem) {
-        Object.keys(attrs).forEach(name => {
-            elem.setAttribute(name, attrs[name]);
+    /**
+     * Установить элементу аттрибуты
+     * @param attributes - массив атрибутов
+     * @param elem - элемент
+     * @private
+     */
+    _setAttributes(attributes, elem) {
+        Object.keys(attributes).forEach(name => {
+            elem.setAttribute(name, attributes[name]);
         })
     }
 
+    /**
+     * Отрисовка
+     * @private
+     */
     _render() {
-        this._setAttrs(this.attrs, this.el);
-        this._setAttrs(this.help_attrs, this.help_el);
+        this._setAttributes(this.attrs, this.el);
+        this._setAttributes(this.help_attrs, this.help_el);
     }
 
+    /**
+     * Возвращает элемент input
+     * @return {Input}
+     */
     getElem() {
         return this;
     }
 
-    toString() {
-        return this.el.outerHTML;
-    }
-
+    /**
+     * Метод валидации данных в поле
+     * @param prev - предыдущий элемент (для проверки паролей)
+     * @return {*}
+     */
     validate(prev) {
         let check = true;
         if (CheckFields.checkEmpty(this.el.value)) {
@@ -56,6 +71,9 @@ export default class Input {
         return check;
     }
 
+    /**
+     * Отчистка полей
+     */
     clear() {
         CheckFields.helpSetText(this.help_el, '');
         CheckFields.fieldSetText(this.el, '');

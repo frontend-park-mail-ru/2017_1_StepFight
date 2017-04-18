@@ -12,6 +12,11 @@ export default class LeaderBoardView extends BaseView {
         this.router = router;
     }
 
+    /**
+     * Метод обновления leaderboard
+     * @param data
+     * @private
+     */
     _refreshLeaderBoard(data) {
         let leaderBoardSource = `
                         {{#with logo}}
@@ -33,6 +38,9 @@ export default class LeaderBoardView extends BaseView {
         return leaderBoardTemplate(data);
     }
 
+    /**
+     * Отрисовка элемента
+     */
     render() {
         this._setProgressBar(this.node);
 
@@ -79,6 +87,10 @@ export default class LeaderBoardView extends BaseView {
         });
     }
 
+    /**
+     * Инициализация слушателя на кнопку обновить
+     * @private
+     */
     _initRefreshListener() {
         let refresh = document.getElementById('refresh-lb');
         if (refresh) {
@@ -88,12 +100,22 @@ export default class LeaderBoardView extends BaseView {
         }
     }
 
+    /**
+     * Отчитска контейнера, удаление всех дочерних элементов
+     * @param container
+     * @private
+     */
     _clearContainer(container) {
         while (container.children.length > 1) {
             container.removeChild(container.lastChild);
         }
     }
 
+    /**
+     * Вставить прогресс бар
+     * @param container
+     * @private
+     */
     _setProgressBar(container) {
         this._clearContainer(container);
         container.appendChild(new ProgressBar().getElem());

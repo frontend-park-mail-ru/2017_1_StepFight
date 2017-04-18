@@ -23,6 +23,10 @@ export default class GameScene {
         this._renderContainer();
     }
 
+    /**
+     * Установить все размеры экрана
+     * @private
+     */
     _setSize() {
         const height = window.innerHeight;
         this.fieldSize = (height / this.HDim) | 0;
@@ -30,6 +34,10 @@ export default class GameScene {
         this.HEGHT = this.fieldSize / 3 * 2 * this.HDim;
     }
 
+    /**
+     * Метод срабатывает, когда окно меняет размер
+     * @private
+     */
     _onWindowResize() {
         let height = window.innerHeight;
 
@@ -50,11 +58,19 @@ export default class GameScene {
         this.renderer2D.style.height = this.HEGHT + 'px';*/
     }
 
+    /**
+     * Инициализация слушателей
+     * @private
+     */
     _initListeners() {
         window.addEventListener('resize', this._onWindowResize.bind(this), false);
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     }
 
+    /**
+     * Отрисовка основного контейнера
+     * @private
+     */
     _renderContainer() {
         /* init figures arr*/
         /*this.worldBodies = [];
@@ -94,6 +110,10 @@ export default class GameScene {
         this._initListeners();
     }
 
+    /**
+     * Добавить стили для контейнера
+     * @private
+     */
     _addStylesToContainer(){
         this.renderer.domElement.setAttribute('class', 'game-view__game-area');
         this.renderer.domElement.setAttribute('id', 'game-area');
@@ -163,7 +183,7 @@ export default class GameScene {
      */
     _renderGameState() {
         this.clear();
-        this._animCamera();
+        this._animCameraStart();
         this._renderControlArea();
         this._renderGameActionModal();
 
@@ -177,6 +197,10 @@ export default class GameScene {
          this._renderHealthBars();
     }
 
+    /**
+     * Нарисовать поле
+     * @private
+     */
     _renderField() {
         let axes = new THREE.AxisHelper(20);
         this.scene.add(axes);
@@ -220,6 +244,10 @@ export default class GameScene {
         this.world.gravity = new OIMO.Vec3(0, -9.8, 0);*/
     }
 
+    /**
+     * Нарисовать игроков
+     * @private
+     */
     _renderPlayers() {
         this.mePerson = new ObjPerson(this.scene, this);
         this.mePerson.render('left');
@@ -228,6 +256,10 @@ export default class GameScene {
         this.opponentPerson.render('right');
     }
 
+    /**
+     * Добавить камеру
+     * @private
+     */
     _addCamera() {
         this.camera = new THREE.PerspectiveCamera(45
             , this.WIDTH / this.HEGHT, 0.1, 1000);
@@ -236,6 +268,10 @@ export default class GameScene {
         this.camera.lookAt(this.scene.position);
     }
 
+    /**
+     * Запуск анимации, отрисовки
+     * @private
+     */
     _animate() {
         let render = () => {
             window.requestAnimationFrame(render);
@@ -244,6 +280,9 @@ export default class GameScene {
         render();
     }
 
+    /**
+     * Метод обновления, перерисовки сцены
+     */
     refreshScene() {
         /*if (this.world) {
             this.world.step();
@@ -262,7 +301,11 @@ export default class GameScene {
     }
 
 
-    _animCamera(){
+    /**
+     * Метод анимации камеры на старте
+     * @private
+     */
+    _animCameraStart(){
         this.camera.position.set(0,0,1000);
         let render = () => {
             if (this.camera.position.z > 60) {
@@ -278,11 +321,19 @@ export default class GameScene {
         render();
     }
 
+    /**
+     * Отрисовка поля элементов управления
+     * @private
+     */
     _renderControlArea() {
         this.gameControls = new GameControls(this.container, this);
         this.gameControls.render();
     }
 
+    /**
+     * Отрисовка модального окна, для выбора действия
+     * @private
+     */
     _renderGameActionModal(){
         this.gameActionModal = new GameAction(this.node);
         this.gameActionModal.render();
@@ -296,10 +347,18 @@ export default class GameScene {
         this.clear();
     }
 
+    /**
+     * Отрисовка имен игроков
+     * @private
+     */
     _renderNames(){
 
     }
 
+    /**
+     * Отрисовка элементов здоровья
+     * @private
+     */
     _renderHealthBars(){
 
     }

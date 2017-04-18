@@ -7,11 +7,20 @@ export default class ProgressBar {
         this.el = document.createElement('div');
     }
 
+    /**
+     * Метод возвращает элемент с абсолютной позицией
+     * @return {Element|*}
+     */
     getElem() {
         this.el.setAttribute('class', 'loader');
         return this.el;
     }
 
+
+    /**
+     * Метод возвращает элемент с позицией от родителя
+     * @return {Element|*}
+     */
     getElemParent() {
         this.el.setAttribute('class', 'loader_parent');
         return this.el;

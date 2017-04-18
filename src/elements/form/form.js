@@ -5,6 +5,7 @@ import Button from './__button/form-button'
 import Input from './__input/form-input'
 export default class Form {
     constructor(options = {data: {}}) {
+        // options - инструкции
         this.data = options.data;
         this.el = document.createElement('form');
         this.fields = [];
@@ -12,10 +13,14 @@ export default class Form {
         this._render();
     }
 
+    /**
+     * Отрисовка
+     * @private
+     */
     _render() {
-        this._setAttrs(this.data.form.attrs, this.el);
+        this._setAttributes(this.data.form.attrs, this.el);
         let title = document.createElement(this.data.title.type);
-        this._setAttrs(this.data.title.attrs, title);
+        this._setAttributes(this.data.title.attrs, title);
         title.innerHTML = this.data.title.text;
         this.el.appendChild(title);
 
@@ -27,10 +32,19 @@ export default class Form {
         this._controlsAppendTo(this.controls, this.el);
     }
 
+    /**
+     * Возвращает элемент form
+     * @return {Form}
+     */
     getElem(){
         return this;
     }
 
+    /**
+     * Возвращает массив полей формы
+     * @return {Array}
+     * @private
+     */
     _getFields() {
         let {fields = []}=this.data;
         return fields.map(data => {
@@ -38,12 +52,24 @@ export default class Form {
         });
     }
 
-    _setAttrs(attrs, elem) {
-        Object.keys(attrs).forEach(name => {
-            elem.setAttribute(name, attrs[name]);
+    /**
+     * Установка атрибутов
+     * @param attributes - массив атрибутов
+     * @param elem - элемент к которому применяем атрибуты
+     * @private
+     */
+    _setAttributes(attributes, elem) {
+        Object.keys(attributes).forEach(name => {
+            elem.setAttribute(name, attributes[name]);
         })
     }
 
+    /**
+     * Присоединение полей к элементу
+     * @param array - массив полей
+     * @param elem - элемент, к которому присоединяем
+     * @private
+     */
     _fieldsAppendTo(array, elem) {
         array.forEach(item => {
             elem.appendChild(item.el);
@@ -51,12 +77,23 @@ export default class Form {
         })
     }
 
+    /**
+     * Присоединение элементов управления
+     * @param array - массив элементов
+     * @param elem - элемент, к которому присоединяем
+     * @private
+     */
     _controlsAppendTo(array, elem) {
         array.forEach(item => {
             elem.appendChild(item.el);
         })
     }
 
+    /**
+     * Возвращает массив управляющих элементов формы
+     * @return {Array}
+     * @private
+     */
     _getControls() {
         let {controls = []}=this.data;
         return controls.map(data => {
@@ -64,10 +101,10 @@ export default class Form {
         });
     }
 
-    toString() {
-        return this.el.outerHTML;
-    }
-
+    /**
+     * Возвращает объект данных из формы
+     * @return {{}}
+     */
     getFormData() {
         let elements = this.el.elements;
         let fields = {};

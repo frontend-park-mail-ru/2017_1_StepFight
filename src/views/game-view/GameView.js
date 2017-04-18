@@ -14,6 +14,9 @@ export default class GameView extends BaseView{
 
     }
 
+    /**
+     * Отрисовка view
+     */
     render(){
         this.gameManager = new GameManager(this.router, this.storage, this, this.storage.gameStates.SINGLEPLAYER_STRATEGY);
         this.gameManager.start();

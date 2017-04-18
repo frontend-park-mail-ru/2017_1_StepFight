@@ -7,14 +7,23 @@ export default class MultiPlayerStrategy{
         this.manager = manager;
     }
 
+    /**
+     * Игровой цикл
+     */
     gameLoop(){
 
     }
 
+    /**
+     * Начать игрвой цикл
+     */
     startGameLoop() {
         this.inteval = setInterval(() => this.gameLoop(), 100);
     }
 
+    /**
+     * Завершить игровой цикл
+     */
     finishGameLoop(){
         clearInterval(this.inteval);
     }

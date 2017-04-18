@@ -13,6 +13,9 @@ export default class SinglePlayerStrategy {
         this.opponentsSteps = new Array(5);
     }
 
+    /**
+     * Игровой цикл
+     */
     gameLoop() {
         /*console.log(`health=${this.me.health}`);
          this.me.health -= 1;*/
@@ -25,6 +28,9 @@ export default class SinglePlayerStrategy {
         }
     }
 
+    /**
+     * Начать игровой цикл
+     */
     startGameLoop() {
         this.inteval = setInterval(() => this.gameLoop(), 100);
 
@@ -32,6 +38,9 @@ export default class SinglePlayerStrategy {
         this.initActionListener();
     }
 
+    /**
+     * Инициализировать слушателей на кнопки "выбор действия"
+     */
     initActionListener() {
         this.scene.gameControls.initActionListener((index, actionObj) => {
             if (index < 5 && index >= 0 && actionObj !== null) {
@@ -50,6 +59,9 @@ export default class SinglePlayerStrategy {
         });
     }
 
+    /**
+     * Инициализация слушателей на кнопку "сделать шаг"
+     */
     initDoStepListener() {
         this.scene.gameControls.initDoStepListener(() => {
             if (this.checkMyActionsArray()) {
@@ -67,6 +79,10 @@ export default class SinglePlayerStrategy {
         });
     }
 
+    /**
+     * Проверить на полную заполненость массива действия
+     * @return {boolean} true - все заполнено
+     */
     checkMyActionsArray() {
         for (let i = 0; i < this.mySteps.length; i++) {
             if (this.mySteps[i] === null || typeof this.mySteps[i] === 'undefined') {
@@ -76,6 +92,9 @@ export default class SinglePlayerStrategy {
         return true;
     }
 
+    /**
+     * Отчисить массив действия
+     */
     clearMyActionsArray() {
         for (let i = 0; i < this.mySteps.length; i++) {
             this.mySteps[i] = null;
@@ -85,12 +104,20 @@ export default class SinglePlayerStrategy {
         }
     }
 
+    /**
+     * Завершить игровой цикл, отчитска слушателей
+     */
     finishGameLoop() {
         clearInterval(this.inteval);
         this.scene.gameControls.deleteDoStepListener();
         this.scene.gameControls.deleteActionListener();
     }
 
+    /**
+     * Установить игроков
+     * @param me
+     * @param opponent
+     */
     setPlayers(me, opponent) {
         this.me = me;
         this.opponent = opponent;
