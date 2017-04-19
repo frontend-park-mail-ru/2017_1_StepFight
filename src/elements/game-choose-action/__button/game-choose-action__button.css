@@ -8,21 +8,65 @@
     font-family: 'Cabin', sans-serif;
     -webkit-transition: all 0.5s ease;
     cursor: pointer;
-    width: 95%;
     height: 30px;
     line-height: 30px;
     text-align: center;
-    margin: 100px 0 0 0;
+    margin: 5px;
 }
 
-.game-choose-action__button:hover {
+.game-choose-action__button_tabs{
+    flex-grow: 1;
+    padding: 5px;
+    color: white;
+    background-color: rgba(246, 115, 140, 0.86);
+    border: 1px solid black;
+    border-radius: 5px;
+    text-decoration: none;
+    font-family: 'Cabin', sans-serif;
+    -webkit-transition: all 0.5s ease;
+    cursor: pointer;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin: 5px;
+}
+.game-choose-action__button_tabs_focused{
+    background-color: rgba(246, 33, 71, 0.86);
+}
+
+.game-choose-action__button_choose{
+    flex-grow: 1;
+    padding: 5px;
+    color: black;
+    background-color: rgba(127, 246, 95, 0.86);
+    border: 1px solid black;
+    border-radius: 5px;
+    text-decoration: none;
+    font-family: 'Cabin', sans-serif;
+    -webkit-transition: all 0.5s ease;
+    cursor: pointer;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin: 5px;
+}
+
+.game-choose-action__button_choose_focused{
+    background-color: rgba(35, 169, 42, 0.86);
+}
+
+.game-choose-action__button:hover,
+.game-choose-action__button_tabs:hover,
+.game-choose-action__button_choose:hover{
     background-color: white;
     border-color: black;
     color: #191919;
 }
 
 @media (max-width: 550px) {
-    .game-choose-action__button {
+    .game-choose-action__button,
+    .game-choose-action__button_tabs,
+    .game-choose-action__button_choose{
         width: inherit;
         left: 15px;
         right: 15px;

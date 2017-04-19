@@ -16,8 +16,8 @@ module.exports = {
         filename: '[name].bundle.js'
     },
     plugins: debug ? [] : [
-            new webpack.optimize.DedupePlugin(),
-            new webpack.optimize.OccurenceOrderPlugin(),
+            /*new webpack.optimize.DedupePlugin(),
+            new webpack.optimize.OccurenceOrderPlugin(),*/
             new webpack.optimize.UglifyJsPlugin({
                 beautify: false,
                 comments: false,

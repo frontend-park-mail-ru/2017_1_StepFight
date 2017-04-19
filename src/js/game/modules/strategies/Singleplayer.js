@@ -4,8 +4,7 @@
 import IziToast from "izitoast";
 
 export default class SinglePlayerStrategy {
-    constructor(scene, manager) {
-        this.scene = scene;
+    constructor(manager) {
         this.manager = manager;
 
         /*{action: hit||block, than: head||leg||arm, where: head||leg||arm}*/
@@ -42,19 +41,27 @@ export default class SinglePlayerStrategy {
      * Инициализировать слушателей на кнопки "выбор действия"
      */
     initActionListener() {
-        this.scene.gameControls.initActionListener((index, actionObj) => {
-            if (index < 5 && index >= 0 && actionObj !== null) {
-                this.mySteps[index] = actionObj;
-                this.scene.gameControls.actionButtons[index].classList.remove('game-controls__action-button_empty');
-                this.scene.gameControls.actionButtons[index].classList.add('game-controls__action-button_fill');
+        this.manager.scene.gameControls.initActionListener((index, actionObj) => {
+            if (index < 5 && index >= 0 && actionObj !== null && typeof actionObj !== 'undefined') {
+
+                let actionClone = {};
+                actionClone.action = actionObj.action;
+                actionClone.than = actionObj.than;
+                actionClone.where = actionObj.where;
+                
+                this.mySteps[index] = actionClone/*Object.assign({}, actionObj)*/;
+
+
+                this.manager.scene.gameControls.actionButtons[index].classList.remove('game-controls__action-button_empty');
+                this.manager.scene.gameControls.actionButtons[index].classList.add('game-controls__action-button_fill');
 
                 let btnText = '';
                 if (actionObj.action === 'block') {
-                    btnText = `block by ${actionObj.than}`;
+                    btnText = `block ${actionObj.than}`;
                 } else if (actionObj.action === 'hit') {
                     btnText = `hit by ${actionObj.than} to ${actionObj.where}`;
                 }
-                this.scene.gameControls.actionButtons[index].innerText = btnText;
+                this.manager.scene.gameControls.actionButtons[index].innerText = btnText;
             }
         });
     }
@@ -63,7 +70,7 @@ export default class SinglePlayerStrategy {
      * Инициализация слушателей на кнопку "сделать шаг"
      */
     initDoStepListener() {
-        this.scene.gameControls.initDoStepListener(() => {
+        this.manager.scene.gameControls.initDoStepListener(() => {
             if (this.checkMyActionsArray()) {
                 IziToast.success({
                     title: 'Yeah',
@@ -98,9 +105,9 @@ export default class SinglePlayerStrategy {
     clearMyActionsArray() {
         for (let i = 0; i < this.mySteps.length; i++) {
             this.mySteps[i] = null;
-            this.scene.gameControls.actionButtons[i].classList.remove('game-controls__action-button_fill');
-            this.scene.gameControls.actionButtons[i].classList.add('game-controls__action-button_empty');
-            this.scene.gameControls.actionButtons[i].innerText = 'add action';
+            this.manager.scene.gameControls.actionButtons[i].classList.remove('game-controls__action-button_fill');
+            this.manager.scene.gameControls.actionButtons[i].classList.add('game-controls__action-button_empty');
+            this.manager.scene.gameControls.actionButtons[i].innerText = 'add action';
         }
     }
 
@@ -109,8 +116,8 @@ export default class SinglePlayerStrategy {
      */
     finishGameLoop() {
         clearInterval(this.inteval);
-        this.scene.gameControls.deleteDoStepListener();
-        this.scene.gameControls.deleteActionListener();
+        this.manager.scene.gameControls.deleteDoStepListener();
+        this.manager.scene.gameControls.deleteActionListener();
     }
 
     /**
@@ -121,7 +128,7 @@ export default class SinglePlayerStrategy {
     setPlayers(me, opponent) {
         this.me = me;
         this.opponent = opponent;
-        this.scene.setPlayers(me, opponent);
+        this.manager.scene.setPlayers(me, opponent);
     }
 
 }

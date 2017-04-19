@@ -62,18 +62,27 @@ export default class GameControls {
 
     /**
      * Инициализация слушателей на кнопку "выбрать действие"
+     * @param mySteps
      * @param callback
      */
     initActionListener(callback) {
         this.sceneContext.gameActionModal.initButtonsAction((action) => {
-            if(this.index !== null && typeof this.index !== 'undefined'){
+            callback(this.index, action);
+            /*if (action !== null && typeof action !== 'undefined' &&
+                this.index !== null && typeof this.index !== 'undefined') {
                 callback(this.index, action);
-            }
+            }*/
         });
 
         this.actionCallback = function (event) {
             if (event.target.classList.contains('action') && event.target.getAttribute('index')) {
                 this.index = event.target.getAttribute('index');
+
+                let steps = this.sceneContext.manager.strategy.mySteps.slice(0);
+                console.log(steps);
+
+                this.sceneContext.gameActionModal.setStartAction(steps[this.index]);
+
                 this.sceneContext.gameActionModal.show();
             }
         };

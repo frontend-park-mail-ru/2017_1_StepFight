@@ -13,10 +13,10 @@ export default class GameManager {
         this.node = view.node;
         this.view = view;
 
-        this.scene = new GameScene(view.node, this.storage);
+        this.scene = new GameScene(view.node, this.storage, this);
         this.strategy =
             strategy === this.storage.gameStates.SINGLEPLAYER_STRATEGY
-                ? new SinglePlayerStrategy(this.scene, this) : new MultiPlayerStrategy(this.scene, this);
+                ? new SinglePlayerStrategy(this) : new MultiPlayerStrategy(this);
     }
 
     /**

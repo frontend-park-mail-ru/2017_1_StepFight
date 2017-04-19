@@ -1,16 +1,23 @@
 /**
  * Created by Denis on 18.04.2017.
  */
-export default class GameChooseAction{
-    constructor(node){
+
+import IziToast from "izitoast";
+
+export default class GameChooseAction {
+    constructor(node) {
         this.node = node;
-        this.action = {};
+        this.action = {
+            action: 'hit',
+            than: null,
+            where: null
+        };
     }
 
     /**
      * Метод отрисовки
      */
-    render(){
+    render() {
         this.container = document.createElement('div');
         this.container.setAttribute('class', 'game-choose-action hidden');
         this.node.appendChild(this.container);
@@ -21,51 +28,343 @@ export default class GameChooseAction{
 
         this.btnClose = document.createElement('span');
         this.btnClose.setAttribute('class', 'game-choose-action__close-modal');
-        this.btnClose.innerHTML='&times;';
+        this.btnClose.innerHTML = '&times;';
         contentContainer.appendChild(this.btnClose);
 
+        let actionContainer = document.createElement('div');
+        actionContainer.setAttribute('class', 'game-choose-action__container');
+
+        /*----------action set---------*/
+        let actionSet = document.createElement('div');
+        actionSet.setAttribute('class', 'game-choose-action__container__action-set');
+        this.btnActionChooseHit = document.createElement('div');
+        this.btnActionChooseHit.setAttribute('class', 'game-choose-action__button_tabs game-choose-action__button_tabs_focused');
+        this.btnActionChooseHit.innerText = 'Hit';
+        actionSet.appendChild(this.btnActionChooseHit);
+        this.btnActionChooseBlock = document.createElement('div');
+        this.btnActionChooseBlock.setAttribute('class', 'game-choose-action__button_tabs');
+        this.btnActionChooseBlock.innerText = 'Block';
+        actionSet.appendChild(this.btnActionChooseBlock);
+        contentContainer.appendChild(actionSet);
+
+        /*-----------actions settings-----------*/
+        this.actionHitSet = document.createElement('div');
+        this.actionHitSet.setAttribute('class', 'game-choose-action__container__action-hit-set');
+        this.actionBlockSet = document.createElement('div');
+        this.actionBlockSet.setAttribute('class', 'game-choose-action__container__action-block-set hidden');
+        contentContainer.appendChild(this.actionHitSet);
+        contentContainer.appendChild(this.actionBlockSet);
+
+        /*-------------fill actions sets--------------*/
+        /*---fill block set----*/
+        this.btnActionBlockHead = document.createElement('div');
+        this.btnActionBlockHead.setAttribute('class', 'game-choose-action__button_choose');
+        this.btnActionBlockHead.innerText = 'head';
+        this.btnActionBlockBody = document.createElement('div');
+        this.btnActionBlockBody.setAttribute('class', 'game-choose-action__button_choose');
+        this.btnActionBlockBody.innerText = 'body';
+        this.actionBlockSet.appendChild(this.btnActionBlockBody);
+        this.actionBlockSet.appendChild(this.btnActionBlockHead);
+        /*---fill hit set----*/
+        let divThan = document.createElement('div');
+        divThan.setAttribute('class', 'game-choose-action__container__action-hit-set__column');
+        let divWhere = document.createElement('div');
+        divWhere.setAttribute('class', 'game-choose-action__container__action-hit-set__column');
+        this.actionHitSet.appendChild(divThan);
+        this.actionHitSet.appendChild(divWhere);
+
+        /*-----------than--------------*/
+        let headText = document.createElement('h3');
+        headText.innerText = 'Than';
+        divThan.appendChild(headText);
+
+        this.btnActionHitThanHead = document.createElement('div');
+        this.btnActionHitThanHead.setAttribute('class', 'game-choose-action__button_choose');
+        this.btnActionHitThanHead.innerText = 'Head';
+        divThan.appendChild(this.btnActionHitThanHead);
+
+        this.btnActionHitThanArm = document.createElement('div');
+        this.btnActionHitThanArm.setAttribute('class', 'game-choose-action__button_choose');
+        this.btnActionHitThanArm.innerText = 'Arm';
+        divThan.appendChild(this.btnActionHitThanArm);
+
+        this.btnActionHitThanLeg = document.createElement('div');
+        this.btnActionHitThanLeg.setAttribute('class', 'game-choose-action__button_choose');
+        this.btnActionHitThanLeg.innerText = 'Leg';
+        divThan.appendChild(this.btnActionHitThanLeg);
+
+        /*-----------where--------------*/
+        headText = document.createElement('h3');
+        headText.innerText = 'Where';
+        divWhere.appendChild(headText);
+
+        this.btnActionHitWhereHead = document.createElement('div');
+        this.btnActionHitWhereHead.setAttribute('class', 'game-choose-action__button_choose');
+        this.btnActionHitWhereHead.innerText = 'Head';
+        divWhere.appendChild(this.btnActionHitWhereHead);
+
+        this.btnActionHitWhereBody = document.createElement('div');
+        this.btnActionHitWhereBody.setAttribute('class', 'game-choose-action__button_choose');
+        this.btnActionHitWhereBody.innerText = 'Body';
+        divWhere.appendChild(this.btnActionHitWhereBody);
+
+
+        /*--------------btn choose--------------*/
         this.btnChoose = document.createElement('div');
         this.btnChoose.setAttribute('class', 'game-choose-action__button');
         this.btnChoose.innerText = 'Ok';
         contentContainer.appendChild(this.btnChoose);
+
+        this._initActionSetsListeners();
+    }
+
+    /**
+     * Установить состояние события, если оно открыто на редактирование
+     * @param action
+     */
+    setStartAction(action) {
+        if(action === null || typeof action === 'undefined'){
+            return;
+        }
+        this.action = action;
+        if (this.action.action === 'hit') {
+
+            this.actionHitSet.classList.remove('hidden');
+            this.actionBlockSet.classList.add('hidden');
+
+            switch (this.action.than) {
+                case 'head': {
+                    this._setButtonActionFocus(this.btnActionHitThanHead);
+                    break;
+                }
+                case 'arm': {
+                    this._setButtonActionFocus(this.btnActionHitThanArm);
+                    break;
+                }
+                case 'leg': {
+                    this._setButtonActionFocus(this.btnActionHitThanLeg);
+                    break;
+                }
+            }
+            switch (this.action.where) {
+                case 'head': {
+                    this._setButtonActionFocus(this.btnActionHitWhereHead);
+                    break;
+                }
+                case 'body': {
+                    this._setButtonActionFocus(this.btnActionHitWhereBody);
+                    break;
+                }
+            }
+        } else if (this.action.action === 'block') {
+
+            this.actionHitSet.classList.add('hidden');
+            this.actionBlockSet.classList.remove('hidden');
+
+            switch (this.action.than) {
+                case 'body': {
+                    this._setButtonActionFocus(this.btnActionBlockBody);
+                    break;
+                }
+                case 'head': {
+                    this._setButtonActionFocus(this.btnActionBlockHead);
+                    break;
+                }
+            }
+        }
+    }
+
+
+    /**
+     * Инициализация слушателей кнопок по выбору действий
+     * @private
+     */
+    _initActionSetsListeners() {
+        this.showBlockSet = function () {
+            this.actionHitSet.classList.add('hidden');
+            this.actionBlockSet.classList.remove('hidden');
+
+            this.btnActionChooseHit.classList.remove('game-choose-action__button_tabs_focused');
+            this.btnActionChooseBlock.classList.add('game-choose-action__button_tabs_focused');
+
+            this.clearActionData();
+            this._clearFocused();
+            this.action.action = 'block';
+        };
+
+        this.showHitSet = function () {
+            this.actionBlockSet.classList.add('hidden');
+            this.actionHitSet.classList.remove('hidden');
+
+            this.btnActionChooseHit.classList.add('game-choose-action__button_tabs_focused');
+            this.btnActionChooseBlock.classList.remove('game-choose-action__button_tabs_focused');
+
+            this.clearActionData();
+            this._clearFocused();
+            this.action.action = 'hit';
+        };
+
+        this.btnActionChooseBlock.addEventListener('click', this.showBlockSet.bind(this));
+        this.btnActionChooseHit.addEventListener('click', this.showHitSet.bind(this));
+
+        this.chooseThanHitHead = function () {
+            this.clearHitThanFocus();
+            this.action.than = 'head';
+            this._setButtonActionFocus(this.btnActionHitThanHead);
+        };
+        this.chooseThanHitArm = function () {
+            this.clearHitThanFocus();
+            this.action.than = 'arm';
+            this._setButtonActionFocus(this.btnActionHitThanArm);
+        };
+        this.chooseThanHitLeg = function () {
+            this.clearHitThanFocus();
+            this.action.than = 'leg';
+            this._setButtonActionFocus(this.btnActionHitThanLeg);
+        };
+        this.chooseWhereHitHead = function () {
+            this.clearHitWhereFocus();
+            this.action.where = 'head';
+            this._setButtonActionFocus(this.btnActionHitWhereHead);
+        };
+        this.chooseWhereHitBody = function () {
+            this.clearHitWhereFocus();
+            this.action.where = 'body';
+            this._setButtonActionFocus(this.btnActionHitWhereBody);
+        };
+
+        this.btnActionHitThanHead.addEventListener('click', this.chooseThanHitHead.bind(this));
+        this.btnActionHitThanArm.addEventListener('click', this.chooseThanHitArm.bind(this));
+        this.btnActionHitThanLeg.addEventListener('click', this.chooseThanHitLeg.bind(this));
+        this.btnActionHitWhereHead.addEventListener('click', this.chooseWhereHitHead.bind(this));
+        this.btnActionHitWhereBody.addEventListener('click', this.chooseWhereHitBody.bind(this));
+
+        this.chooseBlockHead = function () {
+            this.clearBlockThanFocus();
+            this.action.than = 'head';
+            this._setButtonActionFocus(this.btnActionBlockHead);
+        };
+        this.chooseBlockBody = function () {
+            this.clearBlockThanFocus();
+            this.action.than = 'body';
+            this._setButtonActionFocus(this.btnActionBlockBody);
+        };
+
+        this.btnActionBlockHead.addEventListener('click', this.chooseBlockHead.bind(this));
+        this.btnActionBlockBody.addEventListener('click', this.chooseBlockBody.bind(this));
+    }
+
+    _setButtonActionFocus(elem) {
+        elem.classList.add('game-choose-action__button_choose_focused');
+    }
+
+    /**
+     * Убрать фокусы со всех кнопок блока
+     */
+    clearBlockThanFocus() {
+        this.btnActionBlockHead.classList.remove('game-choose-action__button_choose_focused');
+        this.btnActionBlockBody.classList.remove('game-choose-action__button_choose_focused');
+    }
+
+    /**
+     * Убрать фокусы со всех кнопок удара "чем"
+     */
+    clearHitThanFocus() {
+        this.btnActionHitThanArm.classList.remove('game-choose-action__button_choose_focused');
+        this.btnActionHitThanHead.classList.remove('game-choose-action__button_choose_focused');
+        this.btnActionHitThanLeg.classList.remove('game-choose-action__button_choose_focused');
+    }
+
+    /**
+     * Убрать фокусы со всех кнопок удара "куда"
+     */
+    clearHitWhereFocus() {
+        this.btnActionHitWhereHead.classList.remove('game-choose-action__button_choose_focused');
+        this.btnActionHitWhereBody.classList.remove('game-choose-action__button_choose_focused');
+    }
+
+    /**
+     * Отчистить выбранное действие
+     */
+    clearActionData() {
+        this.action.action = 'hit';
+        this.action.than = null;
+        this.action.where = null;
     }
 
     /**
      * Показать элемент
      */
-    show(){
+    show() {
         this.container.classList.remove('hidden');
     }
 
     /**
      * Спрятать элемент
      */
-    hide(){
+    hide() {
         this.container.classList.add('hidden');
+    }
+
+    /**
+     * Убрать все фокусы с кнопок
+     * @private
+     */
+    _clearFocused() {
+        //this.clearActionData();
+        this.clearHitWhereFocus();
+        this.clearHitThanFocus();
+        this.clearBlockThanFocus()
     }
 
     /**
      * Инициализация слушателей на кнопках [закрытие, подтверждение действия]
      * @param callback
      */
-    initButtonsAction(callback){
+    initButtonsAction(callback) {
         this.actionCallbackClose = function () {
             this.hide();
             this.deleteButtonAction();
+            this._clearFocused();
             callback(null);
         };
+
         this.actionCallbackChoose = function () {
-            this.hide();
-            this.deleteButtonAction();
+            switch (this.action.action) {
+                case 'hit': {
+                    if (this.action.than === null || this.action.where === null) {
+                        IziToast.error({
+                            title: 'Fill actions',
+                            position: 'topRight'
+                        });
+                    } else {
+                        this.hide();
+                        this.deleteButtonAction();
 
-            //TODO get info from
-            this.action = {
-                action: 'hit',
-                than: 'head',
-                where: 'arm'
-            };
+                        callback(action);
 
-            callback(this.action);
+                        this._clearFocused();
+                    }
+                    break;
+                }
+                case 'block': {
+                    if (this.action.than === null) {
+                        IziToast.error({
+                            title: 'Fill actions',
+                            position: 'topRight'
+                        });
+                    } else {
+                        this.hide();
+                        this.deleteButtonAction();
+                        callback(action);
+                        this._clearFocused();
+                    }
+                    break;
+                }
+                default: {
+                    console.error('action is null');
+                }
+            }
         };
 
         this.btnClose.addEventListener('click', this.actionCallbackClose.bind(this));
@@ -75,8 +374,17 @@ export default class GameChooseAction{
     /**
      * Удалить слушатели
      */
-    deleteButtonAction(){
+    deleteButtonAction() {
         this.btnClose.removeEventListener('click', this.actionCallbackClose);
         this.btnChoose.removeEventListener('click', this.actionCallbackChoose);
+
+        this.btnActionChooseBlock.removeEventListener('click', this.showBlockSet);
+        this.btnActionChooseHit.removeEventListener('click', this.showHitSet);
+
+        this.btnActionHitThanHead.removeEventListener('click', this.chooseThanHitHead);
+        this.btnActionHitThanArm.removeEventListener('click', this.chooseThanHitArm);
+        this.btnActionHitThanLeg.removeEventListener('click', this.chooseThanHitLeg);
+        this.btnActionHitWhereHead.removeEventListener('click', this.chooseWhereHitHead);
+        this.btnActionHitWhereBody.removeEventListener('click', this.chooseWhereHitBody);
     }
 }

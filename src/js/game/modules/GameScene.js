@@ -12,11 +12,12 @@ const OrbitControls = require('three-orbit-controls')(THREE);
 // import * as OrbitControls from 'three-orbit-controls';
 
 export default class GameScene {
-    constructor(node, storage) {
+    constructor(node, storage, manager) {
         this.HDim = 34;
         this.WDim = 50;
 
         this.node = node;
+        this.manager = manager;
         this.storage = storage;
 
         this._setSize();
