@@ -31,7 +31,7 @@ export default class GameManager {
                 this.opponent = this._getOpponent();
                 this.strategy.setPlayers(
                     //TODO fix this
-                    {login: /*this.storage.user.login*/'debug', health: 100},
+                    {login: this.storage.user.login/*'debug'*/, health: 100},
                     {login: this.opponent.login, health: 100});
                 this.scene.setState(this.storage.gameStates.STATEGAME);
                 this.strategy.startGameLoop();
@@ -55,7 +55,7 @@ export default class GameManager {
      */
     checkUser(){
         //TODO delete this
-        return true;
+        //return true;
         try{
             return this.storage.user.login !== null;
         } catch (e){
