@@ -39,7 +39,10 @@ export default class Router {
      * @param {string} path
      * @param isToHistory
      */
-    go(path, isToHistory) {
+    go(path, isToHistory, gameStrategy) {
+        console.log('strategy');
+        console.log(gameStrategy);
+
         path = this._checkUser(path);
         if (isToHistory) {
             window.history.pushState({}, '', path);
@@ -53,7 +56,11 @@ export default class Router {
             return;
         }
         if ('render' in this.currView) {
-            this.currView.render();
+            if(gameStrategy !== null && typeof gameStrategy !== 'undefined'){
+                this.currView.render(gameStrategy);
+            } else {
+                this.currView.render();
+            }
         }
     }
 

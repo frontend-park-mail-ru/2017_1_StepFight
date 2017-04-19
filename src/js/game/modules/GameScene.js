@@ -94,20 +94,12 @@ export default class GameScene {
 
         this.container.appendChild(this.renderer.domElement);
 
-
-        /*----------create 2d canvas-----------*/
-        /*this.renderer2D = document.createElement('canvas');
-        this.renderer2D.setAttribute('class', 'game-view__game-area_info');
-        this.renderer2D.style.width = this.WIDTH + 'px';
-        this.renderer2D.style.height =  '80px';
-        this.container.appendChild(this.renderer2D);*/
-        /*---------------------*/
         this.node.appendChild(this.container);
 
         //this.world = new OIMO.World(1 / 60, 2, 8);
 
         this._addCamera();
-        this._animate();
+        this._startRenderAnimate();
         this._initListeners();
     }
 
@@ -194,8 +186,7 @@ export default class GameScene {
 
         // this.mePerson.depnut();
 
-         this._renderNames();
-         this._renderHealthBars();
+         this._renderInfoBars();
     }
 
     /**
@@ -273,7 +264,7 @@ export default class GameScene {
      * Запуск анимации, отрисовки
      * @private
      */
-    _animate() {
+    _startRenderAnimate() {
         let render = () => {
             window.requestAnimationFrame(render);
             this.refreshScene();
@@ -348,19 +339,12 @@ export default class GameScene {
         this.clear();
     }
 
-    /**
-     * Отрисовка имен игроков
-     * @private
-     */
-    _renderNames(){
-
-    }
 
     /**
      * Отрисовка элементов здоровья
      * @private
      */
-    _renderHealthBars(){
+    _renderInfoBars(){
         this.myInfo = new GameInfoToast(this.container, this.players.me.health, this.players.me.login, 'left');
         this.myInfo.render();
         this.opponentInfo = new GameInfoToast(this.container, this.players.opponent.health, this.players.opponent.login, 'right');
@@ -368,7 +352,7 @@ export default class GameScene {
     }
 
     /**
-     * Отчистка основного контейнера
+     * Отчистка сцены
      */
     clear() {
         this.scene.children.splice(0, this.scene.children.length);

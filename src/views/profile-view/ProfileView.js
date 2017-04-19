@@ -40,12 +40,11 @@ export default class ProfileView extends BaseView {
                 this._hideViewProgressBar();
                 this._renderProfile(user);
 
-                this.login = document.getElementById('l-login');
+                /*this.login = document.getElementById('l-login');
                 this.password = document.getElementById('l-password');
                 this.loginHelp = document.getElementById('l-login-help');
-                this.btnLogin = document.getElementById('btn-login');
+                this.btnLogin = document.getElementById('btn-login');*/
 
-                this._initListener();
             }, 500);
         }).catch(err => {
             this._hideViewProgressBar();
@@ -57,13 +56,21 @@ export default class ProfileView extends BaseView {
      * @private
      */
     _initListener() {
-        document.getElementById('btn-logout').addEventListener('click', event => {
+        this.hrefLogout.addEventListener('click', event => {
             new UserService().logOutUser().then(response => {
                 this.storage.user = null;
                 this.router.go(this.storage.urls.LOGIN, true);
             }).catch(err => {
 
             });
+        });
+
+        this.hrefPlayS.addEventListener('click', event => {
+            this.router.go(this.storage.urls.GAME, true, this.storage.gameStates.SINGLEPLAYER_STRATEGY);
+        });
+
+        this.hrefPlayM.addEventListener('click', event => {
+            this.router.go(this.storage.urls.GAME, true, this.storage.gameStates.MULTIPLAYER_STRATEGY);
         });
     }
 
@@ -106,7 +113,6 @@ export default class ProfileView extends BaseView {
     /**
      * Создание элементов профайла
      * @param user
-     * @return {Element}
      * @private
      */
     _renderProfile(user) {
@@ -124,22 +130,22 @@ export default class ProfileView extends BaseView {
         let controllersDiv = document.createElement('div');
         controllersDiv.setAttribute('class', 'profile-view__controllers');
 
-        let hrefPlayM = document.createElement('a');
-        hrefPlayM.setAttribute('href', this.storage.urls.GAME);
-        hrefPlayM.setAttribute('class', 'profile-view__controllers__button');
+        this.hrefPlayM = document.createElement('div');
+        //this.hrefPlayM.setAttribute('href', this.storage.urls.GAME);
+        this.hrefPlayM.setAttribute('class', 'profile-view__controllers__button');
         let h1 = document.createElement('h1');
         h1.innerHTML = 'Multiplayer';
-        hrefPlayM.appendChild(h1);
+        this.hrefPlayM.appendChild(h1);
 
-        let hrefPlayS = document.createElement('a');
-        hrefPlayS.setAttribute('href', this.storage.urls.GAME);
-        hrefPlayS.setAttribute('class', 'profile-view__controllers__button');
+        this.hrefPlayS = document.createElement('div');
+        //this.hrefPlayS.setAttribute('href', this.storage.urls.GAME);
+        this.hrefPlayS.setAttribute('class', 'profile-view__controllers__button');
         h1 = document.createElement('h1');
         h1.innerHTML = 'Single play';
-        hrefPlayS.appendChild(h1);
+        this.hrefPlayS.appendChild(h1);
 
-        controllersDiv.appendChild(hrefPlayM);
-        controllersDiv.appendChild(hrefPlayS);
+        controllersDiv.appendChild(this.hrefPlayM);
+        controllersDiv.appendChild(this.hrefPlayS);
 
         /*create user div*/
         let userDiv = document.createElement('div');
@@ -198,12 +204,12 @@ export default class ProfileView extends BaseView {
         this.node.appendChild(resourcesDiv);
         this.node.appendChild(controllersDiv);
 
-        let hrefLogout = document.createElement('a');
-        hrefLogout.setAttribute('class', 'profile-view__controllers__button_logout');
-        hrefLogout.setAttribute('id', 'btn-logout');
-        hrefLogout.innerText = 'Log out';
-        this.node.appendChild(hrefLogout);
+        this.hrefLogout = document.createElement('a');
+        this.hrefLogout.setAttribute('class', 'profile-view__controllers__button_logout');
+        this.hrefLogout.setAttribute('id', 'btn-logout');
+        this.hrefLogout.innerText = 'Log out';
+        this.node.appendChild(this.hrefLogout);
 
-        return this.node;
+        this._initListener();
     }
 }

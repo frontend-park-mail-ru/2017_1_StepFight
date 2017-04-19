@@ -120,9 +120,6 @@ export default class GameChooseAction {
      * @param action
      */
     setStartAction(action) {
-        /*if(action === null || typeof action === 'undefined'){
-            return;
-        }*/
         this.action = action;
         this.buffAction = new Object({action: 'hit', method: null, target: null});
         if(action === null || typeof action === 'undefined'){
@@ -179,6 +176,9 @@ export default class GameChooseAction {
     }
 
 
+    /**
+     * Показать панель блоков
+     */
     showBlockSet(){
         this.actionHitSet.classList.add('hidden');
         this.actionBlockSet.classList.remove('hidden');
@@ -187,6 +187,9 @@ export default class GameChooseAction {
         this.btnActionChooseBlock.classList.add('game-choose-action__button_tabs_focused');
     }
 
+    /**
+     * Показать панель ударов
+     */
     showHitSet(){
         this.actionBlockSet.classList.add('hidden');
         this.actionHitSet.classList.remove('hidden');
@@ -265,6 +268,11 @@ export default class GameChooseAction {
         this.btnActionBlockBody.addEventListener('click', this.chooseBlockBody.bind(this));
     }
 
+    /**
+     * Установать кнопке выбранное положение
+     * @param elem
+     * @private
+     */
     _setButtonActionFocus(elem) {
         elem.classList.add('game-choose-action__button_choose_focused');
     }
