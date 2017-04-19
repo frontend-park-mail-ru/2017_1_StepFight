@@ -71,7 +71,7 @@ export default class SinglePlayerStrategy {
      */
     initDoStepListener() {
         this.manager.scene.gameControls.initDoStepListener(() => {
-            if(this.checkMyActionsArray()) {
+            if (this.checkMyActionsArray()) {
                 this.gameLogic().then(() => {
                     this.clearMyActionsArray();
                 });
@@ -105,8 +105,8 @@ export default class SinglePlayerStrategy {
         });
     }
 
-    stepAnalyser(myActions, opponentActions, stepIndex){
-        console.error(`action is № ${stepIndex}! my health=${this.me.health}! opponent health=${this.opponent.health}`);
+    stepAnalyser(myActions, opponentActions, stepIndex) {
+        console.error(`action is № ${stepIndex+1}! my health=${this.me.health}! opponent health=${this.opponent.health}`);
         let myAction = myActions[stepIndex];
         let opponentAction = opponentActions[stepIndex];
 
@@ -114,33 +114,57 @@ export default class SinglePlayerStrategy {
             switch (myAction.action) {
                 case 'hit': {
                     //TODO heat by turns
-                    console.log(`I hit by ${myAction.method} to ${myAction.target}`);
+                    this.logIt(`I hit by ${myAction.method} to ${myAction.target}`, stepIndex);
                     this.opponent.health -= 10;
-                    console.log(`Opponent hit by ${opponentAction.method} to ${opponentAction.target}`);
+                    this._updateOpponentHealth(-10);
+
+                    this.logIt(`Opponent hit by ${opponentAction.method} to ${opponentAction.target}`, stepIndex);
                     this.me.health -= 10;
+                    this._updateMyHealth(-10);
                     break;
                 }
                 case 'block': {
                     //TODO do block
-                    console.log('each do block');
+                    this.logIt(`Both made a block`, stepIndex);
                     break;
                 }
             }
         } else if (myAction.action === 'hit' && opponentAction.action === 'block') {
             if (myAction.target === opponentAction.method) {
-                console.log(`I hit by ${myAction.method} to ${myAction.target} but opponent blocked it`);
+                this.logIt(`I hit by ${myAction.method} to ${myAction.target} but opponent blocked it`, stepIndex);
             } else {
-                console.log(`I hit by ${myAction.method} to ${myAction.target} and opponent didn't block`);
+                this.logIt(`I hit by ${myAction.method} to ${myAction.target} and opponent didn't block`, stepIndex);
                 this.opponent.health -= 10;
+                this._updateOpponentHealth(-10);
             }
         } else if (myAction.action === 'block' && opponentAction.action === 'hit') {
             if (myAction.target === opponentAction.method) {
-                console.log(`I'm blocked by ${myAction.method} from ${opponentAction.target}`);
+                this.logIt(`I'm blocked by ${myAction.method} from ${opponentAction.target}`, stepIndex);
             } else {
-                console.log(`I missed hit by ${opponentAction.method} to ${opponentAction.target}`);
+                this.logIt(`I missed hit by ${opponentAction.method} to ${opponentAction.target}`, stepIndex);
                 this.me.health -= 10;
+                this._updateMyHealth(-10);
             }
         }
+    }
+
+    logIt(text, stepIndex){
+        console.log(text);
+        IziToast.info({
+            title: `${stepIndex+1} Action`,
+            message: text,
+            position: 'bottomRight',
+            timeout: 10000,
+            icon: ''
+        })
+    }
+
+    _updateOpponentHealth(div) {
+        this.manager.scene.opponentInfo.updateHealth(div);
+    }
+
+    _updateMyHealth(div) {
+        this.manager.scene.myInfo.updateHealth(div);
     }
 
     /**

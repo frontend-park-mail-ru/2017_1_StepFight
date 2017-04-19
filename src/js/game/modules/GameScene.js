@@ -361,10 +361,10 @@ export default class GameScene {
      * @private
      */
     _renderHealthBars(){
-        this.myHealth = new GameInfoToast(this.container, this.players.me.health, this.players.me.login, 'left');
-        this.myHealth.render();
-        this.opponentHealth = new GameInfoToast(this.container, this.players.opponent.health, this.players.opponent.login, 'right');
-        this.opponentHealth.render();
+        this.myInfo = new GameInfoToast(this.container, this.players.me.health, this.players.me.login, 'left');
+        this.myInfo.render();
+        this.opponentInfo = new GameInfoToast(this.container, this.players.opponent.health, this.players.opponent.login, 'right');
+        this.opponentInfo.render();
     }
 
     /**
