@@ -92,7 +92,7 @@ export default class SinglePlayerStrategy {
         return new Promise((resolve) => {
             //let myActions = this.createStepForOpponent();
             let myActions = this.mySteps;
-            let opponentActions = this.createStepForOpponent();
+            let opponentActions = this.createStepForOpponent({level: 'light'});
 
             console.log(myActions);
             console.log(opponentActions);
@@ -106,7 +106,7 @@ export default class SinglePlayerStrategy {
     }
 
     stepAnalyser(myActions, opponentActions, stepIndex) {
-        console.error(`action is № ${stepIndex+1}! my health=${this.me.health}! opponent health=${this.opponent.health}`);
+        console.error(`action is № ${stepIndex + 1}! my health=${this.me.health}! opponent health=${this.opponent.health}`);
         let myAction = myActions[stepIndex];
         let opponentAction = opponentActions[stepIndex];
 
@@ -148,10 +148,10 @@ export default class SinglePlayerStrategy {
         }
     }
 
-    logIt(text, stepIndex){
+    logIt(text, stepIndex) {
         console.log(text);
         IziToast.info({
-            title: `${stepIndex+1} Action`,
+            title: `${stepIndex + 1} Action`,
             message: text,
             position: 'bottomRight',
             timeout: 10000,
@@ -213,20 +213,64 @@ export default class SinglePlayerStrategy {
     }
 
 
-    createStepForOpponent() {
+    createStepForOpponent(settings) {
         let actionTypes = ['hit', 'block'];
         let methods = ['head', 'arm', 'leg'];
         let targets = ['head', 'body'];
 
         let actions = new Array(5);
-        for (let i = 0; i < 5; i++) {
-            let currAction = actionTypes[Math.floor(Math.random() * actionTypes.length)];
-            let currMethod = currAction === 'hit' ?
-                methods[Math.floor(Math.random() * methods.length)] : targets[Math.floor(Math.random() * targets.length)];
-            actions[i] = {
-                action: currAction,
-                method: currMethod,
-                target: targets[Math.floor(Math.random() * targets.length)]
+
+        let lightAlg = () => {
+            for (let i = 0; i < 5; i++) {
+                let currAction = actionTypes[Math.floor(Math.random() * actionTypes.length)];
+                let currMethod = currAction === 'hit' ?
+                    methods[Math.floor(Math.random() * methods.length)] : targets[Math.floor(Math.random() * targets.length)];
+                actions[i] = {
+                    action: currAction,
+                    method: currMethod,
+                    target: targets[Math.floor(Math.random() * targets.length)]
+                }
+            }
+        };
+
+        let hardAlg = () => {
+            console.log(this);
+            for (let i = 0; i < 5; i++) {
+                console.log(this.mySteps[i]);
+                if (this.mySteps[i].action === 'hit') {
+                    actions[i] = {
+                        action: 'block',
+                        method: this.mySteps[i].target
+                    }
+                } else {
+                    let target = targets[0];
+                    for (let j = 0; j < targets.length; j++) {
+                        if (targets[j] !== this.mySteps[i].method) {
+                            target = targets[j];
+                            break;
+                        }
+                    }
+                    actions[i] = {
+                        action: 'hit',
+                        method: methods[Math.floor(Math.random() * methods.length)],
+                        target: target
+                    }
+                }
+            }
+        };
+
+        switch (settings.level) {
+            case 'light': {
+                lightAlg();
+                break;
+            }
+            case 'hard': {
+                hardAlg();
+                break;
+            }
+            default: {
+                lightAlg();
+                break;
             }
         }
         return actions;
