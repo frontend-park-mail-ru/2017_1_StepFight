@@ -1,9 +1,8 @@
 .game-controls__button{
     padding: 5px;
     color: white;
-    background-color: rgba(131, 73, 246, 0.86);
-    border: 1px solid black;
-    border-radius: 5px;
+    background-color: rgba(246, 35, 59, 0.86);
+    border-radius: 3px;
     text-decoration: none;
     font-family: 'Cabin', sans-serif;
     -webkit-transition: all 0.5s ease;
@@ -14,9 +13,7 @@
 }
 
 .game-controls__button:hover {
-    background-color: white;
-    border-color: white;
-    color: #191919;
+    background-color: rgba(246, 94, 103, 0.86);
 }
 
 @media (max-width: 550px) {

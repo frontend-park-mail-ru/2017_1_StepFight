@@ -78,10 +78,7 @@ export default class GameControls {
             if (event.target.classList.contains('action') && event.target.getAttribute('index')) {
                 this.index = event.target.getAttribute('index');
 
-                let steps = this.sceneContext.manager.strategy.mySteps.slice(0);
-                console.log(steps);
-
-                this.sceneContext.gameActionModal.setStartAction(steps[this.index]);
+                this.sceneContext.gameActionModal.setStartAction(this.sceneContext.manager.strategy.mySteps[this.index]/*steps[this.index]*/);
 
                 this.sceneContext.gameActionModal.show();
             }

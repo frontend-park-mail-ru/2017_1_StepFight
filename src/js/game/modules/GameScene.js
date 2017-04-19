@@ -3,11 +3,11 @@
  */
 // import * as THREE from "../../../../vendor/three";
 import * as THREE from "three";
-//import * as OIMO from "oimo";
 
 import ObjPerson from "./ObjPerson";
 import GameControls from "../../../elements/game-controls/GameControls";
 import GameAction from "../../../elements/game-choose-action/GameChooseAction";
+import GameInfoToast from "../../../elements/game-info-toast/GameInfoToast";
 const OrbitControls = require('three-orbit-controls')(THREE);
 // import * as OrbitControls from 'three-orbit-controls';
 
@@ -162,7 +162,7 @@ export default class GameScene {
         spotLight.position.set(0, 20, 30);
         this.scene.add(spotLight);
 
-        /* figure where field in*/
+        /* figure target field in*/
         let octahedronGeometry = new THREE.OctahedronGeometry(4, 0);
         let octahedronMaterial = new THREE.MeshLambertMaterial(
             {color: 0xff0000});
@@ -361,7 +361,10 @@ export default class GameScene {
      * @private
      */
     _renderHealthBars(){
-
+        this.myHealth = new GameInfoToast(this.container, this.players.me.health, this.players.me.login, 'left');
+        this.myHealth.render();
+        this.opponentHealth = new GameInfoToast(this.container, this.players.opponent.health, this.players.opponent.login, 'right');
+        this.opponentHealth.render();
     }
 
     /**

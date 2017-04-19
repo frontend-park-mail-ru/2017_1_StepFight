@@ -1,0 +1,17 @@
+.game-info-toast_right{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+   /* width: 200px;
+    height: 80px;*/
+    background-color: white;
+}
+
+.game-info-toast_left{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    /*width: 200px;
+    height: 80px;*/
+    background-color: white;
+}

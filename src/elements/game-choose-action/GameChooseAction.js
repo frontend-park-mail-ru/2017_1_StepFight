@@ -7,11 +7,8 @@ import IziToast from "izitoast";
 export default class GameChooseAction {
     constructor(node) {
         this.node = node;
-        this.action = {
-            action: 'hit',
-            than: null,
-            where: null
-        };
+        this.action = null;
+        this.buffAction = null;
     }
 
     /**
@@ -73,9 +70,9 @@ export default class GameChooseAction {
         this.actionHitSet.appendChild(divThan);
         this.actionHitSet.appendChild(divWhere);
 
-        /*-----------than--------------*/
+        /*-----------method--------------*/
         let headText = document.createElement('h3');
-        headText.innerText = 'Than';
+        headText.innerText = 'Method';
         divThan.appendChild(headText);
 
         this.btnActionHitThanHead = document.createElement('div');
@@ -93,9 +90,9 @@ export default class GameChooseAction {
         this.btnActionHitThanLeg.innerText = 'Leg';
         divThan.appendChild(this.btnActionHitThanLeg);
 
-        /*-----------where--------------*/
+        /*-----------target--------------*/
         headText = document.createElement('h3');
-        headText.innerText = 'Where';
+        headText.innerText = 'Target';
         divWhere.appendChild(headText);
 
         this.btnActionHitWhereHead = document.createElement('div');
@@ -123,16 +120,23 @@ export default class GameChooseAction {
      * @param action
      */
     setStartAction(action) {
+        /*if(action === null || typeof action === 'undefined'){
+            return;
+        }*/
+        this.action = action;
+        this.buffAction = new Object({action: 'hit', method: null, target: null});
         if(action === null || typeof action === 'undefined'){
+            this.showHitSet();
             return;
         }
-        this.action = action;
         if (this.action.action === 'hit') {
-
             this.actionHitSet.classList.remove('hidden');
             this.actionBlockSet.classList.add('hidden');
 
-            switch (this.action.than) {
+            this.btnActionChooseHit.classList.add('game-choose-action__button_tabs_focused');
+            this.btnActionChooseBlock.classList.remove('game-choose-action__button_tabs_focused');
+
+            switch (this.action.method) {
                 case 'head': {
                     this._setButtonActionFocus(this.btnActionHitThanHead);
                     break;
@@ -146,7 +150,7 @@ export default class GameChooseAction {
                     break;
                 }
             }
-            switch (this.action.where) {
+            switch (this.action.target) {
                 case 'head': {
                     this._setButtonActionFocus(this.btnActionHitWhereHead);
                     break;
@@ -161,7 +165,7 @@ export default class GameChooseAction {
             this.actionHitSet.classList.add('hidden');
             this.actionBlockSet.classList.remove('hidden');
 
-            switch (this.action.than) {
+            switch (this.action.method) {
                 case 'body': {
                     this._setButtonActionFocus(this.btnActionBlockBody);
                     break;
@@ -175,61 +179,68 @@ export default class GameChooseAction {
     }
 
 
+    showBlockSet(){
+        this.actionHitSet.classList.add('hidden');
+        this.actionBlockSet.classList.remove('hidden');
+
+        this.btnActionChooseHit.classList.remove('game-choose-action__button_tabs_focused');
+        this.btnActionChooseBlock.classList.add('game-choose-action__button_tabs_focused');
+    }
+
+    showHitSet(){
+        this.actionBlockSet.classList.add('hidden');
+        this.actionHitSet.classList.remove('hidden');
+
+        this.btnActionChooseHit.classList.add('game-choose-action__button_tabs_focused');
+        this.btnActionChooseBlock.classList.remove('game-choose-action__button_tabs_focused');
+    }
+
     /**
      * Инициализация слушателей кнопок по выбору действий
      * @private
      */
     _initActionSetsListeners() {
-        this.showBlockSet = function () {
-            this.actionHitSet.classList.add('hidden');
-            this.actionBlockSet.classList.remove('hidden');
-
-            this.btnActionChooseHit.classList.remove('game-choose-action__button_tabs_focused');
-            this.btnActionChooseBlock.classList.add('game-choose-action__button_tabs_focused');
+        this.showBlockSetCallback = function () {
+            this.showBlockSet();
 
             this.clearActionData();
             this._clearFocused();
-            this.action.action = 'block';
+            this.buffAction.action = 'block';
         };
-
-        this.showHitSet = function () {
-            this.actionBlockSet.classList.add('hidden');
-            this.actionHitSet.classList.remove('hidden');
-
-            this.btnActionChooseHit.classList.add('game-choose-action__button_tabs_focused');
-            this.btnActionChooseBlock.classList.remove('game-choose-action__button_tabs_focused');
+        this.showHitSetCallback = function () {
+            this.showHitSet();
 
             this.clearActionData();
             this._clearFocused();
-            this.action.action = 'hit';
+            this.buffAction.action = 'hit';
         };
 
-        this.btnActionChooseBlock.addEventListener('click', this.showBlockSet.bind(this));
-        this.btnActionChooseHit.addEventListener('click', this.showHitSet.bind(this));
+        this.btnActionChooseBlock.addEventListener('click', this.showBlockSetCallback.bind(this));
+        this.btnActionChooseHit.addEventListener('click', this.showHitSetCallback.bind(this));
 
         this.chooseThanHitHead = function () {
             this.clearHitThanFocus();
-            this.action.than = 'head';
+            this.buffAction.method = 'head';
             this._setButtonActionFocus(this.btnActionHitThanHead);
         };
         this.chooseThanHitArm = function () {
             this.clearHitThanFocus();
-            this.action.than = 'arm';
+            this.buffAction.method = 'arm';
             this._setButtonActionFocus(this.btnActionHitThanArm);
         };
         this.chooseThanHitLeg = function () {
             this.clearHitThanFocus();
-            this.action.than = 'leg';
+            this.buffAction.method = 'leg';
             this._setButtonActionFocus(this.btnActionHitThanLeg);
         };
         this.chooseWhereHitHead = function () {
             this.clearHitWhereFocus();
-            this.action.where = 'head';
+            this.buffAction.target = 'head';
             this._setButtonActionFocus(this.btnActionHitWhereHead);
         };
         this.chooseWhereHitBody = function () {
             this.clearHitWhereFocus();
-            this.action.where = 'body';
+            this.buffAction.target = 'body';
             this._setButtonActionFocus(this.btnActionHitWhereBody);
         };
 
@@ -241,12 +252,12 @@ export default class GameChooseAction {
 
         this.chooseBlockHead = function () {
             this.clearBlockThanFocus();
-            this.action.than = 'head';
+            this.buffAction.method = 'head';
             this._setButtonActionFocus(this.btnActionBlockHead);
         };
         this.chooseBlockBody = function () {
             this.clearBlockThanFocus();
-            this.action.than = 'body';
+            this.buffAction.method = 'body';
             this._setButtonActionFocus(this.btnActionBlockBody);
         };
 
@@ -287,9 +298,9 @@ export default class GameChooseAction {
      * Отчистить выбранное действие
      */
     clearActionData() {
-        this.action.action = 'hit';
-        this.action.than = null;
-        this.action.where = null;
+        this.buffAction.action = 'hit';
+        this.buffAction.method = null;
+        this.buffAction.target = null;
     }
 
     /**
@@ -330,9 +341,9 @@ export default class GameChooseAction {
         };
 
         this.actionCallbackChoose = function () {
-            switch (this.action.action) {
+            switch (this.buffAction.action) {
                 case 'hit': {
-                    if (this.action.than === null || this.action.where === null) {
+                    if (this.buffAction.method === null || this.buffAction.target === null) {
                         IziToast.error({
                             title: 'Fill actions',
                             position: 'topRight'
@@ -341,14 +352,19 @@ export default class GameChooseAction {
                         this.hide();
                         this.deleteButtonAction();
 
-                        callback(action);
+
+                        callback({
+                            action: this.buffAction.action,
+                            method: this.buffAction.method,
+                            target: this.buffAction.target
+                        });
 
                         this._clearFocused();
                     }
                     break;
                 }
                 case 'block': {
-                    if (this.action.than === null) {
+                    if (this.buffAction.method === null) {
                         IziToast.error({
                             title: 'Fill actions',
                             position: 'topRight'
@@ -356,7 +372,11 @@ export default class GameChooseAction {
                     } else {
                         this.hide();
                         this.deleteButtonAction();
-                        callback(action);
+                        callback({
+                            action: this.buffAction.action,
+                            method: this.buffAction.method,
+                            target: this.buffAction.target
+                        });
                         this._clearFocused();
                     }
                     break;
@@ -378,8 +398,8 @@ export default class GameChooseAction {
         this.btnClose.removeEventListener('click', this.actionCallbackClose);
         this.btnChoose.removeEventListener('click', this.actionCallbackChoose);
 
-        this.btnActionChooseBlock.removeEventListener('click', this.showBlockSet);
-        this.btnActionChooseHit.removeEventListener('click', this.showHitSet);
+        this.btnActionChooseBlock.removeEventListener('click', this.showBlockSetCallback);
+        this.btnActionChooseHit.removeEventListener('click', this.showHitSetCallback);
 
         this.btnActionHitThanHead.removeEventListener('click', this.chooseThanHitHead);
         this.btnActionHitThanArm.removeEventListener('click', this.chooseThanHitArm);

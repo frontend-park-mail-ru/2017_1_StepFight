@@ -44,7 +44,8 @@ export default class GameManager {
     /**
      * Завершить игровой процесс
      */
-    finish(){
+    finish(resultObj){
+        console.warn(`winner=${resultObj.winner.login} loser=${resultObj.loser.login}`);
         this.scene.setState(this.storage.gameStates.STATERESULT);
     }
 

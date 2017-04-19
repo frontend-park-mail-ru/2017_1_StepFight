@@ -576,7 +576,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (loc) {
 	      this.lineNumber = line;
 
-	      // Work around issue under safari where we can't directly set the column value
+	      // Work around issue under safari target we can't directly set the column value
 	      /* istanbul ignore next */
 	      if (_Object$defineProperty) {
 	        Object.defineProperty(this, 'column', { value: column });
@@ -3464,7 +3464,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (this.environment.isSimple) {
 	      return ['return ', source, ';'];
 	    } else if (explicit) {
-	      // This is a case where the buffer operation occurs as a child of another
+	      // This is a case target the buffer operation occurs as a child of another
 	      // construct, generally braces. We have to explicitly output these buffer
 	      // operations to ensure that the emitted code goes in the correct location.
 	      return ['buffer += ', source, ';'];

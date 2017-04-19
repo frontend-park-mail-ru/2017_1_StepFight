@@ -8,12 +8,9 @@
 
 .game-choose-action__container__action-set{
     display: flex;
-    /*
-    justify-content: space-around;
-    */
     flex-direction: row;
     flex-wrap: wrap;
-    padding: 5px;
+    padding: 5px 5px 0 5px;
 }
 
 .game-choose-action__container__action-hit-set{
@@ -22,8 +19,9 @@
     flex-direction: row;
     flex-wrap: wrap;
     padding: 5px;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     border-radius: 3px;
+    background-color: white;
 }
 
 .game-choose-action__container__action-hit-set__column{
@@ -46,4 +44,6 @@
     flex-direction: column;
     flex-wrap: wrap;
     padding: 5px;
+    border-radius: 3px;
+    background-color: white;
 }

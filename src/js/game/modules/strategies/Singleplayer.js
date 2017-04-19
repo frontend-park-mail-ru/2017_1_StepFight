@@ -7,7 +7,7 @@ export default class SinglePlayerStrategy {
     constructor(manager) {
         this.manager = manager;
 
-        /*{action: hit||block, than: head||leg||arm, where: head||leg||arm}*/
+        /*{action: hit||block, method: head||leg||arm, target: head||leg||arm}*/
         this.mySteps = new Array(5);
         this.opponentsSteps = new Array(5);
     }
@@ -18,12 +18,18 @@ export default class SinglePlayerStrategy {
     gameLoop() {
         /*console.log(`health=${this.me.health}`);
          this.me.health -= 1;*/
-        if (this.me.health < 0) {
+        if (this.me.health <= 0) {
             this.finishGameLoop();
-            this.manager.finish();
-        } else if (this.opponent.health < 0) {
+            this.manager.finish({
+                winner: this.opponent,
+                loser: this.me
+            });
+        } else if (this.opponent.health <= 0) {
             this.finishGameLoop();
-            this.manager.finish();
+            this.manager.finish({
+                winner: this.me,
+                loser: this.opponent
+            });
         }
     }
 
@@ -44,22 +50,16 @@ export default class SinglePlayerStrategy {
         this.manager.scene.gameControls.initActionListener((index, actionObj) => {
             if (index < 5 && index >= 0 && actionObj !== null && typeof actionObj !== 'undefined') {
 
-                let actionClone = {};
-                actionClone.action = actionObj.action;
-                actionClone.than = actionObj.than;
-                actionClone.where = actionObj.where;
-                
-                this.mySteps[index] = actionClone/*Object.assign({}, actionObj)*/;
-
+                this.mySteps[index] = actionObj/*Object.assign({}, actionObj)*/;
 
                 this.manager.scene.gameControls.actionButtons[index].classList.remove('game-controls__action-button_empty');
                 this.manager.scene.gameControls.actionButtons[index].classList.add('game-controls__action-button_fill');
 
                 let btnText = '';
                 if (actionObj.action === 'block') {
-                    btnText = `block ${actionObj.than}`;
+                    btnText = `block ${actionObj.method}`;
                 } else if (actionObj.action === 'hit') {
-                    btnText = `hit by ${actionObj.than} to ${actionObj.where}`;
+                    btnText = `hit by ${actionObj.method} to ${actionObj.target}`;
                 }
                 this.manager.scene.gameControls.actionButtons[index].innerText = btnText;
             }
@@ -71,12 +71,10 @@ export default class SinglePlayerStrategy {
      */
     initDoStepListener() {
         this.manager.scene.gameControls.initDoStepListener(() => {
-            if (this.checkMyActionsArray()) {
-                IziToast.success({
-                    title: 'Yeah',
-                    position: 'topRight'
+            if(this.checkMyActionsArray()) {
+                this.gameLogic().then(() => {
+                    this.clearMyActionsArray();
                 });
-                this.clearMyActionsArray();
             } else {
                 IziToast.error({
                     title: 'Fill action buttons',
@@ -84,6 +82,65 @@ export default class SinglePlayerStrategy {
                 });
             }
         });
+    }
+
+    /**
+     * Игровая логика
+     * @return {Promise}
+     */
+    gameLogic() {
+        return new Promise((resolve) => {
+            //let myActions = this.createStepForOpponent();
+            let myActions = this.mySteps;
+            let opponentActions = this.createStepForOpponent();
+
+            console.log(myActions);
+            console.log(opponentActions);
+
+            for (let i = 0; i < 5; i++) {
+                this.stepAnalyser(myActions, opponentActions, i);
+            }
+
+            resolve();
+        });
+    }
+
+    stepAnalyser(myActions, opponentActions, stepIndex){
+        console.error(`action is № ${stepIndex}! my health=${this.me.health}! opponent health=${this.opponent.health}`);
+        let myAction = myActions[stepIndex];
+        let opponentAction = opponentActions[stepIndex];
+
+        if (myAction.action === opponentAction.action) {
+            switch (myAction.action) {
+                case 'hit': {
+                    //TODO heat by turns
+                    console.log(`I hit by ${myAction.method} to ${myAction.target}`);
+                    this.opponent.health -= 10;
+                    console.log(`Opponent hit by ${opponentAction.method} to ${opponentAction.target}`);
+                    this.me.health -= 10;
+                    break;
+                }
+                case 'block': {
+                    //TODO do block
+                    console.log('each do block');
+                    break;
+                }
+            }
+        } else if (myAction.action === 'hit' && opponentAction.action === 'block') {
+            if (myAction.target === opponentAction.method) {
+                console.log(`I hit by ${myAction.method} to ${myAction.target} but opponent blocked it`);
+            } else {
+                console.log(`I hit by ${myAction.method} to ${myAction.target} and opponent didn't block`);
+                this.opponent.health -= 10;
+            }
+        } else if (myAction.action === 'block' && opponentAction.action === 'hit') {
+            if (myAction.target === opponentAction.method) {
+                console.log(`I'm blocked by ${myAction.method} from ${opponentAction.target}`);
+            } else {
+                console.log(`I missed hit by ${opponentAction.method} to ${opponentAction.target}`);
+                this.me.health -= 10;
+            }
+        }
     }
 
     /**
@@ -131,4 +188,23 @@ export default class SinglePlayerStrategy {
         this.manager.scene.setPlayers(me, opponent);
     }
 
+
+    createStepForOpponent() {
+        let actionTypes = ['hit', 'block'];
+        let methods = ['head', 'arm', 'leg'];
+        let targets = ['head', 'body'];
+
+        let actions = new Array(5);
+        for (let i = 0; i < 5; i++) {
+            let currAction = actionTypes[Math.floor(Math.random() * actionTypes.length)];
+            let currMethod = currAction === 'hit' ?
+                methods[Math.floor(Math.random() * methods.length)] : targets[Math.floor(Math.random() * targets.length)];
+            actions[i] = {
+                action: currAction,
+                method: currMethod,
+                target: targets[Math.floor(Math.random() * targets.length)]
+            }
+        }
+        return actions;
+    }
 }
