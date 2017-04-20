@@ -19,16 +19,23 @@ export default class SinglePlayerStrategy {
         /*console.log(`health=${this.me.health}`);
          this.me.health -= 1;*/
         if (this.me.health <= 0) {
+            //TODO create rating analyser
             this.finishGameLoop();
             this.manager.finish({
-                winner: this.opponent,
-                loser: this.me
+                win: false,
+                object: this.me
+            }, {
+                win: true,
+                object: this.opponent
             });
         } else if (this.opponent.health <= 0) {
             this.finishGameLoop();
             this.manager.finish({
-                winner: this.me,
-                loser: this.opponent
+                win: true,
+                object: this.me
+            }, {
+                win: false,
+                object: this.opponent
             });
         }
     }
@@ -115,11 +122,9 @@ export default class SinglePlayerStrategy {
                 case 'hit': {
                     //TODO heat by turns
                     this.logIt(`I hit by ${myAction.method} to ${myAction.target}`, stepIndex);
-                    this.opponent.health -= 10;
                     this._updateOpponentHealth(-10);
 
                     this.logIt(`Opponent hit by ${opponentAction.method} to ${opponentAction.target}`, stepIndex);
-                    this.me.health -= 10;
                     this._updateMyHealth(-10);
                     break;
                 }
@@ -134,7 +139,6 @@ export default class SinglePlayerStrategy {
                 this.logIt(`I hit by ${myAction.method} to ${myAction.target} but opponent blocked it`, stepIndex);
             } else {
                 this.logIt(`I hit by ${myAction.method} to ${myAction.target} and opponent didn't block`, stepIndex);
-                this.opponent.health -= 10;
                 this._updateOpponentHealth(-10);
             }
         } else if (myAction.action === 'block' && opponentAction.action === 'hit') {
@@ -142,7 +146,6 @@ export default class SinglePlayerStrategy {
                 this.logIt(`I'm blocked by ${myAction.method} from ${opponentAction.target}`, stepIndex);
             } else {
                 this.logIt(`I missed hit by ${opponentAction.method} to ${opponentAction.target}`, stepIndex);
-                this.me.health -= 10;
                 this._updateMyHealth(-10);
             }
         }
@@ -160,10 +163,12 @@ export default class SinglePlayerStrategy {
     }
 
     _updateOpponentHealth(div) {
+        this.opponent.health -= 10;
         this.manager.scene.opponentInfo.updateHealth(div);
     }
 
     _updateMyHealth(div) {
+        this.me.health -= 10;
         this.manager.scene.myInfo.updateHealth(div);
     }
 
@@ -208,7 +213,9 @@ export default class SinglePlayerStrategy {
      */
     setPlayers(me, opponent) {
         this.me = me;
+        this.me.health = 100;
         this.opponent = opponent;
+        this.opponent.health = 100;
         this.manager.scene.setPlayers(me, opponent);
     }
 

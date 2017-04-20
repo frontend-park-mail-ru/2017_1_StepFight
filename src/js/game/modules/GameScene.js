@@ -8,6 +8,8 @@ import ObjPerson from "./ObjPerson";
 import GameControls from "../../../elements/game-controls/GameControls";
 import GameAction from "../../../elements/game-choose-action/GameChooseAction";
 import GameInfoToast from "../../../elements/game-info-toast/GameInfoToast";
+import ProgressBarTable from "../../../elements/progress-bar-table/progressBarTable";
+import GameResultTable from "../../../elements/game-result-table/GameResultTable";
 const OrbitControls = require('three-orbit-controls')(THREE);
 // import * as OrbitControls from 'three-orbit-controls';
 
@@ -21,7 +23,7 @@ export default class GameScene {
         this.storage = storage;
 
         this._setSize();
-        this._renderContainer();
+        //this.renderContainer();
     }
 
     /**
@@ -53,10 +55,6 @@ export default class GameScene {
         this.camera.updateProjectionMatrix();
 
         this.renderer.setSize(this.WIDTH, this.HEGHT);
-
-        /*-------2d canvas-----------*/
-        /*this.renderer2D.style.width = this.WIDTH + 'px';
-        this.renderer2D.style.height = this.HEGHT + 'px';*/
     }
 
     /**
@@ -70,13 +68,8 @@ export default class GameScene {
 
     /**
      * Отрисовка основного контейнера
-     * @private
      */
-    _renderContainer() {
-        /* init figures arr*/
-        /*this.worldBodies = [];
-        this.worldMeshes = [];*/
-
+    renderContainer() {
         this.scene = new THREE.Scene();
         this.renderer = new THREE.WebGLRenderer({
             antialias: true,
@@ -103,11 +96,15 @@ export default class GameScene {
         this._initListeners();
     }
 
+    removeContainer() {
+        this.node.removeChild(this.container);
+    }
+
     /**
      * Добавить стили для контейнера
      * @private
      */
-    _addStylesToContainer(){
+    _addStylesToContainer() {
         this.renderer.domElement.setAttribute('class', 'game-view__game-area');
         this.renderer.domElement.setAttribute('id', 'game-area');
     }
@@ -147,27 +144,14 @@ export default class GameScene {
      * @private
      */
     _renderWaitState() {
-        this.clear();
-
-        /* Lights */
-        let spotLight = new THREE.SpotLight(0xffffff);
-        spotLight.position.set(0, 20, 30);
-        this.scene.add(spotLight);
-
-        /* figure target field in*/
-        let octahedronGeometry = new THREE.OctahedronGeometry(4, 0);
-        let octahedronMaterial = new THREE.MeshLambertMaterial(
-            {color: 0xff0000});
-        let octahedron = new THREE.Mesh(octahedronGeometry, octahedronMaterial);
-        octahedron.position.set(0, 0, 0);
-        this.scene.add(octahedron);
-
-        let render = () => {
-            window.requestAnimationFrame(render);
-            octahedron.rotation.y += 0.02;
-            //this.refreshScene();
-        };
-        render();
+        this.progressBarTable = new ProgressBarTable(this.node);
+        this.progressBarTable.render({
+            conf: [
+                {
+                    text: 'Search for an opponent...'
+                }
+            ]
+        });
     }
 
     /**
@@ -175,7 +159,11 @@ export default class GameScene {
      * @private
      */
     _renderGameState() {
-        this.clear();
+        this.progressBarTable.remove();
+
+        this.renderContainer();
+
+        this.clearScene();
         this._animCameraStart();
         this._renderControlArea();
         this._renderGameActionModal();
@@ -184,9 +172,7 @@ export default class GameScene {
         this._renderPlayers();
         this.refreshScene();
 
-        // this.mePerson.depnut();
-
-         this._renderInfoBars();
+        this._renderInfoBars();
     }
 
     /**
@@ -224,17 +210,8 @@ export default class GameScene {
         plane.rotation.x = -0.5 * Math.PI;
         plane.position.set(0, -10, 0);
         this.scene.add(plane);
-
-        /*this.world.add({
-            size: [1000, 10, 1000],
-            pos: [0, -10, 0],
-            world: this.world,
-            density: 1,
-            collidesWith: 0xffffffff
-        });
-
-        this.world.gravity = new OIMO.Vec3(0, -9.8, 0);*/
     }
+
 
     /**
      * Нарисовать игроков
@@ -256,7 +233,7 @@ export default class GameScene {
         this.camera = new THREE.PerspectiveCamera(45
             , this.WIDTH / this.HEGHT, 0.1, 1000);
 
-        this.camera.position.set(0,25,80);
+        this.camera.position.set(0, 25, 80);
         this.camera.lookAt(this.scene.position);
     }
 
@@ -276,19 +253,6 @@ export default class GameScene {
      * Метод обновления, перерисовки сцены
      */
     refreshScene() {
-        /*if (this.world) {
-            this.world.step();
-            for (let i = 0, len = this.worldBodies.length; i < len; i++) {
-                let b = this.worldBodies[i];
-                let m = this.worldMeshes[i];
-
-                if (!b.sleeping) {
-                    m.position.copy(b.getPosition());
-                    m.quaternion.copy(b.getQuaternion());
-                }
-            }
-        }*/
-
         this.renderer.render(this.scene, this.camera);
     }
 
@@ -297,14 +261,14 @@ export default class GameScene {
      * Метод анимации камеры на старте
      * @private
      */
-    _animCameraStart(){
-        this.camera.position.set(0,0,1000);
+    _animCameraStart() {
+        this.camera.position.set(0, 0, 1000);
         let render = () => {
             if (this.camera.position.z > 60) {
                 this.camera.position.z -= 10;
                 this.camera.lookAt(this.scene.position);
                 window.requestAnimationFrame(render);
-            } else if(this.camera.position.y < 30){
+            } else if (this.camera.position.y < 30) {
                 this.camera.position.y += 1;
                 this.camera.lookAt(this.scene.position);
                 window.requestAnimationFrame(render);
@@ -326,7 +290,7 @@ export default class GameScene {
      * Отрисовка модального окна, для выбора действия
      * @private
      */
-    _renderGameActionModal(){
+    _renderGameActionModal() {
         this.gameActionModal = new GameAction(this.node);
         this.gameActionModal.render();
     }
@@ -336,15 +300,27 @@ export default class GameScene {
      * @private
      */
     _renderResultState() {
-        this.clear();
+        this.clearScene();
+        this.clearView();
+
+        this.gameResultTable = new GameResultTable(this.node);
+        this.gameResultTable.render(this.resultData);
+        this.gameResultTable.initListener(()=>{
+           this.manager.router.go(this.storage.urls.PROFILE, false);
+        });
     }
 
+    clearView() {
+        while (this.node.children.length > 0) {
+            this.node.removeChild(this.node.lastChild);
+        }
+    }
 
     /**
      * Отрисовка элементов здоровья
      * @private
      */
-    _renderInfoBars(){
+    _renderInfoBars() {
         this.myInfo = new GameInfoToast(this.container, this.players.me.health, this.players.me.login, 'left');
         this.myInfo.render();
         this.opponentInfo = new GameInfoToast(this.container, this.players.opponent.health, this.players.opponent.login, 'right');
@@ -354,7 +330,7 @@ export default class GameScene {
     /**
      * Отчистка сцены
      */
-    clear() {
+    clearScene() {
         this.scene.children.splice(0, this.scene.children.length);
         this.refreshScene();
     }
@@ -366,5 +342,17 @@ export default class GameScene {
      */
     setPlayers(me, opponent) {
         this.players = {me: me, opponent: opponent};
+    }
+
+    /**
+     * Установить данные по результатам боя
+     * @param me
+     * @param opponent
+     */
+    setResultData(me, opponent) {
+        this.resultData = {
+            me: me,
+            opponent: opponent
+        }
     }
 }

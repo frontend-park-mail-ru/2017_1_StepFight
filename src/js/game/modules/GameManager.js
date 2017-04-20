@@ -22,17 +22,19 @@ export default class GameManager {
     /**
      * Начать игровой процесс
      */
-    start(){
+    start() {
         //TODO start strategy
         this.scene.setState(this.storage.gameStates.STATEWAIT);
 
-        if(this.checkUser()){
-            setTimeout(()=>{
+        if (this.checkUser()) {
+            setTimeout(() => {
                 this.opponent = this._getOpponent();
+                //this.opponent.health = 100; // ADD START HEALTH
                 this.strategy.setPlayers(
                     //TODO fix this
-                    {login: /*this.storage.user.login*/'debug', health: 100},
-                    {login: this.opponent.login, health: 100});
+                    //{login: /*this.storage.user.login*/'debug', health: 100, rating: 1029},
+                    this.storage.user,
+                    this.opponent);
                 this.scene.setState(this.storage.gameStates.STATEGAME);
                 this.strategy.startGameLoop();
             }, 1000);
@@ -44,8 +46,10 @@ export default class GameManager {
     /**
      * Завершить игровой процесс
      */
-    finish(resultObj){
-        console.warn(`winner=${resultObj.winner.login} loser=${resultObj.loser.login}`);
+    finish(myResult, opponentResult) {
+        //console.warn(`winner=${resultObj.winner.login} loser=${resultObj.loser.login}`);
+
+        this.scene.setResultData(myResult, opponentResult);
         this.scene.setState(this.storage.gameStates.STATERESULT);
     }
 
@@ -53,12 +57,12 @@ export default class GameManager {
      * Проверить user-а на существования
      * @return {boolean}
      */
-    checkUser(){
+    checkUser() {
         //TODO delete this
         return true;
-        try{
+        try {
             return this.storage.user.login !== null;
-        } catch (e){
+        } catch (e) {
             return false;
         }
     }
@@ -70,10 +74,10 @@ export default class GameManager {
      */
     _getOpponent() {
         if (this.strategy.constructor.name === SinglePlayerStrategy.name) {
-            return {login: 'dc.DRE'};
+            return {login: 'dc.DRE', rating: 99999999};
         } else {
             //TODO search for opponent in global
-            return {login: 'MULTIPLAYER'};
+            return {login: 'MULTIPLAYER', rating: 99999999};
         }
     }
 }

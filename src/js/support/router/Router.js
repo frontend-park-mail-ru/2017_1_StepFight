@@ -131,12 +131,12 @@ export default class Router {
             }
         } else if (path === Storage.urls.GAME) {
             //!!! for debug only !!!
-            return Storage.urls.GAME;
-            /*if (Storage.user) {
+            //return Storage.urls.GAME;
+            if (Storage.user) {
                 return Storage.urls.GAME;
             } else {
                 return Storage.urls.MAIN;
-            }*/
+            }
         } else {
             return path;
         }
