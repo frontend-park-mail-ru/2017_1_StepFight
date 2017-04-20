@@ -29,10 +29,8 @@ export default class GameManager {
         if (this.checkUser()) {
             setTimeout(() => {
                 this.opponent = this._getOpponent();
-                //this.opponent.health = 100; // ADD START HEALTH
                 this.strategy.setPlayers(
                     //TODO fix this
-                    //{login: /*this.storage.user.login*/'debug', health: 100, rating: 1029},
                     this.storage.user,
                     this.opponent);
                 this.scene.setState(this.storage.gameStates.STATEGAME);

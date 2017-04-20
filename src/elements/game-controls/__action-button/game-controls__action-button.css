@@ -23,8 +23,7 @@
 .game-controls__action-button_empty{
     word-break: break-all;
     height: 80px;
-    width: 200px;
-    margin: 5px;
+    width: inherit;
     background-color: white;
     border-radius: 3px;
     line-height: 80px;
@@ -38,8 +37,7 @@
     background-color: rgba(35, 169, 42, 0.86);
     color: white;
     height: 80px;
-    width: 200px;
-    margin: 5px;
+    width: inherit;
     border-radius: 3px;
     line-height: 80px;
     font-family: 'Cabin', sans-serif;

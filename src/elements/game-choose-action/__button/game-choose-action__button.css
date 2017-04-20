@@ -18,10 +18,10 @@
 }
 
 .game-choose-action__button_tabs{
-    flex-grow: 1;
     padding: 5px;
-    color: black;
-    background-color: #c0c0c0;
+    color: white;
+    /*background-color: #c0c0c0;*/
+    background-color: #565458;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     text-decoration: none;
@@ -31,15 +31,15 @@
     height: 30px;
     line-height: 30px;
     text-align: center;
-    margin: 5px 5px 0 5px;
+    margin: 5px 15px 0 15px;
 }
-.game-choose-action__button_tabs_focused{
+/*.game-choose-action__button_tabs_focused{
     background-color: white;
 }
 
 .game-choose-action__button_tabs:hover{
-    /*background-color: #d0d0d0;*/
-}
+    !*background-color: #d0d0d0;*!
+}*/
 
 .game-choose-action__button_choose{
     flex-grow: 1;

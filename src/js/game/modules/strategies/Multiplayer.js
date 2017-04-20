@@ -54,9 +54,9 @@ export default class MultiPlayerStrategy{
                 this.manager.scene.gameControls.actionButtons[index].classList.add('game-controls__action-button_fill');
 
                 let btnText = '';
-                if (actionObj.action === 'block') {
+                if (actionObj.buffAction === 'block') {
                     btnText = `block ${actionObj.method}`;
-                } else if (actionObj.action === 'hit') {
+                } else if (actionObj.buffAction === 'hit') {
                     btnText = `hit by ${actionObj.method} to ${actionObj.target}`;
                 }
                 this.manager.scene.gameControls.actionButtons[index].innerText = btnText;
@@ -74,7 +74,7 @@ export default class MultiPlayerStrategy{
                 this.clearMyActionsArray();
             } else {
                 IziToast.error({
-                    title: 'Fill action buttons',
+                    title: 'Fill buffAction buttons',
                     position: 'topRight'
                 });
             }
@@ -102,7 +102,7 @@ export default class MultiPlayerStrategy{
             this.mySteps[i] = null;
             this.manager.scene.gameControls.actionButtons[i].classList.remove('game-controls__action-button_fill');
             this.manager.scene.gameControls.actionButtons[i].classList.add('game-controls__action-button_empty');
-            this.manager.scene.gameControls.actionButtons[i].innerText = 'add action';
+            this.manager.scene.gameControls.actionButtons[i].innerText = 'add buffAction';
         }
     }
 

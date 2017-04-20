@@ -7,6 +7,7 @@
     margin: auto auto;
     padding: 5px;
     text-transform: uppercase;
+    width: 300px;
 }
 
 @media (max-width: 1000px) {
@@ -25,9 +26,8 @@
     flex-direction: row;
     flex-wrap: wrap;
     margin: auto auto;
-    padding: 2px;
-    border: 1px solid white;
     border-radius: 3px;
+    width: inherit;
 }
 
 @media (max-width: 1000px) {

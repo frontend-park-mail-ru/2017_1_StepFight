@@ -5,9 +5,6 @@ export default class GameControls {
     constructor(node, sceneContext) {
         this.node = node;
         this.sceneContext = sceneContext;
-
-        /*Массив хранит кнопки действий*/
-        this.actionButtons = new Array(5);
     }
 
     /**
@@ -18,17 +15,13 @@ export default class GameControls {
         container.setAttribute('class', 'game-controls');
 
         this.actionContainer = document.createElement('div');
-        this.actionContainer.setAttribute('id', 'command-div');
         this.actionContainer.setAttribute('class', 'game-controls_actions');
 
-        for (let i = 0; i < 5; i++) {
-            let action = document.createElement('div');
-            action.innerText = 'add action';
-            action.setAttribute('class', 'action game-controls__action-button_empty');
-            action.setAttribute('index', i);
-            this.actionContainer.appendChild(action);
-            this.actionButtons[i] = action;
-        }
+        this.buttonAddAction = document.createElement('div');
+        this.buttonAddAction.innerText = 'add actions';
+        this.buttonAddAction.setAttribute('class', 'game-controls__action-button_empty');
+        this.actionContainer.appendChild(this.buttonAddAction);
+
         container.appendChild(this.actionContainer);
 
         this.btnStep = document.createElement('div');
@@ -65,26 +58,23 @@ export default class GameControls {
      * @param callback
      */
     initActionListener(callback) {
-        this.sceneContext.gameActionModal.initButtonsAction((action) => {
-            callback(this.index, action);
+        this.sceneContext.gameActionModal.initButtonsAction((actionObj) => {
+            callback(actionObj);
         });
 
-        this.actionCallback = function (event) {
-            if (event.target.classList.contains('action') && event.target.getAttribute('index')) {
-                this.index = event.target.getAttribute('index');
-                this.sceneContext.gameActionModal.setStartAction(this.sceneContext.manager.strategy.mySteps[this.index]);
-
-                this.sceneContext.gameActionModal.show();
-            }
+        this.actionAddCallback = function () {
+            this.sceneContext.gameActionModal.setStartAction(this.sceneContext.manager.strategy.myStep);
+            this.sceneContext.gameActionModal.show();
         };
-        this.actionContainer.addEventListener('click', this.actionCallback.bind(this));
+
+        this.buttonAddAction.addEventListener('click', this.actionAddCallback.bind(this));
     }
 
     /**
      * Удалить слушателя на кнопку "выбрать действие"
      */
     deleteActionListener() {
-        this.actionContainer.removeEventListener('click', this.actionCallback);
+        this.buttonAddAction.removeEventListener('click', this.actionAddCallback);
         this.sceneContext.gameActionModal.deleteButtonAction();
     }
 }
