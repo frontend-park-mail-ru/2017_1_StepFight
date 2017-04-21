@@ -6,6 +6,16 @@ import UserService from '../../js/support/service/UserService';
 import ProgressBar from "../../elements/loader/loader";
 import Diamond from "../../js/menu/elements/Diamond";
 
+import './profile-view.css';
+import './__controllers/profile-view__controllers.css';
+import './__controllers/__button/profile-view__controllers__button.css';
+import './__resources/profile-view__resources.css';
+import './__resources/__diamond/profile-view__resources__diamond.css';
+import './__resources/__diamond/text/profile-view__resources__diamond__text.css';
+import './__user-info/profile-view__user-info.css';
+import './__user-info/login/profile-view__user-info__login.css';
+import './__user-info/item/profile-view__user-info__item.css';
+
 export default class ProfileView extends BaseView {
     constructor(node, storage, router) {
         super(node);

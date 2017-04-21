@@ -4,6 +4,13 @@
 import BaseView from "../BaseView";
 import ProgressBar from "../../elements/loader/loader";
 import UserService from "../../js/support/service/UserService";
+
+import './__title/leaderboard-view__title.css';
+import './__link/leaderboard-view__link.css';
+import './__list/leaderboard-view__list.css';
+import './__list/__item/leaderboard-view__list__item.css';
+import Handlebars from 'handlebars/dist/handlebars.min';
+
 export default class LeaderBoardView extends BaseView {
     constructor(node, storage, router) {
         super(node);

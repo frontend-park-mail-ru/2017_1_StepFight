@@ -1,17 +1,21 @@
 /**
  * Created by Denis on 04.03.2017.
  */
-import Router from "./support/router/Router";
-import MenuView from "../views/menu-view/MenuView";
-import LoginView from "../views/enter-views/LoginView";
-import SignUpView from "../views/enter-views/SignUpView";
-import LeaderBoardView from "../views/leaderboard-view/LeaderBoardView";
-import AboutView from "../views/about-view/AboutView";
-import ProfileView from "../views/profile-view/ProfileView";
-import GameView from "../views/game-view/GameView";
+import Router from "../support/router/Router";
+import MenuView from "../../views/menu-view/MenuView";
+import LoginView from "../../views/enter-views/LoginView";
+import SignUpView from "../../views/enter-views/SignUpView";
+import LeaderBoardView from "../../views/leaderboard-view/LeaderBoardView";
+import AboutView from "../../views/about-view/AboutView";
+import ProfileView from "../../views/profile-view/ProfileView";
+import GameView from "../../views/game-view/GameView";
 
-import UserService from "./support/service/UserService";
-import Storage from './game/object/Storage';
+import UserService from "../support/service/UserService";
+import Storage from '../game/object/Storage';
+
+import './application.css';
+import './main-title.css';
+import '../../../vendor/css/iziToast.min.css';
 
 new UserService().getUser().then(user => {
     Storage.user = user;

@@ -4,6 +4,10 @@
 
 import IziToast from "izitoast";
 
+import './game-choose-action.css';
+import './__button/game-choose-action__button.css';
+import './__container/game-choose-action__container.css';
+
 export default class GameChooseAction {
     constructor(node) {
         this.node = node;

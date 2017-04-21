@@ -2,6 +2,8 @@
  * Created by Denis on 07.03.2017.
  */
 
+import './loader.css';
+
 export default class ProgressBar {
     constructor() {
         this.el = document.createElement('div');

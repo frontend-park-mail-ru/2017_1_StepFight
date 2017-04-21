@@ -1,6 +1,9 @@
 /**
  * Created by Denis on 20.04.2017.
  */
+
+import './game-result-table.css';
+
 export default class GameResultTable{
     constructor(node){
         this.node = node;

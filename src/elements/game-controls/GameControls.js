@@ -1,6 +1,10 @@
 /**
  * Created by Denis on 08.04.2017.
  */
+import './game-controls.css';
+import './__button/game-controls__button.css';
+import './__action-button/game-controls__action-button.css';
+
 export default class GameControls {
     constructor(node, sceneContext) {
         this.node = node;
