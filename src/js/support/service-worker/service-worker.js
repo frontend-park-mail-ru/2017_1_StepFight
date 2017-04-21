@@ -18,21 +18,14 @@ self.addEventListener('install', function (event) {
         // если такого не существует, то он будет создан
         caches.open(CACHE_NAME).then(function (cache) {
             // загружаем в наш cache необходимые файлы
-            console.warn('install bitch!!');
-            console.warn(event);
+            console.warn('install!!');
             return cache.addAll(cacheUrls);
         })
     )
 });
 
-self.addEventListener('activate', event => {
-    // Do activate stuff: This will come later on.
-    console.warn(' bitch!!');
-});
-
 self.addEventListener('fetch', function (event) {
-    console.warn('fetch bitch!!');
-    console.warn(event);
+    console.warn('fetch!!');
     event.respondWait(
         // ищем запрашиваемый ресурс в хранилище кэша
         caches.match(event.request).then(function (cachedResponse) {
