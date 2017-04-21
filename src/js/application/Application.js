@@ -11,11 +11,11 @@ import ProfileView from "../../views/profile-view/ProfileView";
 import GameView from "../../views/game-view/GameView";
 
 import UserService from "../support/service/UserService";
-import Storage from '../game/object/Storage';
+import Storage from "../game/object/Storage";
 
-import './application.css';
-import './main-title.css';
-import '../../../vendor/css/iziToast.min.css';
+import "./application.css";
+import "./main-title.css";
+import "../../../vendor/css/iziToast.min.css";
 
 new UserService().getUser().then(user => {
     Storage.user = user;
@@ -60,6 +60,19 @@ function startRoute() {
     });
 
     router.start();
+}
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/src/js/support/service-worker/service-worker.js')
+        .then(function (registration) {
+            // при удачной регистрации имеем объект типа ServiceWorkerRegistration
+            console.log('ServiceWorker registration', registration);
+            // строкой ниже можно прекратить работу serviceWorker’а
+            //registration.unregister();
+        })
+        .catch(function (err) {
+            console.error(err);
+        });
 }
 
 

@@ -166,7 +166,7 @@ export default class GameChooseAction {
                 }
             });
         }
-        this.action = action;
+        this.action = Object.assign({}, action);
 
 
         if (this.action !== null && typeof this.action !== 'undefined') {

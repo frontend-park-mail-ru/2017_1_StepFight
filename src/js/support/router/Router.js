@@ -38,11 +38,9 @@ export default class Router {
      * Перейти по маршруту и поменять текущую вьюшку
      * @param {string} path
      * @param isToHistory
+     * @param gameStrategy
      */
     go(path, isToHistory, gameStrategy) {
-        console.log('strategy');
-        console.log(gameStrategy);
-
         path = this._checkUser(path);
         if (isToHistory) {
             window.history.pushState({}, '', path);

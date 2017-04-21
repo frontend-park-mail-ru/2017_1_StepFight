@@ -5,6 +5,7 @@ import BaseView from '../BaseView';
 import UserService from '../../js/support/service/UserService';
 import ProgressBar from "../../elements/loader/loader";
 import Diamond from "../../js/menu/elements/Diamond";
+import IziToast from 'izitoast';
 
 import './profile-view.css';
 import './__controllers/profile-view__controllers.css';
@@ -49,12 +50,6 @@ export default class ProfileView extends BaseView {
             setTimeout(() => {
                 this._hideViewProgressBar();
                 this._renderProfile(user);
-
-                /*this.login = document.getElementById('l-login');
-                this.password = document.getElementById('l-password');
-                this.loginHelp = document.getElementById('l-login-help');
-                this.btnLogin = document.getElementById('btn-login');*/
-
             }, 500);
         }).catch(err => {
             this._hideViewProgressBar();
@@ -80,7 +75,16 @@ export default class ProfileView extends BaseView {
         });
 
         this.hrefPlayM.addEventListener('click', event => {
-            this.router.go(this.storage.urls.GAME, true, this.storage.gameStates.MULTIPLAYER_STRATEGY);
+            //TODO check-connection
+            if(navigator.onLine) {
+                this.router.go(this.storage.urls.GAME, true, this.storage.gameStates.MULTIPLAYER_STRATEGY);
+            } else {
+                IziToast.error({
+                    title: 'You are offline!',
+                    text: 'Use single play only',
+                    position: 'topRight'
+                });
+            }
         });
     }
 
