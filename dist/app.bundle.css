@@ -817,7 +817,7 @@
 }
 .game-result-table__my-info h1{
     color: #32d3ac;
-    margin: 1px;
+    margin: 5px;
 }
 
 .game-result-table__my-info h2 {
@@ -864,9 +864,9 @@
     background-color: rgba(246, 94, 103, 0.86);
 }
 
-@media (max-width: 550px) {
+@media (max-width: 800px) {
     .game-result-table__button {
-        width: inherit;
+        width: 100%;
         left: 15px;
         right: 15px;
     }

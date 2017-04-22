@@ -343,7 +343,7 @@ export default class GameChooseAction {
             } else {
                 IziToast.error({
                     title: 'Fill actions',
-                    position: 'topRight'
+                    position: 'topCenter'
                 });
             }
         };

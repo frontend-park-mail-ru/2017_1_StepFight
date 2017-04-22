@@ -77,7 +77,7 @@ export default class SinglePlayerStrategy {
             } else {
                 IziToast.error({
                     title: 'Fill action buttons',
-                    position: 'topRight'
+                    position: 'topCenter'
                 });
             }
         });
@@ -105,13 +105,13 @@ export default class SinglePlayerStrategy {
         let myDamage = this.getDamage('my', myAction, opponentAction);
         let opponentDamage = this.getDamage('opponent', myAction, opponentAction);
 
-        if(myDamage !== 0){
+        if (myDamage !== 0) {
             this.logIt(`I missed hit by ${opponentAction.hit.method} to ${opponentAction.hit.target}`);
         } else {
             this.logIt(`Everything okey with ME!`);
         }
 
-        if(opponentDamage !== 0){
+        if (opponentDamage !== 0) {
             this.logIt(`Opponent missed hit by ${myAction.hit.method} to ${myAction.hit.target}`);
         } else {
             this.logIt(`Everything okey with OPPONENT!`);
@@ -172,11 +172,11 @@ export default class SinglePlayerStrategy {
             hitP = this.getProbability('hit', actionForAttacking.hit.method);
             blockP = this.getProbability('block', actionForDefensing.block.method);
             checkP = this.checkProbability(hitP * blockP);
-            damage = checkP ? (1 - hitP*blockP)*this.BASE_DAMAGE : 0;
+            damage = checkP ? (1 - hitP * blockP) * this.BASE_DAMAGE : 0;
         } else {
             hitP = this.getProbability('hit', actionForAttacking.hit.method);
             checkP = this.checkProbability(hitP);
-            damage = checkP ? (1 - hitP)*this.BASE_DAMAGE : 0;
+            damage = checkP ? (1 - hitP) * this.BASE_DAMAGE : 0;
         }
         console.warn(`hitP=${hitP} blockP=${blockP} checkP=${checkP} damage=${Math.round(damage)}`);
         return Math.round(damage);
@@ -187,14 +187,14 @@ export default class SinglePlayerStrategy {
         //TODO DONT DELETE!!!
 
         /*if (actionForDefensing.block.method === actionForAttacking.hit.target) {
-            return Math.round((this.checkProbability(this.getProbability('hit', actionForAttacking.hit.method)
-                * this.getProbability('block', actionForDefensing.block.method))) ?
-                (1 - (this.getProbability('hit', actionForAttacking.hit.method)
-                * this.getProbability('block', actionForDefensing.block.method))) * this.BASE_DAMAGE : 0);
-        } else {
-            return Math.round((this.checkProbability(this.getProbability('hit', actionForAttacking.hit.method))) ?
-                (1 - (this.getProbability('hit', actionForAttacking.hit.method))) * this.BASE_DAMAGE : 0);
-        }*/
+         return Math.round((this.checkProbability(this.getProbability('hit', actionForAttacking.hit.method)
+         * this.getProbability('block', actionForDefensing.block.method))) ?
+         (1 - (this.getProbability('hit', actionForAttacking.hit.method)
+         * this.getProbability('block', actionForDefensing.block.method))) * this.BASE_DAMAGE : 0);
+         } else {
+         return Math.round((this.checkProbability(this.getProbability('hit', actionForAttacking.hit.method))) ?
+         (1 - (this.getProbability('hit', actionForAttacking.hit.method))) * this.BASE_DAMAGE : 0);
+         }*/
 
         //TODO DONT DELETE!!!
         //TODO DONT DELETE!!!
