@@ -4,9 +4,9 @@
 
 @media (max-width: 1000px) {
     .game-view__game-area {
-        left: 15px;
+        /*left: 15px;
         right: 15px;
-        width: inherit;
+        width: inherit;*/
     }
 }
 

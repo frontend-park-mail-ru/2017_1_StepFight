@@ -218,7 +218,7 @@ export default class ProfileView extends BaseView {
         this.node.appendChild(resourcesDiv);
         this.node.appendChild(controllersDiv);
 
-        this.hrefLogout = document.createElement('a');
+        this.hrefLogout = document.createElement('div');
         this.hrefLogout.setAttribute('class', 'profile-view__controllers__button_logout');
         this.hrefLogout.setAttribute('id', 'btn-logout');
         this.hrefLogout.innerText = 'Log out';

@@ -168,8 +168,7 @@ export default class GameChooseAction {
         }
         this.action = Object.assign({}, action);
 
-
-        if (this.action !== null && typeof this.action !== 'undefined') {
+        if (action !== null && typeof action !== 'undefined') {
             switch (this.action.hit.method) {
                 case 'head': {
                     this._setButtonActionFocus(this.buttonHitMethodHead);

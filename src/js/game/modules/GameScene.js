@@ -34,6 +34,7 @@ export default class GameScene {
         const height = window.innerHeight;
         this.fieldSize = (height / this.HDim) | 0;
         this.WIDTH = window.innerWidth;
+        console.log(`WIDTH = ${this.WIDTH}`);
         this.HEGHT = this.fieldSize / 3 * 2 * this.HDim;
     }
 
@@ -55,6 +56,8 @@ export default class GameScene {
         this.camera.updateProjectionMatrix();
 
         this.renderer.setSize(this.WIDTH, this.HEGHT);
+        console.log(`RESIZE WIDTH = ${this.WIDTH}`);
+
     }
 
     /**

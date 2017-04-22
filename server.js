@@ -10,7 +10,7 @@ app.use('/signup', express.static('pages/index.html'));
 app.use('/leaderboard', express.static('pages/index.html'));
 app.use('/about', express.static('pages/index.html'));
 app.use('/profile', express.static('pages/index.html'));
-app.use('/service-worker.js', express.static('/service-worker.js'));
+app.use('/service-worker.js', express.static('service-worker.js'));
 
 app.use('/game', express.static('pages/index.html'));
 

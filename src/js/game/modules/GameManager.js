@@ -57,7 +57,7 @@ export default class GameManager {
      */
     checkUser() {
         //TODO delete this
-        return true;
+        //return true;
         try {
             return this.storage.user.login !== null;
         } catch (e) {
@@ -72,7 +72,7 @@ export default class GameManager {
      */
     _getOpponent() {
         if (this.strategy.constructor.name === SinglePlayerStrategy.name) {
-            return {login: 'dc.DRE', rating: 99999999};
+            return {login: 'SUPER BOT', rating: 99999999};
         } else {
             //TODO search for opponent in global
             return {login: 'MULTIPLAYER', rating: 99999999};

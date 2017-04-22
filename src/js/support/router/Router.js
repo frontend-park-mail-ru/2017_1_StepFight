@@ -3,6 +3,7 @@
  */
 
 import Storage from "../../game/object/Storage";
+import IziToast from "izitoast";
 export default class Router {
 
     /**
@@ -41,7 +42,7 @@ export default class Router {
      * @param gameStrategy
      */
     go(path, isToHistory, gameStrategy) {
-        path = this._checkUser(path);
+        path = this._checkOffline(path);
         if (isToHistory) {
             window.history.pushState({}, '', path);
         }
@@ -54,7 +55,7 @@ export default class Router {
             return;
         }
         if ('render' in this.currView) {
-            if(gameStrategy !== null && typeof gameStrategy !== 'undefined'){
+            if (gameStrategy !== null && typeof gameStrategy !== 'undefined') {
                 this.currView.render(gameStrategy);
             } else {
                 this.currView.render();
@@ -107,6 +108,28 @@ export default class Router {
             event.preventDefault();
             this.go(event.target.parentElement.getAttribute('href'), true);
         }
+    }
+
+    _checkOffline(path) {
+        if (navigator.onLine) {
+            path = this._checkUser(path);
+            try {
+                if (Storage.user.login === 'Offline') Storage.user.login = null;
+            } catch (e){
+                //console.warn(e);
+            }
+        } else {
+            IziToast.warning({
+                title: 'Only test single play',
+                message: 'YOU ARE OFFLINE!',
+                position: 'topRight',
+                timeout: 5000
+            });
+            Storage.user = {login: 'Offline', rating: 9999999999999999};
+            path = (path === Storage.urls.LOGIN || path === Storage.urls.SIGNUP || path === Storage.urls.PROFILE)
+                ? Storage.urls.GAME : path;
+        }
+        return path;
     }
 
     /**

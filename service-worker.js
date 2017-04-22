@@ -3,10 +3,15 @@
  */
 
 const CACHE_NAME = 'stepfight_serviceworker_v_1';
-const RUNTIME = 'runtime';
+const MAX_AGE = 86400000;
 
 const CACHE_URLS = [
     '/',
+    '/login',
+    '/signup',
+    '/profile',
+    '/game',
+    '/src/three-models/player.json',
     '/dist/app.bundle.css',
     '/dist/app.bundle.js'
 ];
@@ -25,28 +30,35 @@ self.addEventListener('install', (event) => {
     );
 });
 
-self.addEventListener('activate', event => {
-    const currentCaches = [CACHE_NAME, RUNTIME];
-    event.waitUntil(
-        caches.keys().then(cacheNames => {
-            return cacheNames.filter(cacheName => !currentCaches.includes(cacheName));
-        }).then(cachesToDelete => {
-            return Promise.all(cachesToDelete.map(cacheToDelete => {
-                return caches.delete(cacheToDelete);
-            }));
-        }).then(() => self.clients.claim())
-    );
-});
-
 self.addEventListener('fetch', (event) => {
     console.warn('fetch!!');
 
     event.respondWith(
         // ищем запрашиваемый ресурс в хранилище кэша
         caches.match(event.request).then(function(cachedResponse) {
-
+            let lastModified, fetchRequest;
             // выдаём кэш, если он есть
             if (cachedResponse) {
+                lastModified = new Date(cachedResponse.headers.get('last-modified'));
+                if (lastModified && (Date.now() - lastModified.getTime()) > MAX_AGE) {
+
+                    fetchRequest = event.request.clone();
+                    // создаём новый запрос
+                    return fetch(fetchRequest).then(function(response) {
+                        // при неудаче всегда можно выдать ресурс из кэша
+                        if (!response || response.status !== 200) {
+                            return cachedResponse;
+                        }
+                        // обновляем кэш
+                        caches.open(CACHE_NAME).then(function(cache) {
+                            cache.put(event.request, response.clone());
+                        });
+                        // возвращаем свежий ресурс
+                        return response;
+                    }).catch(function() {
+                        return cachedResponse;
+                    });
+                }
                 return cachedResponse;
             }
 
