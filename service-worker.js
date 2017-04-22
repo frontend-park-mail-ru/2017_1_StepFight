@@ -3,6 +3,7 @@
  */
 
 const CACHE_NAME = 'stepfight_serviceworker_v_1';
+const RUNTIME = 'runtime';
 
 const CACHE_URLS = [
     '/',
@@ -21,6 +22,19 @@ self.addEventListener('install', (event) => {
             console.warn('install!!');
             return cache.addAll(CACHE_URLS);
         }).then(self.skipWaiting())
+    );
+});
+
+self.addEventListener('activate', event => {
+    const currentCaches = [CACHE_NAME, RUNTIME];
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return cacheNames.filter(cacheName => !currentCaches.includes(cacheName));
+        }).then(cachesToDelete => {
+            return Promise.all(cachesToDelete.map(cacheToDelete => {
+                return caches.delete(cacheToDelete);
+            }));
+        }).then(() => self.clients.claim())
     );
 });
 
