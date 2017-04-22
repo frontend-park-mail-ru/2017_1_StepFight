@@ -238,7 +238,7 @@ export default class SinglePlayerStrategy {
         this.myStep = null;
         this.manager.scene.gameControls.buttonAddAction.classList.remove('game-controls__action-button_fill');
         this.manager.scene.gameControls.buttonAddAction.classList.add('game-controls__action-button_empty');
-        this.manager.scene.gameControls.buttonAddAction.innerText = 'add buffAction';
+        this.manager.scene.gameControls.buttonAddAction.innerText = 'add action';
     }
 
     /**
