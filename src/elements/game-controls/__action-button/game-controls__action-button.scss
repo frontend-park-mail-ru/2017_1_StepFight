@@ -1,3 +1,5 @@
+@import "../consts";
+
 @mixin game-controls-transition() {
   $settings: all 0.5s ease;
   -webkit-transition: $settings;
@@ -19,18 +21,18 @@
 
 .game-controls__action-button_empty {
   @extend .game-controls__action-button;
-  background-color: white;
+  background-color: $colorButtonActionEmptyBg;
   &:hover {
-    background-color: #ff9370;
-    color: white;
+    background-color: $colorButtonActionEmptyHoverBg;
+    color: $colorButtonActionEmptyHoverText;
   }
 }
 
 .game-controls__action-button_fill {
   @extend .game-controls__action-button;
-  background-color: rgba(35, 169, 42, 0.86);
+  background-color: $colorButtonActionFillBg;
   &:hover {
-    background-color: rgba(47, 231, 58, 0.86);
-    color: white;
+    background-color: $colorButtonActionFillHoverBg;
+    color: $colorButtonActionFillHoverText;
   }
 }

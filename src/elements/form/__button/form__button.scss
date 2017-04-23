@@ -1,14 +1,11 @@
-$color-background: rgb(131, 73, 246);
-$button-border: 1px solid black;
-$color-font: white;
-$color-font-hover: #191919;
+@import "../consts";
 
 .form__button {
   margin-top: 5px;
   padding: 5px;
-  color: $color-font;
-  background-color: $color-background;
-  border: $button-border;
+  color: $colorButtonTextForm;
+  background-color: $colorButtonBgForm;
+  border: 1px solid $colorButtonBorder;
   border-radius: 2px;
   text-decoration: none;
   font-family: 'Cabin', sans-serif;
@@ -16,8 +13,8 @@ $color-font-hover: #191919;
   cursor: pointer;
 
   &:hover {
-    background-color: $color-font;
-    border-color: $color-font;
-    color: $color-font-hover;
+    background-color: $colorButtonTextForm;
+    border-color: $colorButtonTextForm;
+    color: $colorButtonFocusTextForm;
   }
 }

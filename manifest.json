@@ -1,0 +1,10 @@
+{
+  "name": "Step fight",
+  "short_name": "s-fight",
+  "display": "standalone",
+  "lang": "en-EN",
+  "start_url": "/",
+  "background_color": "#081b32",
+  "orientation": "landscape",
+  "theme_color": "#081b32"
+}

@@ -1,14 +1,13 @@
-$color-text: rgba(243, 243, 243, 0.91);
-$color-text-hover: #894cff;
+@import "../consts";
 
 .form__link {
   font-family: 'Orbitron', sans-serif;
   text-decoration: none;
   -webkit-transition: all 0.5s ease;
   cursor: pointer;
-  color: $color-text;
+  color: $colorLinkText;
   margin: 15px 5px 5px;
   &:hover {
-    color: $color-text-hover;
+    color: $colorLinkHoverText;
   }
 }

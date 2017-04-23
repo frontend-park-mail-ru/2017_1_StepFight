@@ -1,3 +1,5 @@
+@import "../consts";
+
 @mixin flex-container($direction, $justify-content) {
   display: flex;
   @if $justify-content == true {

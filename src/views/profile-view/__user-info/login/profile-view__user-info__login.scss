@@ -1,9 +1,11 @@
-.profile-view__user-info__login{
-    background: #c8ceff;
-    color: #081b32;
-    padding: 3px 15px;
-    border-radius: 3px;
-    margin: 5px;
+@import "../../consts";
 
-    font-family: 'Orbitron', sans-serif;
+.profile-view__user-info__login {
+  background: $colorLoginText;
+  color: $colorLoginBg;
+  padding: 3px 15px;
+  border-radius: 3px;
+  margin: 5px;
+
+  font-family: 'Orbitron', sans-serif;
 }

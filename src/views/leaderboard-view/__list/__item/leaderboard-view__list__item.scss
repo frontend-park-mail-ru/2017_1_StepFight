@@ -1,12 +1,15 @@
+@import "../../consts";
+
 .leaderboard-view__list__item {
   word-wrap: break-word;
-  border: 0 solid black;
+  border: 0 solid $colorListItemBorder;
   padding: 5px;
-  color: white;
+  color: $colorListItemText;
+  word-break: break-all;
 }
 
 .badge {
-  color: white;
+  color: $colorListItemBadge;
   padding: 2px;
   margin: 2px;
   line-height: 1;
@@ -15,7 +18,7 @@
 }
 
 .position {
-  color: #ff275e;
+  color: $colorListItemPosition;
   padding: 2px;
   margin: 2px;
   line-height: 1;

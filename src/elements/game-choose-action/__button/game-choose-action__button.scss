@@ -1,3 +1,5 @@
+@import "../consts";
+
 @mixin choose-action-button($color, $background-color, $border-radius, $margin) {
   cursor: pointer;
   height: 30px;
@@ -14,28 +16,28 @@
 }
 
 .game-choose-action__button {
-  @include choose-action-button(white, rgba(246, 35, 59, 0.86), 3px, 5px);
+  @include choose-action-button($colorButtonText, $colorButtonBg, 3px, 5px);
   &:hover {
-    background-color: rgba(246, 94, 103, 0.86);
+    background-color: $colorButtonHoverBg;
   }
 }
 
 .game-choose-action__button_tabs {
-  @include choose-action-button(white, #565458, 5px 5px 0 0, 5px 15px 0 15px);
+  @include choose-action-button($colorTabText, $colorTabBg, 5px 5px 0 0, 5px 15px 0 15px);
 }
 
 .game-choose-action__button_choose {
   flex-grow: 1;
-  @include choose-action-button(black, #c0c0c0, 3px, 5px);
+  @include choose-action-button($colorButtonChooseText, $colorButtonChooseBg, 3px, 5px);
   &:hover {
-    background-color: rgba(47, 231, 58, 0.86);
-    color: white;
+    background-color: $colorButtonChooseHoverBg;
+    color: $colorButtonChooseHoverText;
   }
 }
 
 .game-choose-action__button_choose_focused {
-  background-color: rgba(35, 169, 42, 0.86);
-  color: white;
+  background-color: $colorButtonChooseFocusedBg;
+  color: $colorButtonChooseFocusedText;
 }
 
 @media (max-width: 550px) {

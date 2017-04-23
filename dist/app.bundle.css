@@ -28,7 +28,7 @@
   height: 150px;
   border: 2px solid white;
   padding: 10px;
-  border-radius: 2000px;
+  border-radius: 50%;
   text-align: center;
   margin: 5px auto;
   font-family: 'Orbitron', sans-serif;
@@ -125,7 +125,7 @@
   .form__button:hover {
     background-color: white;
     border-color: white;
-    color: #191919; }
+    color: black; }
 .form__input {
   padding: 5px;
   margin-top: 5px;
@@ -137,9 +137,9 @@
     outline-color: black; }
 
 .form__input_error {
-  border: 1px solid #c35465;
+  border: 1px solid rgba(246, 94, 103, 0.86);
   background-color: #fff4f4;
-  outline-color: #c35465; }
+  outline-color: rgba(246, 94, 103, 0.86); }
 
 .form__input_ok {
   border: 1px solid #32d3ac;
@@ -155,7 +155,7 @@
   font-family: 'Cabin', sans-serif;
   margin: 0;
   text-align: left;
-  color: #c35465; }
+  color: rgba(246, 94, 103, 0.86); }
 .form__link {
   font-family: 'Orbitron', sans-serif;
   text-decoration: none;
@@ -164,7 +164,7 @@
   color: rgba(243, 243, 243, 0.91);
   margin: 15px 5px 5px; }
   .form__link:hover {
-    color: #894cff; }
+    color: rgba(137, 76, 255, 0.56); }
 .form__title {
   text-align: center;
   font-family: 'Orbitron', sans-serif;
@@ -194,12 +194,13 @@
   .leaderboard-view__list li:nth-child(2n-1) {
     background-color: rgba(137, 76, 255, 0.56); }
   .leaderboard-view__list li:nth-child(2n) {
-    background-color: rgba(161, 200, 255, 0); }
+    background-color: rgba(135, 75, 251, 0); }
 .leaderboard-view__list__item {
   word-wrap: break-word;
   border: 0 solid black;
   padding: 5px;
-  color: white; }
+  color: white;
+  word-break: break-all; }
 
 .badge {
   color: white;

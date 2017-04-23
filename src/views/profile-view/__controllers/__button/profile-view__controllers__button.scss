@@ -1,23 +1,25 @@
+@import "../../consts";
+
 @mixin button-hover-template(){
-  color: #191919;
-  border-color: white;
-  background-color: white;
+  color: $colorButtonText;
+  border-color: $colorButtonBorder;
+  background-color: $colorButtonBg;
   cursor: pointer;
-  text-shadow: 10px 10px 40px #6e47ff;
+  text-shadow: 10px 10px 40px $colorButtonShadow;
 }
 .profile-view__controllers__button {
   text-decoration: none;
   width: 100px;
   height: 100px;
-  border: 2px solid white;
+  border: 2px solid $colorButtonControlsBorder;
   padding: 10px;
   border-radius: 2000px;
   text-align: center;
   margin: 5px 5px;
   font-family: 'Orbitron', sans-serif;
-  color: white;
+  color: $colorButtonControlsText;
   display: table;
-  background-color: rgba(131, 73, 246, 0.86);
+  background-color: $colorButtonControlsBg;
   -webkit-transition: all 0.2s linear;
   h1 {
     font-size: 16px;
@@ -41,15 +43,15 @@
   -webkit-transition: all 0.5s ease;
   cursor: pointer;
   font-size: 20px;
-  background: #615b8b;
+  background: $colorButtonLogoutBg;
   border-radius: 3px;
-  color: white;
+  color: $colorButtonLogoutText;
   padding: 3px 25px;
   margin: auto auto;
   text-align: center;
   &:hover {
-    background: white;
-    color: black;
+    background: $colorButtonHoverLogoutBg;
+    color: $colorButtonHoverLogoutText;
   }
 }
 

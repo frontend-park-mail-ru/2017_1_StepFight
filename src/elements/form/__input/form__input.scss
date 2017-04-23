@@ -1,11 +1,11 @@
-$input-border: 1px solid black;
-$color-outline: black;
-$color-error: #c35465;
-$color-ok: #32d3ac;
-$color-background-error: #fff4f4;
-$input-border_error: 1px solid  $color-error;
-$input-border_ok: 1px solid  $color-ok;
-$color-background-ok: #c9f7dd;
+@import "../consts";
+
+$input-border: 1px solid $colorInputBorder;
+$color-outline: $colorInputOutline;
+$color-background-error: $colorInputBgERROR;
+$input-border_error: 1px solid  $colorInputBorderERROR;
+$input-border_ok: 1px solid  $colorInputBorderOK;
+$color-background-ok: $colorInputBgOK;
 
 .form__input {
   padding: 5px;
@@ -23,11 +23,11 @@ $color-background-ok: #c9f7dd;
 .form__input_error {
   border: $input-border_error;
   background-color: $color-background-error;
-  outline-color: $color-error;
+  outline-color: $colorInputBorderERROR;
 }
 
 .form__input_ok{
   border: $input-border_ok;
   background-color: $color-background-ok;
-  outline-color:  $color-ok;
+  outline-color:  $colorInputBorderOK;
 }

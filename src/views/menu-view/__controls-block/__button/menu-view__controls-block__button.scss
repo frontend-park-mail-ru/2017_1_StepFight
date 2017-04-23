@@ -1,9 +1,10 @@
-$text-shadow: 10px 10px 40px #6e47ff;
+@import "../../consts";
+$text-shadow: 10px 10px 40px $colorButtonShadow;
 
 @mixin menu-button-hover-template() {
   color: #191919;
-  border-color: white;
-  background-color: white;
+  border-color: $colorButtonHoverBorder;
+  background-color: $colorButtonHoverBg;
   cursor: pointer;
   text-shadow: $text-shadow;
 }
@@ -12,15 +13,15 @@ $text-shadow: 10px 10px 40px #6e47ff;
   text-decoration: none;
   width: 150px;
   height: 150px;
-  border: 2px solid white;
+  border: 2px solid $colorButtonBorder;
   padding: 10px;
-  border-radius: 2000px;
+  border-radius: 50%;
   text-align: center;
   margin: 5px auto;
   font-family: 'Orbitron', sans-serif;
-  color: white;
+  color: $colorButtonText;
   display: table;
-  background-color: rgba(131, 73, 246, 0.86);
+  background-color: $colorButtonBg;
   -webkit-transition: all 0.2s linear;
 
   &:hover {
@@ -46,7 +47,7 @@ $text-shadow: 10px 10px 40px #6e47ff;
 
 .menu-view__controls-block__button_main {
   @extend .menu-view__controls-block__button;
-  background-color: #991b4e;
+  background-color: $colorButtonMainBg;
   width: 200px;
   height: 200px;
 }

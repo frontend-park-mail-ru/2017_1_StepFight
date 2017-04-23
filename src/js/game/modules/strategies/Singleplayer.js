@@ -70,7 +70,7 @@ export default class SinglePlayerStrategy {
      */
     initDoStepListener() {
         this.manager.scene.gameControls.initDoStepListener(() => {
-            this.opponent.health-=100;
+            //this.opponent.health-=100;
             if (this.checkMyAction()) {
                 this.gameLogic().then(() => {
                     this.clearMyActionsArray();

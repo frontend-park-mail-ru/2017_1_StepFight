@@ -1,7 +1,8 @@
+@import "../consts";
 .game-controls__button {
   padding: 5px 0;
-  color: white;
-  background-color: rgba(246, 35, 59, 0.86);
+  color: $colorButtonChooseText;
+  background-color: $colorButtonChooseBg;
   border-radius: 3px;
   text-decoration: none;
   font-family: 'Cabin', sans-serif;
@@ -12,7 +13,7 @@
   margin: 5px 0 0 0;
 
   &:hover {
-    background-color: rgba(246, 94, 103, 0.86);
+    background-color: $colorButtonChooseHoverBg;
   }
 }
 
