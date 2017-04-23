@@ -1,0 +1,14 @@
+.leaderboard-view__list {
+  color: white;
+  font-family: 'Orbitron', sans-serif;
+  text-transform: uppercase;
+  text-align: left;
+  list-style-type: none;
+  padding: 0;
+  li:nth-child(2n-1) {
+    background-color: rgba(137, 76, 255, 0.56);
+  }
+  li:nth-child(2n) {
+    background-color: rgba(161, 200, 255, 0);
+  }
+}

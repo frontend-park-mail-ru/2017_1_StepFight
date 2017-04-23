@@ -1,0 +1,53 @@
+$text-shadow: 10px 10px 40px #6e47ff;
+
+@mixin menu-button-hover-template() {
+  color: #191919;
+  border-color: white;
+  background-color: white;
+  cursor: pointer;
+  text-shadow: $text-shadow;
+}
+
+.menu-view__controls-block__button {
+  text-decoration: none;
+  width: 150px;
+  height: 150px;
+  border: 2px solid white;
+  padding: 10px;
+  border-radius: 2000px;
+  text-align: center;
+  margin: 5px auto;
+  font-family: 'Orbitron', sans-serif;
+  color: white;
+  display: table;
+  background-color: rgba(131, 73, 246, 0.86);
+  -webkit-transition: all 0.2s linear;
+
+  &:hover {
+    @include menu-button-hover-template();
+  }
+
+  &:focus {
+    @include menu-button-hover-template();
+  }
+
+  h1 {
+    font-size: 26px;
+    display: table-cell;
+    vertical-align: middle;
+    &:hover {
+      cursor: pointer;
+    }
+    &:focus {
+      cursor: pointer;
+    }
+  }
+}
+
+.menu-view__controls-block__button_main {
+  @extend .menu-view__controls-block__button;
+  background-color: #991b4e;
+  width: 200px;
+  height: 200px;
+}
+

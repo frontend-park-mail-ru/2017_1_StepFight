@@ -10,6 +10,8 @@ const CACHE_URLS = [
     '/login',
     '/signup',
     '/profile',
+    '/leaderboard',
+    '/about',
     '/game',
     '/src/three-models/player.json',
     '/dist/app.bundle.css',

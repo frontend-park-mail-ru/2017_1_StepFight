@@ -1,0 +1,24 @@
+.leaderboard-view__list__item {
+  word-wrap: break-word;
+  border: 0 solid black;
+  padding: 5px;
+  color: white;
+}
+
+.badge {
+  color: white;
+  padding: 2px;
+  margin: 2px;
+  line-height: 1;
+  border-radius: 5px;
+  float: right;
+}
+
+.position {
+  color: #ff275e;
+  padding: 2px;
+  margin: 2px;
+  line-height: 1;
+  border-radius: 5px;
+  float: left;
+}

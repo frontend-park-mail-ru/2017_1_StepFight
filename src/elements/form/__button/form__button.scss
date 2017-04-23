@@ -1,0 +1,23 @@
+$color-background: rgb(131, 73, 246);
+$button-border: 1px solid black;
+$color-font: white;
+$color-font-hover: #191919;
+
+.form__button {
+  margin-top: 5px;
+  padding: 5px;
+  color: $color-font;
+  background-color: $color-background;
+  border: $button-border;
+  border-radius: 2px;
+  text-decoration: none;
+  font-family: 'Cabin', sans-serif;
+  -webkit-transition: all 0.5s ease;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-font;
+    border-color: $color-font;
+    color: $color-font-hover;
+  }
+}

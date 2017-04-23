@@ -2,7 +2,7 @@
  * Created by Denis on 20.04.2017.
  */
 
-import './game-result-table.css';
+import './game-result-table.scss';
 
 export default class GameResultTable{
     constructor(node){

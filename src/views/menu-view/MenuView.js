@@ -2,10 +2,9 @@
  * Created by Denis on 19.03.2017.
  */
 
-import './menu-view.css';
-import './__controls-block/menu-view__controls-block.css';
-import './__controls-block/__button/menu-view__controls-block__button.css';
-import './__controls-block/__button/menu-view__controls-block__button_main.css';
+import './menu-view.scss';
+import './__controls-block/menu-view__controls-block.scss';
+import './__controls-block/__button/menu-view__controls-block__button.scss';
 
 import BaseView from "../BaseView";
 export default class MenuView extends BaseView {

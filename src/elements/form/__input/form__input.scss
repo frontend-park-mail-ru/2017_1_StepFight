@@ -1,0 +1,33 @@
+$input-border: 1px solid black;
+$color-outline: black;
+$color-error: #c35465;
+$color-ok: #32d3ac;
+$color-background-error: #fff4f4;
+$input-border_error: 1px solid  $color-error;
+$input-border_ok: 1px solid  $color-ok;
+$color-background-ok: #c9f7dd;
+
+.form__input {
+  padding: 5px;
+  margin-top: 5px;
+  border: $input-border;
+  border-radius: 2px;
+  -webkit-transition: all 0.5s ease;
+
+  &:focus {
+    height: 25px;
+    outline-color: $color-outline;
+  }
+}
+
+.form__input_error {
+  border: $input-border_error;
+  background-color: $color-background-error;
+  outline-color: $color-error;
+}
+
+.form__input_ok{
+  border: $input-border_ok;
+  background-color: $color-background-ok;
+  outline-color:  $color-ok;
+}

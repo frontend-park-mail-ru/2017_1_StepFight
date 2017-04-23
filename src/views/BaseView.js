@@ -1,7 +1,7 @@
 /**
  * Created by Denis on 17.03.2017.
  */
-import './view.css';
+import './view.scss';
 
 export default class BaseView {
 

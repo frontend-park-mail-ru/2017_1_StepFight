@@ -2,7 +2,7 @@
  * Created by Denis on 07.03.2017.
  */
 
-import './loader.css';
+import './loader.scss';
 
 export default class ProgressBar {
     constructor() {

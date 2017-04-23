@@ -1,0 +1,22 @@
+$color-text: white;
+$text-shadow: 10px 10px 40px #6e47ff;
+
+.main-title {
+  text-decoration: none;
+  h1 {
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 60px;
+    color: $color-text;
+    border-width: 5px;
+    margin-bottom: 20px;
+
+    &:hover{
+      color: $color-text;
+      border-color: $color-text;
+      text-shadow: $text-shadow;
+    }
+  }
+}

@@ -1,0 +1,88 @@
+$color-title: #32d3ac;
+
+@mixin flex-container($direction, $justify-content) {
+  display: flex;
+  @if $justify-content == true {
+    justify-content: space-around;
+  }
+  flex-direction: $direction;
+  flex-wrap: wrap;
+}
+
+.game-result-table {
+  @include flex-container(column, true);
+  text-align: center;
+  margin: auto 0;
+  padding: 50px 5px;
+  font-family: 'Orbitron', sans-serif;
+  text-transform: uppercase;
+  h1 {
+    color: $color-title;
+    font-size: 50px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .game-result-table {
+    left: 15px;
+    right: 15px;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.game-result-table__my-info {
+  @include flex-container(column, true);
+  text-align: center;
+  margin: auto 0;
+  background-color: #991b4e;
+  border-radius: 3px;
+  h1 {
+    color: $color-title;
+    margin: 5px;
+  }
+  h2 {
+    color: white;
+    margin: 3px;
+  }
+}
+
+.game-result-table__opponent-info {
+  @include flex-container(column, true);
+  text-align: center;
+  margin: 0 auto;
+  padding-top: 50px;
+  h1 {
+    color: $color-title;
+    margin: 1px;
+  }
+  h4 {
+    color: #a2a2a2;
+    margin: 3px;
+  }
+}
+
+.game-result-table__button {
+  padding: 15px;
+  color: white;
+  background-color: rgba(246, 35, 59, 0.86);
+  border-radius: 3px;
+  text-decoration: none;
+  font-family: 'Cabin', sans-serif;
+  -webkit-transition: all 0.5s ease;
+  cursor: pointer;
+  width: 200px;
+  text-align: center;
+  margin: 15px auto;
+  &:hover {
+    background-color: rgba(246, 94, 103, 0.86);
+  }
+}
+
+@media (max-width: 800px) {
+  .game-result-table__button {
+    width: 100%;
+    left: 15px;
+    right: 15px;
+  }
+}

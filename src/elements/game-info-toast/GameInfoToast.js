@@ -1,7 +1,7 @@
 /**
  * Created by Denis on 19.04.2017.
  */
-import './game-info-toast.css';
+import './game-info-toast.scss';
 
 export default class GameInfoToast {
     constructor(node, health, login, position) {

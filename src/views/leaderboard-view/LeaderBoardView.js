@@ -5,10 +5,10 @@ import BaseView from "../BaseView";
 import ProgressBar from "../../elements/loader/loader";
 import UserService from "../../js/support/service/UserService";
 
-import './__title/leaderboard-view__title.css';
-import './__link/leaderboard-view__link.css';
-import './__list/leaderboard-view__list.css';
-import './__list/__item/leaderboard-view__list__item.css';
+import './__title/leaderboard-view__title.scss';
+import './__link/leaderboard-view__link.scss';
+import './__list/leaderboard-view__list.scss';
+import './__list/__item/leaderboard-view__list__item.scss';
 import Handlebars from 'handlebars/dist/handlebars.min';
 
 export default class LeaderBoardView extends BaseView {

@@ -1,0 +1,22 @@
+.progress-bar-table {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: auto auto;
+  padding: 50px 5px;
+  font-family: 'Orbitron', sans-serif;
+  text-transform: uppercase;
+  h1 {
+    color: white;
+  }
+}
+
+@media (max-width: 1000px) {
+  .progress-bar-table {
+    left: 15px;
+    right: 15px;
+    margin: 15px;
+    padding: 0;
+  }
+}

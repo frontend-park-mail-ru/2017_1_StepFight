@@ -34,6 +34,10 @@ module.exports = {
                 loader: ExtractTextPlugin.extract({fallback: 'style-loader', use: 'css-loader'})
             },
             {
+                test: /\.scss$/,
+                loader: ExtractTextPlugin.extract({fallback: 'style-loader', use: 'css-loader!sass-loader'})
+            },
+            {
                 test: /\.png$/,
                 loader: "url-loader?limit=100000&outputPath=/images/"
             },

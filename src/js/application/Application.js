@@ -13,8 +13,8 @@ import GameView from "../../views/game-view/GameView";
 import UserService from "../support/service/UserService";
 import Storage from "../game/object/Storage";
 
-import "./application.css";
-import "./main-title.css";
+import "./application.scss";
+import "./main-title.scss";
 import "../../../vendor/css/iziToast.min.css";
 
 new UserService().getUser().then(user => {
@@ -62,7 +62,7 @@ function startRoute() {
     router.start();
 }
 
-if ('serviceWorker' in navigator) {
+/*if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('../../../service-worker.js')
         .then(function (registration) {
             // при удачной регистрации имеем объект типа ServiceWorkerRegistration
@@ -73,7 +73,7 @@ if ('serviceWorker' in navigator) {
         .catch(function (err) {
             console.error(err);
         });
-}
+}*/
 
 
 

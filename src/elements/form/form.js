@@ -4,14 +4,10 @@
 import Button from './__button/form-button'
 import Input from './__input/form-input'
 
-import './form.css';
-import './__button/form__button.css';
-import './__help-text/form__help-text.css';
-import './__input/form__input.css';
-import './__input/form__input_error.css';
-import './__input/form__input_ok.css';
-import './__link/form__link.css';
-import './__title/form__title.css';
+import './form.scss';
+import './__help-text/form__help-text.scss';
+import './__link/form__link.scss';
+import './__title/form__title.scss';
 
 export default class Form {
     constructor(options = {data: {}}) {

@@ -1,6 +1,9 @@
 /**
  * Created by Denis on 02.03.2017.
  */
+import './form__button.scss';
+
+
 export default class FormButton {
     constructor(options) {
         this.text = options.text;

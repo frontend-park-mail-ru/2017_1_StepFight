@@ -3,11 +3,10 @@
  */
 import BaseView from '../BaseView';
 import GameManager from "../../js/game/modules/GameManager";
-import SinglePlayerStrategy from "../../js/game/modules/strategies/Singleplayer";
 
-import './game-view.css';
-import './__container/game-view__container.css';
-import './__game-area/game-view__game-area.css';
+import './game-view.scss';
+import './__container/game-view__container.scss';
+import './__game-area/game-view__game-area.scss';
 export default class GameView extends BaseView{
     constructor(node, storage, router){
         super(node);

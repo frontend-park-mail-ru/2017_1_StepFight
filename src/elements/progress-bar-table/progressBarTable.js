@@ -1,7 +1,7 @@
 /**
  * Created by Denis on 20.04.2017.
  */
-import './progress-bar-table.css';
+import './progress-bar-table.scss';
 
 export default class ProgressBarTable {
     constructor(node) {

@@ -3,6 +3,8 @@
  */
 import CheckFields from "../../../js/menu/actions/CheckFields";
 
+import './form__input.scss';
+
 export default class Input {
     constructor(options) {
         this.text = options.text;
