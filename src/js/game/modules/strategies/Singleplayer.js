@@ -150,6 +150,7 @@ export default class SinglePlayerStrategy {
 
     checkProbability(p) {
         let checkP = Math.floor(Math.random() * 100);
+        console.log(`random=${checkP}`);
         console.log(`check p = ${p * 100 >= checkP}`);
         return p * 100 >= checkP;
     }
@@ -165,10 +166,10 @@ export default class SinglePlayerStrategy {
             actionForAttacking = myAction;
         }
 
-        let hitP = -1.1;
-        let blockP = -1.1;
-        let checkP = -1.1;
-        let damage = -1.1;
+        let hitP = 0;
+        let blockP = 0;
+        let checkP = 0;
+        let damage = 0;
         if (actionForDefensing.block.method === actionForAttacking.hit.target) {
             hitP = this.getProbability('hit', actionForAttacking.hit.method);
             blockP = this.getProbability('block', actionForDefensing.block.method);
@@ -177,7 +178,7 @@ export default class SinglePlayerStrategy {
         } else {
             hitP = this.getProbability('hit', actionForAttacking.hit.method);
             checkP = this.checkProbability(hitP);
-            damage = checkP ? (1 - hitP) * this.BASE_DAMAGE : 0;
+            damage = checkP ? (1 - hitP/2) * this.BASE_DAMAGE : 0;
         }
         console.warn(`hitP=${hitP} blockP=${blockP} checkP=${checkP} damage=${Math.round(damage)}`);
         return Math.round(damage);
@@ -212,7 +213,7 @@ export default class SinglePlayerStrategy {
     }
 
     _updateOpponentHealth(div) {
-        this.opponent.health -= 10;
+        this.opponent.health += div;
         this.manager.scene.opponentInfo.updateHealth(div);
     }
 

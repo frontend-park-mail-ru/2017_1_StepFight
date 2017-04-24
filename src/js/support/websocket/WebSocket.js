@@ -20,17 +20,17 @@ export default class WebSocket {
         });
     }
 
+    getData(callback){
+        this.socket.onmessage = (event) =>{
+            callback(event.data);
+            console.log("Получены данные " + event.data);
+        };
+    }
 
-    send(data) {
-        return new Promise((resolve, reject)=>{
-            if (this.socket) {
-                this.socket.send(JSON.stringify(data));
-            }
-            this.socket.onmessage = (event) =>{
-                resolve(event.data);
-                console.log("Получены данные " + event.data);
-            };
-        });
+    sendData(data) {
+        if (this.socket) {
+            this.socket.send(JSON.stringify(data));
+        }
     }
 
     remove() {

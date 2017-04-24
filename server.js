@@ -19,6 +19,8 @@ app.use('/dist', express.static('dist'));
 app.use('/src', express.static('src'));
 app.use('/vendor', express.static('vendor'));
 
+
+
 // Запускаем сервер
 app.listen(PORT, function () {
     console.log(`Server listen ${PORT} port`);

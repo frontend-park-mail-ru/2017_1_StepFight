@@ -2,31 +2,38 @@
  * Created by Denis on 02.04.2017.
  */
 
-import IziToast from 'izitoast';
+import IziToast from "izitoast";
 
-export default class MultiPlayerStrategy{
+export default class MultiPlayerStrategy {
     constructor(manager) {
         this.manager = manager;
 
-        this.mySteps = new Array(5);
-        this.opponentsSteps = new Array(5);
+        this.myStep = null;
+        this.opponentsStep = null;
     }
 
     /**
      * Игровой цикл
      */
-    gameLoop(){
+    gameLoop() {
         if (this.me.health <= 0) {
+            //TODO create rating analyser
             this.finishGameLoop();
             this.manager.finish({
-                winner: this.opponent,
-                loser: this.me
+                win: false,
+                object: this.me
+            }, {
+                win: true,
+                object: this.opponent
             });
         } else if (this.opponent.health <= 0) {
             this.finishGameLoop();
             this.manager.finish({
-                winner: this.me,
-                loser: this.opponent
+                win: true,
+                object: this.me
+            }, {
+                win: false,
+                object: this.opponent
             });
         }
     }
@@ -45,21 +52,14 @@ export default class MultiPlayerStrategy{
      * Инициализировать слушателей на кнопки "выбор действия"
      */
     initActionListener() {
-        this.manager.scene.gameControls.initActionListener((index, actionObj) => {
-            if (index < 5 && index >= 0 && actionObj !== null && typeof actionObj !== 'undefined') {
+        this.manager.scene.gameControls.initActionListener((actionObj) => {
+            if (actionObj !== null && typeof actionObj !== 'undefined') {
+                this.myStep = actionObj;
+                this.manager.scene.gameControls.buttonAddAction.classList.remove('game-controls__action-button_empty');
+                this.manager.scene.gameControls.buttonAddAction.classList.add('game-controls__action-button_fill');
 
-                this.mySteps[index] = actionObj/*Object.assign({}, actionObj)*/;
-
-                this.manager.scene.gameControls.actionButtons[index].classList.remove('game-controls__action-button_empty');
-                this.manager.scene.gameControls.actionButtons[index].classList.add('game-controls__action-button_fill');
-
-                let btnText = '';
-                if (actionObj.buffAction === 'block') {
-                    btnText = `block ${actionObj.method}`;
-                } else if (actionObj.buffAction === 'hit') {
-                    btnText = `hit by ${actionObj.method} to ${actionObj.target}`;
-                }
-                this.manager.scene.gameControls.actionButtons[index].innerText = btnText;
+                let btnText = `hit by ${actionObj.hit.method} to ${actionObj.hit.target} and block ${actionObj.block.method}`;
+                this.manager.scene.gameControls.buttonAddAction.innerText = btnText;
             }
         });
     }
@@ -69,48 +69,119 @@ export default class MultiPlayerStrategy{
      */
     initDoStepListener() {
         this.manager.scene.gameControls.initDoStepListener(() => {
-            if (this.checkMyActionsArray()) {
-                //TODO logic with server
-                this.clearMyActionsArray();
+            //this.opponent.health-=100;
+            if (this.checkMyAction()) {
+                this.gameLogic().then(() => {
+                    this.clearMyActionsArray();
+                });
             } else {
                 IziToast.error({
-                    title: 'Fill buffAction buttons',
-                    position: 'topRight'
+                    title: 'Fill action buttons',
+                    position: 'topCenter'
                 });
             }
         });
     }
 
     /**
+     * Игровая логика
+     * @return {Promise}
+     */
+    gameLogic() {
+        return new Promise((resolve) => {
+            let myActions = this.myStep;
+            let send = {
+                method: myActions.hit.method,
+                target: myActions.hit.target,
+                block: myActions.block.method,
+                hp: this.me.health
+            };
+            this.manager.ws.send(JSON.stringify(send));
+
+            let opponentActions = this.createStepForOpponent();
+
+            console.log(myActions);
+            console.log(opponentActions);
+
+            this.stepAnalyser(myActions, opponentActions);
+
+            resolve();
+        });
+    }
+
+    stepAnalyser(myAction, opponentAction) {
+        let myDamage = this.getDamage('my', myAction, opponentAction);
+        let opponentDamage = this.getDamage('opponent', myAction, opponentAction);
+
+        if (myDamage !== 0) {
+            this.logIt(`I missed hit by ${opponentAction.hit.method} to ${opponentAction.hit.target}`);
+        } else {
+            this.logIt(`Everything okey with ME!`);
+        }
+
+        if (opponentDamage !== 0) {
+            this.logIt(`Opponent missed hit by ${myAction.hit.method} to ${myAction.hit.target}`);
+        } else {
+            this.logIt(`Everything okey with OPPONENT!`);
+        }
+
+        this._updateMyHealth(-myDamage);
+        this._updateOpponentHealth(-opponentDamage);
+    }
+
+
+    getDamage(who, myAction, opponentAction) {
+
+    }
+
+    logIt(text) {
+        console.log(text);
+        IziToast.info({
+            title: text,
+            position: 'bottomRight',
+            timeout: 10000,
+            icon: ''
+        })
+    }
+
+    _updateOpponentHealth(div) {
+        this.opponent.health += div;
+        this.manager.scene.opponentInfo.updateHealth(div);
+    }
+
+    _updateMyHealth(div) {
+        this.me.health += div;
+        this.manager.scene.myInfo.updateHealth(div);
+    }
+
+    /**
      * Проверить на полную заполненость массива действия
      * @return {boolean} true - все заполнено
      */
-    checkMyActionsArray() {
-        for (let i = 0; i < this.mySteps.length; i++) {
-            if (this.mySteps[i] === null || typeof this.mySteps[i] === 'undefined') {
-                return false;
-            }
-        }
-        return true;
+    checkMyAction() {
+        console.log(this.myStep);
+        return !(this.myStep === null || typeof this.myStep === 'undefined'
+        || this.myStep.hit.method === null || this.myStep.hit.target === null
+        || this.myStep.block.method === null);
     }
 
     /**
      * Отчисить массив действия
      */
     clearMyActionsArray() {
-        for (let i = 0; i < this.mySteps.length; i++) {
-            this.mySteps[i] = null;
-            this.manager.scene.gameControls.actionButtons[i].classList.remove('game-controls__action-button_fill');
-            this.manager.scene.gameControls.actionButtons[i].classList.add('game-controls__action-button_empty');
-            this.manager.scene.gameControls.actionButtons[i].innerText = 'add buffAction';
-        }
+        this.myStep = null;
+        this.manager.scene.gameControls.buttonAddAction.classList.remove('game-controls__action-button_fill');
+        this.manager.scene.gameControls.buttonAddAction.classList.add('game-controls__action-button_empty');
+        this.manager.scene.gameControls.buttonAddAction.innerText = 'add action';
     }
 
     /**
-     * Завершить игровой цикл
+     * Завершить игровой цикл, отчитска слушателей
      */
-    finishGameLoop(){
+    finishGameLoop() {
         clearInterval(this.inteval);
+        this.manager.scene.gameControls.deleteDoStepListener();
+        this.manager.scene.gameControls.deleteActionListener();
     }
 
     /**
@@ -120,7 +191,9 @@ export default class MultiPlayerStrategy{
      */
     setPlayers(me, opponent) {
         this.me = me;
+        this.me.health = 100;
         this.opponent = opponent;
+        this.opponent.health = 100;
         this.manager.scene.setPlayers(me, opponent);
     }
 }

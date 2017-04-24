@@ -294,7 +294,7 @@ export default class GameScene {
      * @private
      */
     _renderGameActionModal() {
-        this.gameActionModal = new GameAction(this.node);
+        this.gameActionModal = new GameAction(this.node, this.manager);
         this.gameActionModal.render();
     }
 

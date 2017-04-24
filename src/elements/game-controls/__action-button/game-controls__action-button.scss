@@ -31,6 +31,7 @@
 .game-controls__action-button_fill {
   @extend .game-controls__action-button;
   background-color: $colorButtonActionFillBg;
+  color: $colorButtonActionFillText;
   &:hover {
     background-color: $colorButtonActionFillHoverBg;
     color: $colorButtonActionFillHoverText;

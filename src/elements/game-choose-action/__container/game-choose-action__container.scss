@@ -42,7 +42,6 @@
   flex-grow: 1;
   h3 {
     margin: 0;
-    font-family: 'Orbitron', sans-serif;
     text-transform: uppercase;
   }
 }
@@ -53,4 +52,30 @@
   border-radius: 3px;
   background-color: white;
   flex-grow: 1;
+}
+
+.game-choose-action__probability-block {
+  @include flex-container(column, true);
+  padding: 5px;
+  margin: 5px;
+  border-radius: 3px;
+  background-color: #21ff56;
+
+  h5 {
+    color: white;
+    word-wrap: break-word;
+    line-height: 25px;
+    action {
+      padding: 2px;
+      background-color: #8b841e;
+    }
+    probability {
+      padding: 2px;
+      background-color: #262c8b;
+    }
+    damage {
+      padding: 2px;
+      background-color: darkred;
+    }
+  }
 }

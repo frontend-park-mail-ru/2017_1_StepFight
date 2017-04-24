@@ -13,6 +13,8 @@ export default class GameManager {
         this.node = view.node;
         this.view = view;
 
+        this.ws = new WebSocket();
+
         this.scene = new GameScene(view.node, this.storage, this);
         this.strategy =
             strategy === this.storage.gameStates.SINGLEPLAYER_STRATEGY
@@ -74,8 +76,18 @@ export default class GameManager {
         if (this.strategy.constructor.name === SinglePlayerStrategy.name) {
             return {login: 'SUPER BOT', rating: 99999999};
         } else {
-            //TODO search for opponent in global
-            return {login: 'MULTIPLAYER', rating: 99999999};
+            /* //TODO search for opponent in global
+             return {login: 'MULTIPLAYER', rating: 99999999};*/
+            this.ws.open('url').then(() => {
+
+            }).catch(() => {
+
+            });
+
+            this.ws.getData((data) => {
+                console.log('123');
+                console.log(data);
+            });
         }
     }
 }

@@ -4,13 +4,14 @@
 
 import IziToast from "izitoast";
 
-import './game-choose-action.scss';
-import './__button/game-choose-action__button.scss';
-import './__container/game-choose-action__container.scss';
+import "./game-choose-action.scss";
+import "./__button/game-choose-action__button.scss";
+import "./__container/game-choose-action__container.scss";
 
 export default class GameChooseAction {
-    constructor(node) {
+    constructor(node, manager) {
         this.node = node;
+        this.manager = manager;
         this.action = null;
         this.buffAction = null;
     }
@@ -132,12 +133,45 @@ export default class GameChooseAction {
         this.buttonHitTargetBody.innerText = 'Body';
         containerHitTargetControls.appendChild(this.buttonHitTargetBody);
 
+        /*/!*--------------create probability block info--------------*!/
+         this.probabilityContainer = document.createElement('div');
+         this.probabilityContainer.setAttribute('class', 'game-choose-action__probability-block');
+         contentContainer.appendChild(this.probabilityContainer);
+
+         /!*--------------fill probability block info--------------*!/
+         this.pHitOpponentDontBlock = document.createElement('p');
+         this.pHitOpponentDontBlockSuccess = document.createElement('p');
+
+         this.pHitOpponentBlock = document.createElement('p');
+         this.pHitOpponentBlockSuccess = document.createElement('p');
+
+         this.pBlock = document.createElement('p');
+
+         this.probabilityContainer.appendChild(this.pHitOpponentDontBlock);
+         this.probabilityContainer.appendChild(this.pHitOpponentDontBlockSuccess);
+         this.probabilityContainer.appendChild(this.pHitOpponentBlock);
+         this.probabilityContainer.appendChild(this.pHitOpponentBlockSuccess);
+         this.probabilityContainer.appendChild(this.pBlock);*/
+
+        /*--------------create probability block info--------------*/
+        this.probabilityContainer = document.createElement('div');
+        this.probabilityContainer.setAttribute('class', 'game-choose-action__probability-block');
+        contentContainer.appendChild(this.probabilityContainer);
+
+        this.probabilityInfo = document.createElement('h5');
+        this.probabilityContainer.appendChild(this.probabilityInfo);
+
+        this.probabilityInfo.innerHTML = `<action>Hit head</action> = <probability>the smallest</probability> probability, damage is the <damage>biggest</damage>.</br>
+                                        <action>Hit arm</action> = <probability>the biggest</probability> probability, damage is the <damage>smallest</damage>.</br>
+                                          <action>Hit leg</action> = <probability>average</probability> probability, damage is <damage>average</damage>.</br>`;
+
 
         /*--------------create button choose--------------*/
         this.btnChoose = document.createElement('div');
         this.btnChoose.setAttribute('class', 'game-choose-action__button');
         this.btnChoose.innerText = 'Ok';
         contentContainer.appendChild(this.btnChoose);
+
 
         this._initActionSetsListeners();
     }
@@ -147,7 +181,7 @@ export default class GameChooseAction {
      * @param action
      */
     setStartAction(action) {
-        if(action !== null && typeof action !== 'undefined'){
+        if (action !== null && typeof action !== 'undefined') {
             this.buffAction = new Object({
                 hit: {
                     method: action.hit.method,
@@ -220,6 +254,7 @@ export default class GameChooseAction {
             this.clearHitMethodFocus();
             this.buffAction.hit.method = 'arm';
             this._setButtonActionFocus(this.buttonHitMethodArm);
+
         };
         this.chooseThanHitLeg = function () {
             this.clearHitMethodFocus();
