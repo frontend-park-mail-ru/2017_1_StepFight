@@ -7,13 +7,14 @@ import IziToast from "izitoast";
 import "./game-choose-action.scss";
 import "./__button/game-choose-action__button.scss";
 import "./__container/game-choose-action__container.scss";
+import StepObject from "../../js/game/object/StepObject";
 
 export default class GameChooseAction {
     constructor(node, manager) {
         this.node = node;
         this.manager = manager;
-        this.action = null;
-        this.buffAction = null;
+        this.action = new StepObject();
+        this.buffAction = new StepObject();
     }
 
     /**
@@ -182,24 +183,12 @@ export default class GameChooseAction {
      */
     setStartAction(action) {
         if (action !== null && typeof action !== 'undefined') {
-            this.buffAction = new Object({
-                hit: {
-                    method: action.hit.method,
-                    target: action.hit.target
-                }, block: {
-                    method: action.block.method
-                }
-            });
+            this.buffAction.init(action.hit.method, action.hit.target, action.block.method);
+            console.log(this.buffAction);
         } else {
-            this.buffAction = new Object({
-                hit: {
-                    method: null,
-                    target: null
-                }, block: {
-                    method: null
-                }
-            });
+            this.buffAction = new StepObject();
         }
+
         this.action = Object.assign({}, action);
 
         if (action !== null && typeof action !== 'undefined') {
@@ -246,6 +235,7 @@ export default class GameChooseAction {
      */
     _initActionSetsListeners() {
         this.chooseThanHitHead = function () {
+            console.log(this);
             this.clearHitMethodFocus();
             this.buffAction.hit.method = 'head';
             this._setButtonActionFocus(this.buttonHitMethodHead);
@@ -367,8 +357,7 @@ export default class GameChooseAction {
 
         this.actionCallbackChoose = function () {
 
-            if (this.buffAction !== null && this.buffAction.hit.method !== null && this.buffAction.hit.target !== null
-                && this.buffAction.block.method !== null) {
+            if (this.buffAction.checkOnEmpty()) {
                 this.hide();
                 this.deleteButtonAction();
 

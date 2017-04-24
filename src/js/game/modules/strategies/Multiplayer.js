@@ -3,13 +3,14 @@
  */
 
 import IziToast from "izitoast";
+import StepObject from "../../object/StepObject";
 
 export default class MultiPlayerStrategy {
     constructor(manager) {
         this.manager = manager;
 
-        this.myStep = null;
-        this.opponentsStep = null;
+        this.myStep = new StepObject();
+        this.opponentsStep = new StepObject();
     }
 
     /**

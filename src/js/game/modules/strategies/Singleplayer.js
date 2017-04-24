@@ -2,13 +2,14 @@
  * Created by Denis on 02.04.2017.
  */
 import IziToast from "izitoast";
+import StepObject from "../../object/StepObject";
 
 export default class SinglePlayerStrategy {
     constructor(manager) {
         this.manager = manager;
 
-        this.myStep = null;
-        this.opponentsStep = null;
+        this.myStep = new StepObject();
+        this.opponentsStep = new StepObject();
 
         this.BASE_DAMAGE = 40;
     }
@@ -274,14 +275,10 @@ export default class SinglePlayerStrategy {
         let hitMethod = methods[Math.floor(Math.random() * methods.length)];
         let hitTarget = targets[Math.floor(Math.random() * targets.length)];
         let blockMethod = targets[Math.floor(Math.random() * targets.length)];
-        return {
-            hit: {
-                method: hitMethod,
-                target: hitTarget
-            },
-            block: {
-                method: blockMethod
-            }
-        };
+
+        let step = new StepObject();
+        step.init(hitMethod, hitTarget, blockMethod);
+        console.warn(step);
+        return step;
     }
 }

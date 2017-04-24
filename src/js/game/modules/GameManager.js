@@ -13,7 +13,13 @@ export default class GameManager {
         this.node = view.node;
         this.view = view;
 
-        this.ws = new WebSocket();
+        if (strategy === this.storage.gameStates.MULTIPLAYER_STRATEGY) {
+            this.ws = new WebSocket('ws://sf-server.herokuapp.com/api/user/game');
+        }
+
+        this.ws.onopen = () => {
+            console.log("Соединение установлено.");
+        };
 
         this.scene = new GameScene(view.node, this.storage, this);
         this.strategy =
@@ -29,15 +35,16 @@ export default class GameManager {
         this.scene.setState(this.storage.gameStates.STATEWAIT);
 
         if (this.checkUser()) {
-            setTimeout(() => {
-                this.opponent = this._getOpponent();
+            this._getOpponent().then((opponent) => {
                 this.strategy.setPlayers(
                     //TODO fix this
                     this.storage.user,
-                    this.opponent);
+                    opponent);
                 this.scene.setState(this.storage.gameStates.STATEGAME);
                 this.strategy.startGameLoop();
-            }, 1000);
+            }).catch(err => {
+                console.log(err);
+            });
         } else {
             this.router.go(this.storage.urls.LOGIN, true);
         }
@@ -74,19 +81,15 @@ export default class GameManager {
      */
     _getOpponent() {
         if (this.strategy.constructor.name === SinglePlayerStrategy.name) {
-            return {login: 'SUPER BOT', rating: 99999999};
-        } else {
-            /* //TODO search for opponent in global
-             return {login: 'MULTIPLAYER', rating: 99999999};*/
-            this.ws.open('url').then(() => {
-
-            }).catch(() => {
-
+            return new Promise((resolve) => {
+                resolve({login: 'SUPER BOT', rating: 99999999});
             });
-
-            this.ws.getData((data) => {
-                console.log('123');
-                console.log(data);
+        } else {
+            return new Promise((resolve) => {
+                this.ws.onmessage = (event) => {
+                    console.log("Получены данные " + event.data);
+                    resolve(event.data);
+                };
             });
         }
     }
