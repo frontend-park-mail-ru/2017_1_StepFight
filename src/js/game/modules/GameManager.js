@@ -15,11 +15,11 @@ export default class GameManager {
 
         if (strategy === this.storage.gameStates.MULTIPLAYER_STRATEGY) {
             this.ws = new WebSocket('wss://sf-server.herokuapp.com/api/user/game');
+            this.ws.onopen = () => {
+                console.log("Соединение установлено.");
+            };
+            this.initWebSocket();
         }
-
-        this.ws.onopen = () => {
-            console.log("Соединение установлено.");
-        };
 
         this.scene = new GameScene(view.node, this.storage, this);
         this.strategy =
@@ -35,16 +35,11 @@ export default class GameManager {
         this.scene.setState(this.storage.gameStates.STATEWAIT);
 
         if (this.checkUser()) {
-            this._getOpponent().then((opponent) => {
-                this.strategy.setPlayers(
-                    //TODO fix this
-                    this.storage.user,
-                    opponent);
+            if (this.strategy.constructor.name === SinglePlayerStrategy.name) {
+                this.strategy.setPlayers(this.storage.user,  {login: 'SUPER BOT', rating: 99999999});
                 this.scene.setState(this.storage.gameStates.STATEGAME);
                 this.strategy.startGameLoop();
-            }).catch(err => {
-                console.log(err);
-            });
+            }
         } else {
             this.router.go(this.storage.urls.LOGIN, true);
         }
@@ -74,12 +69,23 @@ export default class GameManager {
         }
     }
 
+    initWebSocket(){
+        this.ws.onmessage = (event) => {
+            console.log("Получены данные " + event.data);
+
+            let data = (JSON.parse(event.data));
+            if('message' in data){
+
+            }
+        };
+    }
+
     /**
      * Получить противника
      * @return {*}
      * @private
      */
-    _getOpponent() {
+   /* _getOpponent() {
         if (this.strategy.constructor.name === SinglePlayerStrategy.name) {
             return new Promise((resolve) => {
                 resolve({login: 'SUPER BOT', rating: 99999999});
@@ -88,9 +94,14 @@ export default class GameManager {
             return new Promise((resolve) => {
                 this.ws.onmessage = (event) => {
                     console.log("Получены данные " + event.data);
+
+                    let data = (JSON.parse(event.data));
+                    if(message in data){
+
+                    } else if()
                     resolve(event.data);
                 };
             });
         }
-    }
+    }*/
 }
