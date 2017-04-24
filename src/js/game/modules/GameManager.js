@@ -14,7 +14,7 @@ export default class GameManager {
         this.view = view;
 
         if (strategy === this.storage.gameStates.MULTIPLAYER_STRATEGY) {
-            this.ws = new WebSocket('ws://sf-server.herokuapp.com/api/user/game');
+            this.ws = new WebSocket('wss://sf-server.herokuapp.com/api/user/game');
         }
 
         this.ws.onopen = () => {
