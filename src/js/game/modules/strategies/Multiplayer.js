@@ -99,7 +99,7 @@ export default class MultiPlayerStrategy {
         }
     }
 
-    stepAnalyser(myAction, opponentAction, myDamage, opponentDamage) {
+    stepAnalyzer(myAction, opponentAction, myDamage, opponentDamage) {
         this.clearMyActionsArray();
 
         if (myDamage !== 0) {

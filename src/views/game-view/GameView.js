@@ -23,6 +23,6 @@ export default class GameView extends BaseView{
         if(typeof strategy === 'undefined') strategy = this.storage.gameStates.SINGLEPLAYER_STRATEGY;
 
         this.gameManager = new GameManager(this.router, this.storage, this, strategy);
-        //this.gameManager.start();
+        //this.gameManager.startGameProcess();
     }
 }
