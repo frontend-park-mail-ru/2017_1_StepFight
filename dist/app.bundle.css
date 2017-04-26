@@ -394,6 +394,11 @@
   .game-controls__button:hover {
     background-color: rgba(246, 94, 103, 0.86); }
 
+.game-controls__button_disabled {
+  background-color: rgba(137, 95, 98, 0.86); }
+  .game-controls__button_disabled:hover {
+    background-color: rgba(137, 95, 98, 0.86); }
+
 @media (max-width: 550px) {
   .game-controls__button {
     width: inherit;

@@ -21,7 +21,7 @@ new UserService().getUser().then(user => {
     Storage.user = user;
     startRoute();
 }).catch(err => {
-    console.log(err);
+    //console.log(err);
     startRoute();
 });
 

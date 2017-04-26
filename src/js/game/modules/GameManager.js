@@ -4,39 +4,45 @@
 import GameScene from "./GameScene";
 import SinglePlayerStrategy from "./strategies/Singleplayer";
 import MultiPlayerStrategy from "./strategies/Multiplayer";
+import StepObject from "../object/StepObject";
 export default class GameManager {
     constructor(router, storage, view, strategy) {
-        this._subscribed = [];
+        this._gameId = null;
 
         this.router = router;
         this.storage = storage;
         this.node = view.node;
         this.view = view;
 
+        this.scene = new GameScene(this.view.node, this.storage, this);
+        this.scene.setState(this.storage.gameStates.STATEWAIT);
+
+        this.strategy =
+            strategy === this.storage.gameStates.SINGLEPLAYER_STRATEGY
+                ? new SinglePlayerStrategy(this) : new MultiPlayerStrategy(this);
+
         if (strategy === this.storage.gameStates.MULTIPLAYER_STRATEGY) {
             this.ws = new WebSocket('wss://sf-server.herokuapp.com/api/user/game');
             this.ws.onopen = () => {
                 console.log("Соединение установлено.");
+                this.initWebSocket();
             };
-            this.initWebSocket();
+        } else {
+            this.start();
         }
-
-        this.scene = new GameScene(view.node, this.storage, this);
-        this.strategy =
-            strategy === this.storage.gameStates.SINGLEPLAYER_STRATEGY
-                ? new SinglePlayerStrategy(this) : new MultiPlayerStrategy(this);
     }
 
     /**
      * Начать игровой процесс
      */
-    start() {
-        //TODO start strategy
-        this.scene.setState(this.storage.gameStates.STATEWAIT);
-
+    start(mpOpponentLogin) {
         if (this.checkUser()) {
             if (this.strategy.constructor.name === SinglePlayerStrategy.name) {
-                this.strategy.setPlayers(this.storage.user,  {login: 'SUPER BOT', rating: 99999999});
+                this.strategy.setPlayers(this.storage.user, {login: 'SUPER BOT', rating: 99999999});
+                this.scene.setState(this.storage.gameStates.STATEGAME);
+                this.strategy.startGameLoop();
+            } else {
+                this.strategy.setPlayers(this.storage.user, {login: mpOpponentLogin});
                 this.scene.setState(this.storage.gameStates.STATEGAME);
                 this.strategy.startGameLoop();
             }
@@ -60,8 +66,6 @@ export default class GameManager {
      * @return {boolean}
      */
     checkUser() {
-        //TODO delete this
-        //return true;
         try {
             return this.storage.user.login !== null;
         } catch (e) {
@@ -69,15 +73,50 @@ export default class GameManager {
         }
     }
 
-    initWebSocket(){
+    initWebSocket() {
         this.ws.onmessage = (event) => {
             console.log("Получены данные " + event.data);
 
             let data = (JSON.parse(event.data));
-            if('message' in data){
+            if ('message' in data) {
+                switch (data.message) {
+                    case 'Connect': {
 
+                        break
+                    }
+                    case 'Waiting': {
+
+                        break;
+                    }
+                }
+            } else if ('key' in data) {
+                this._gameId = data.key;
+                let opponentLogin = (data.first === this.storage.user.login) ? data.second : data.first;
+                this.start(opponentLogin);
+            } else if ('id' in data) {
+                let myAction = new StepObject();
+                let opponentAction = new StepObject();
+                let myDamage = 0;
+                let opponentDamage = 0;
+                if (data.first.login === this.storage.user.login) {
+                    myAction.init(data.first.method, data.first.target, data.first.block);
+                    opponentAction.init(data.second.method, data.second.target, data.second.block);
+                    myDamage = data.first.takenDamage;
+                    opponentDamage = data.second.takenDamage;
+                } else {
+                    myAction.init(data.second.method, data.second.target, data.second.block);
+                    opponentAction.init(data.first.method, data.first.target, data.first.block);
+                    myDamage = data.second.takenDamage;
+                    opponentDamage = data.first.takenDamage;
+                }
+                this.strategy.stepAnalyser(myAction, opponentAction, myDamage, opponentDamage);
+                this.scene.gameControls.setButtonStepStatus(true);
             }
         };
+
+        this.ws.onclose = (error) => {
+            console.error("Ошибка " + error.message);
+        }
     }
 
     /**
@@ -85,23 +124,23 @@ export default class GameManager {
      * @return {*}
      * @private
      */
-   /* _getOpponent() {
-        if (this.strategy.constructor.name === SinglePlayerStrategy.name) {
-            return new Promise((resolve) => {
-                resolve({login: 'SUPER BOT', rating: 99999999});
-            });
-        } else {
-            return new Promise((resolve) => {
-                this.ws.onmessage = (event) => {
-                    console.log("Получены данные " + event.data);
+    /* _getOpponent() {
+     if (this.strategy.constructor.name === SinglePlayerStrategy.name) {
+     return new Promise((resolve) => {
+     resolve({login: 'SUPER BOT', rating: 99999999});
+     });
+     } else {
+     return new Promise((resolve) => {
+     this.ws.onmessage = (event) => {
+     console.log("Получены данные " + event.data);
 
-                    let data = (JSON.parse(event.data));
-                    if(message in data){
+     let data = (JSON.parse(event.data));
+     if(message in data){
 
-                    } else if()
-                    resolve(event.data);
-                };
-            });
-        }
-    }*/
+     } else if()
+     resolve(event.data);
+     };
+     });
+     }
+     }*/
 }

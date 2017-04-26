@@ -10,7 +10,6 @@ export default class MultiPlayerStrategy {
         this.manager = manager;
 
         this.myStep = new StepObject();
-        this.opponentsStep = new StepObject();
     }
 
     /**
@@ -70,11 +69,8 @@ export default class MultiPlayerStrategy {
      */
     initDoStepListener() {
         this.manager.scene.gameControls.initDoStepListener(() => {
-            //this.opponent.health-=100;
             if (this.checkMyAction()) {
-                this.gameLogic().then(() => {
-                    this.clearMyActionsArray();
-                });
+                this.sendStep();
             } else {
                 IziToast.error({
                     title: 'Fill action buttons',
@@ -84,58 +80,45 @@ export default class MultiPlayerStrategy {
         });
     }
 
-    /**
-     * Игровая логика
-     * @return {Promise}
-     */
-    gameLogic() {
-        return new Promise((resolve) => {
-            let myActions = this.myStep;
-            let send = {
-                method: myActions.hit.method,
-                target: myActions.hit.target,
-                block: myActions.block.method,
-                hp: this.me.health
-            };
+    sendStep(){
+        let myActions = this.myStep;
+        let send = {
+            method: myActions.hit.method,
+            target: myActions.hit.target,
+            block: myActions.block.method,
+            hp: parseFloat((this.me.health).toFixed(2)),
+            id: this.manager._gameId
+        };
+        try {
+            console.warn(JSON.stringify(send));
+            console.warn(send);
             this.manager.ws.send(JSON.stringify(send));
-
-            let opponentActions = this.createStepForOpponent();
-
-            console.log(myActions);
-            console.log(opponentActions);
-
-            this.stepAnalyser(myActions, opponentActions);
-
-            resolve();
-        });
+            this.manager.scene.gameControls.setButtonStepStatus(false);
+        } catch (err){
+            console.error(err);
+        }
     }
 
-    stepAnalyser(myAction, opponentAction) {
-        let myDamage = this.getDamage('my', myAction, opponentAction);
-        let opponentDamage = this.getDamage('opponent', myAction, opponentAction);
+    stepAnalyser(myAction, opponentAction, myDamage, opponentDamage) {
+        this.clearMyActionsArray();
 
         if (myDamage !== 0) {
-            this.logIt(`I missed hit by ${opponentAction.hit.method} to ${opponentAction.hit.target}`);
+            this._logStep(`I missed hit by ${opponentAction.hit.method} to ${opponentAction.hit.target}`);
         } else {
-            this.logIt(`Everything okey with ME!`);
+            this._logStep(`Everything okey with ME!`);
         }
 
         if (opponentDamage !== 0) {
-            this.logIt(`Opponent missed hit by ${myAction.hit.method} to ${myAction.hit.target}`);
+            this._logStep(`Opponent missed hit by ${myAction.hit.method} to ${myAction.hit.target}`);
         } else {
-            this.logIt(`Everything okey with OPPONENT!`);
+            this._logStep(`Everything okey with OPPONENT!`);
         }
 
         this._updateMyHealth(-myDamage);
         this._updateOpponentHealth(-opponentDamage);
     }
 
-
-    getDamage(who, myAction, opponentAction) {
-
-    }
-
-    logIt(text) {
+    _logStep(text) {
         console.log(text);
         IziToast.info({
             title: text,
@@ -160,7 +143,7 @@ export default class MultiPlayerStrategy {
      * @return {boolean} true - все заполнено
      */
     checkMyAction() {
-        console.log(this.myStep);
+        //console.log(this.myStep);
         return !(this.myStep === null || typeof this.myStep === 'undefined'
         || this.myStep.hit.method === null || this.myStep.hit.target === null
         || this.myStep.block.method === null);

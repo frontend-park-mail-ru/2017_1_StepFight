@@ -17,6 +17,13 @@
   }
 }
 
+.game-controls__button_disabled {
+  background-color: $colorButtonChooseDisableBg;
+  &:hover {
+    background-color: $colorButtonChooseDisableBg;
+  }
+}
+
 @media (max-width: 550px) {
   .game-controls__button {
     width: inherit;

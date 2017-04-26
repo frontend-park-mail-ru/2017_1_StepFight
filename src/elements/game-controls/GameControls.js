@@ -1,14 +1,15 @@
 /**
  * Created by Denis on 08.04.2017.
  */
-import './game-controls.scss';
-import './__button/game-controls__button.scss';
-import './__action-button/game-controls__action-button.scss';
+import "./game-controls.scss";
+import "./__button/game-controls__button.scss";
+import "./__action-button/game-controls__action-button.scss";
 
 export default class GameControls {
     constructor(node, sceneContext) {
         this.node = node;
         this.sceneContext = sceneContext;
+        this.isButtonStepActive = true;
     }
 
     /**
@@ -31,9 +32,9 @@ export default class GameControls {
         this.btnStep = document.createElement('div');
         this.btnStep.setAttribute('id', 'btn-next-step');
         this.btnStep.setAttribute('class', 'game-controls__button');
-        let text = document.createElement('p');
-        text.innerText = 'Create step';
-        this.btnStep.appendChild(text);
+        this.btnStepText = document.createElement('p');
+        this.btnStepText.innerText = 'Create step';
+        this.btnStep.appendChild(this.btnStepText);
 
         container.appendChild(this.btnStep);
         this.node.appendChild(container);
@@ -45,9 +46,11 @@ export default class GameControls {
      */
     initDoStepListener(callback) {
         this.createStep = function () {
-            callback();
+            if (this.isButtonStepActive) {
+                callback();
+            }
         };
-        this.btnStep.addEventListener('click', this.createStep);
+        this.btnStep.addEventListener('click', this.createStep.bind(this));
     }
 
     /**
@@ -67,8 +70,10 @@ export default class GameControls {
         });
 
         this.actionAddCallback = function () {
-            this.sceneContext.gameActionModal.setStartAction(this.sceneContext.manager.strategy.myStep);
-            this.sceneContext.gameActionModal.show();
+            if (this.isButtonStepActive) {
+                this.sceneContext.gameActionModal.setStartAction(this.sceneContext.manager.strategy.myStep);
+                this.sceneContext.gameActionModal.show();
+            }
         };
 
         this.buttonAddAction.addEventListener('click', this.actionAddCallback.bind(this));
@@ -80,5 +85,16 @@ export default class GameControls {
     deleteActionListener() {
         this.buttonAddAction.removeEventListener('click', this.actionAddCallback);
         this.sceneContext.gameActionModal.deleteButtonAction();
+    }
+
+    setButtonStepStatus(law) {
+        this.isButtonStepActive = law;
+        if (law) {
+            this.btnStep.classList.remove('game-controls__button_disabled');
+            this.btnStepText.innerText = 'Create step';
+        } else {
+            this.btnStep.classList.add('game-controls__button_disabled');
+            this.btnStepText.innerText = 'Wait ...';
+        }
     }
 }

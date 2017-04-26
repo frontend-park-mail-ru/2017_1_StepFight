@@ -184,7 +184,7 @@ export default class GameChooseAction {
     setStartAction(action) {
         if (action !== null && typeof action !== 'undefined') {
             this.buffAction.init(action.hit.method, action.hit.target, action.block.method);
-            console.log(this.buffAction);
+            //console.log(this.buffAction);
         } else {
             this.buffAction = new StepObject();
         }
@@ -235,7 +235,7 @@ export default class GameChooseAction {
      */
     _initActionSetsListeners() {
         this.chooseThanHitHead = function () {
-            console.log(this);
+            //console.log(this);
             this.clearHitMethodFocus();
             this.buffAction.hit.method = 'head';
             this._setButtonActionFocus(this.buttonHitMethodHead);
