@@ -33,7 +33,7 @@ export default class ObjPerson {
         this.personConst = {
             startPosition: {
                 x: 10,
-                y: 7,
+                y: 0,
                 z: 0
             },
             startScale: {
@@ -42,9 +42,9 @@ export default class ObjPerson {
                 z: 2
             },
             startRotation: {
-                x: Math.PI / 2,
+                x: 0,
                 y: 0,
-                z: Math.PI / 2
+                z: Math.PI
             }
         }
     }
@@ -84,16 +84,11 @@ export default class ObjPerson {
             this.person.rotation.set(
                 this.personConst.startRotation.x,
                 this.personConst.startRotation.y,
-                this.personConst.startRotation.z * pos
+                this.personConst.startRotation.z
             );
 
 
-            /*
-             this.person.skeleton.bones[this.bonesNames.bodyTop].rotation.y += Math.PI/2;
-             */
-
             this.scene.add(this.person);
-            //this._addInWorld(this.person);
 
             console.log(this.person);
         }));
@@ -113,14 +108,6 @@ export default class ObjPerson {
         let render = () => {
             window.requestAnimationFrame(render);
             step = /*Math.PI / 96*/ 0.01;
-
-            /*while(flag){
-             if(position.x < this.getBones()[this.bonesNames.armRightBottom].position.x){
-             this.getBones()[this.bonesNames.armRightBottom].position -= step;
-             } else {
-             this.getBones()[this.bonesNames.armRightBottom].position += step;
-             }
-             }*/
         };
         render();
     }
@@ -136,50 +123,5 @@ export default class ObjPerson {
          }
          };
          render();*/
-    }
-
-    /**
-     * Добавить в мир физики
-     * @param elem
-     * @private
-     */
-    _addInWorld(elem) {
-        /*const pos = this.partOf === 'left' ? -1 : 1;
-
-        let body = this.sceneContext.world.add({
-            type: 'box',
-            pos: [
-                this.personConst.startPosition.x * pos,
-                this.personConst.startPosition.y,
-                this.personConst.startPosition.z
-            ],
-            rot: [
-                this.personConst.startRotation.x,
-                this.personConst.startRotation.y,
-                this.personConst.startRotation.z * pos
-            ],
-            size: [
-                15,15,15
-            ],
-            move: true,
-            world: this.sceneContext.world,
-            collidesWith: 0x00BFFF
-        });
-
-        this.person.position.copy(body.getPosition());
-        this.person.quaternion.copy(body.getQuaternion());
-        this.person.scale.set(
-            this.personConst.startScale.x,
-            this.personConst.startScale.y,
-            this.personConst.startScale.z
-        );
-        this.person.rotation.set(
-            this.personConst.startRotation.x,
-            this.personConst.startRotation.y,
-            this.personConst.startRotation.z * pos
-        );
-
-        this.sceneContext.worldBodies.push(body);
-        this.sceneContext.worldMeshes.push(elem);*/
     }
 }

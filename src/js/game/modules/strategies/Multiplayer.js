@@ -133,12 +133,12 @@ export default class MultiPlayerStrategy {
 
     _updateOpponentHealth(div, hp) {
         this.opponent.health = hp;
-        this.manager.scene.opponentInfo.updateHealth(div);
+        this.manager.scene.opponentInfo.updateHealth(hp);
     }
 
     _updateMyHealth(div, hp) {
         this.me.health = hp;
-        this.manager.scene.myInfo.updateHealth(div);
+        this.manager.scene.myInfo.updateHealth(hp);
     }
 
     /**
