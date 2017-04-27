@@ -88,7 +88,8 @@ export default class MultiPlayerStrategy {
             target: myActions.hit.target,
             block: myActions.block.method,
             hp: parseFloat((this.me.health).toFixed(2)),
-            id: this.manager._gameId
+            id: this.manager._gameId,
+            type: 'step'
         };
         try {
             console.group("Отправленные данные:");
@@ -101,7 +102,7 @@ export default class MultiPlayerStrategy {
         }
     }
 
-    stepAnalyzer(myAction, opponentAction, myDamage, opponentDamage) {
+    stepAnalyzer(myAction, opponentAction, myDamage, opponentDamage, myHp, opponentHp) {
         this.clearMyActionsArray();
 
         if (myDamage !== 0) {
@@ -116,8 +117,8 @@ export default class MultiPlayerStrategy {
             this._logStep(`Everything okey with OPPONENT!`);
         }
 
-        this._updateMyHealth(-myDamage);
-        this._updateOpponentHealth(-opponentDamage);
+        this._updateMyHealth(-myDamage, myHp);
+        this._updateOpponentHealth(-opponentDamage, opponentHp);
     }
 
     _logStep(text) {
@@ -125,18 +126,18 @@ export default class MultiPlayerStrategy {
         IziToast.info({
             title: text,
             position: 'bottomRight',
-            timeout: 10000,
+            timeout: 7000,
             icon: ''
         })
     }
 
-    _updateOpponentHealth(div) {
-        this.opponent.health += div;
+    _updateOpponentHealth(div, hp) {
+        this.opponent.health = hp;
         this.manager.scene.opponentInfo.updateHealth(div);
     }
 
-    _updateMyHealth(div) {
-        this.me.health += div;
+    _updateMyHealth(div, hp) {
+        this.me.health = hp;
         this.manager.scene.myInfo.updateHealth(div);
     }
 

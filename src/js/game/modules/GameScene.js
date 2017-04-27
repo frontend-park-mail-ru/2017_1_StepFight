@@ -10,6 +10,7 @@ import GameAction from "../../../elements/game-choose-action/GameChooseAction";
 import GameInfoToast from "../../../elements/game-info-toast/GameInfoToast";
 import ProgressBarTable from "../../../elements/progress-bar-table/progressBarTable";
 import GameResultTable from "../../../elements/game-result-table/GameResultTable";
+import GameTimer from "../../../elements/game-timer/GameTimer";
 const OrbitControls = require('three-orbit-controls')(THREE);
 // import * as OrbitControls from 'three-orbit-controls';
 
@@ -278,6 +279,11 @@ export default class GameScene {
             }
         };
         render();
+    }
+
+    renderTimer(){
+        this.timer = new GameTimer(this.container);
+        this.timer.render();
     }
 
     /**

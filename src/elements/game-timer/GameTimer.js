@@ -1,12 +1,24 @@
 /**
  * Created by Denis on 27.04.2017.
  */
-export default class GameTimer{
-    constructor(){
 
+import "./game-timer.scss";
+
+export default class GameTimer {
+    constructor(node) {
+        this.node = node;
     }
 
-    start(){
+    render() {
+        this.container = document.createElement('div');
+        this.node.appendChild(this.container);
+        this.container.setAttribute('class', 'game-timer');
+
+        this.timeText = document.createElement('h1');
+        this.container.appendChild(this.timeText);
+    }
+
+    start() {
         return new Promise((resolve) => {
             this.timeDown = new Date().getTime();
             this.timeDown = this.timeDown + 30000;
@@ -16,9 +28,10 @@ export default class GameTimer{
                 let distance = this.timeDown - now;
 
                 let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                this.timeText.textContent = `00:${seconds}`;
 
-                console.warn(`00:${seconds}`);
-                if(seconds === 0){
+                //console.warn(`00:${seconds}`);
+                if (seconds <= 0) {
                     this.cancel();
                     resolve();
                 }
@@ -26,7 +39,7 @@ export default class GameTimer{
         });
     }
 
-    cancel(){
+    cancel() {
         clearInterval(this.inteval);
     }
 }

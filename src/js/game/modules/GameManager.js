@@ -5,7 +5,6 @@ import GameScene from "./GameScene";
 import SinglePlayerStrategy from "./strategies/Singleplayer";
 import MultiPlayerStrategy from "./strategies/Multiplayer";
 import StepObject from "../object/StepObject";
-import GameTimer from "../../../elements/game-timer/GameTimer";
 export default class GameManager {
     constructor(router, storage, view, strategyName) {
         this._gameId = null;
@@ -47,6 +46,7 @@ export default class GameManager {
                 this.strategy.setPlayers(this.storage.user, {login: mpOpponentLogin});
                 this.scene.setState(this.storage.gameStates.STATEGAME);
                 this.strategy.startGameLoop();
+                this.scene.renderTimer();
             }
         } else {
             this.router.go(this.storage.urls.LOGIN, true);
@@ -120,8 +120,8 @@ export default class GameManager {
         }
     }
 
-    startMpTimer(){
-        new GameTimer().start().then(()=>{
+    startMpTimer() {
+        this.scene.timer.start().then(() => {
             let step = new StepObject();
             step.init('arm', 'body', 'body');
             this.strategy.myStep = step;
@@ -134,18 +134,24 @@ export default class GameManager {
         let opponentAction = new StepObject();
         let myDamage = 0;
         let opponentDamage = 0;
+        let myHealth = 0;
+        let opponentHealth = 0;
         if (data.first.login === this.storage.user.login) {
             myAction.init(data.first.method, data.first.target, data.first.block);
             opponentAction.init(data.second.method, data.second.target, data.second.block);
             myDamage = data.first.takenDamage;
             opponentDamage = data.second.takenDamage;
+            myHealth = data.first.hp;
+            opponentHealth = data.second.hp;
         } else {
             myAction.init(data.second.method, data.second.target, data.second.block);
             opponentAction.init(data.first.method, data.first.target, data.first.block);
             myDamage = data.second.takenDamage;
             opponentDamage = data.first.takenDamage;
+            myHealth = data.second.hp;
+            opponentHealth = data.first.hp;
         }
-        this.strategy.stepAnalyzer(myAction, opponentAction, myDamage, opponentDamage);
+        this.strategy.stepAnalyzer(myAction, opponentAction, myDamage, opponentDamage, myHealth, opponentHealth);
         this.scene.gameControls.setButtonStepStatus(true);
     }
 }
