@@ -4,6 +4,7 @@
 
 import IziToast from "izitoast";
 import StepObject from "../../object/StepObject";
+import GameTimer from "../../../../elements/game-timer/GameTimer";
 
 export default class MultiPlayerStrategy {
     constructor(manager) {
@@ -90,8 +91,9 @@ export default class MultiPlayerStrategy {
             id: this.manager._gameId
         };
         try {
+            console.group("Отправленные данные:");
             console.warn(JSON.stringify(send));
-            console.warn(send);
+            console.groupEnd();
             this.manager.ws.send(JSON.stringify(send));
             this.manager.scene.gameControls.setButtonStepStatus(false);
         } catch (err){

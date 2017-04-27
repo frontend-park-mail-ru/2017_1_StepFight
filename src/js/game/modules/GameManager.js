@@ -5,6 +5,7 @@ import GameScene from "./GameScene";
 import SinglePlayerStrategy from "./strategies/Singleplayer";
 import MultiPlayerStrategy from "./strategies/Multiplayer";
 import StepObject from "../object/StepObject";
+import GameTimer from "../../../elements/game-timer/GameTimer";
 export default class GameManager {
     constructor(router, storage, view, strategyName) {
         this._gameId = null;
@@ -76,18 +77,27 @@ export default class GameManager {
 
     initWebSocketListeners() {
         this.ws.onmessage = (event) => {
-            console.log("Получены данные " + event.data);
+            console.group("Получены данные");
+            console.log(event.data);
+            console.groupEnd();
 
             this.messageAnalyzer(JSON.parse(event.data));
         };
 
-        this.ws.onclose = (error) => {
-            console.error("Ошибка ");
+        this.ws.onerror = (error) => {
+            console.group("Ошибка");
             console.error(error);
-        }
+            console.groupEnd();
+        };
+
+        this.ws.onclose = (event) => {
+            console.group("Соединение закрыто");
+            console.error(event);
+            console.groupEnd();
+        };
     }
 
-    messageAnalyzer(data){
+    messageAnalyzer(data) {
         if ('message' in data) {
             switch (data.message) {
                 case 'Connect': {
@@ -103,12 +113,23 @@ export default class GameManager {
             this._gameId = data.key;
             let opponentLogin = (data.first === this.storage.user.login) ? data.second : data.first;
             this.startGameProcess(opponentLogin);
+            this.startMpTimer();
         } else if ('id' in data) {
             this.stepResultAnalyzer(data);
+            this.startMpTimer();
         }
     }
 
-    stepResultAnalyzer(data){
+    startMpTimer(){
+        new GameTimer().start().then(()=>{
+            let step = new StepObject();
+            step.init('arm', 'body', 'body');
+            this.strategy.myStep = step;
+            this.strategy.sendStep();
+        });
+    }
+
+    stepResultAnalyzer(data) {
         let myAction = new StepObject();
         let opponentAction = new StepObject();
         let myDamage = 0;
@@ -127,29 +148,4 @@ export default class GameManager {
         this.strategy.stepAnalyzer(myAction, opponentAction, myDamage, opponentDamage);
         this.scene.gameControls.setButtonStepStatus(true);
     }
-
-    /**
-     * Получить противника
-     * @return {*}
-     * @private
-     */
-    /* _getOpponent() {
-     if (this.strategy.constructor.name === SinglePlayerStrategy.name) {
-     return new Promise((resolve) => {
-     resolve({login: 'SUPER BOT', rating: 99999999});
-     });
-     } else {
-     return new Promise((resolve) => {
-     this.ws.onmessage = (event) => {
-     console.log("Получены данные " + event.data);
-
-     let data = (JSON.parse(event.data));
-     if(message in data){
-
-     } else if()
-     resolve(event.data);
-     };
-     });
-     }
-     }*/
 }

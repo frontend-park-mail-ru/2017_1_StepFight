@@ -278,7 +278,7 @@ export default class SinglePlayerStrategy {
 
         let step = new StepObject();
         step.init(hitMethod, hitTarget, blockMethod);
-        console.warn(step);
+        //console.warn(step);
         return step;
     }
 }

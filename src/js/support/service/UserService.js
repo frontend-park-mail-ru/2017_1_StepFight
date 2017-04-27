@@ -107,7 +107,7 @@ export default class UserService {
                 if (response.status === '200 OK') {
                     resolve(response);
                 } else {
-                    console.log(response.status);
+                    //console.log(response.status);
                     reject(response);
                 }
             }).catch(e => {
