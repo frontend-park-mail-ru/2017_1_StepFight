@@ -13,6 +13,7 @@ const CACHE_URLS = [
     '/leaderboard',
     '/about',
     '/game',
+    '/src/music/music-bg.mp3',
     '/src/three-models/player.json',
     '/dist/app.bundle.css',
     '/dist/app.bundle.js'

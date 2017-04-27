@@ -1,7 +1,7 @@
 @import "../consts";
-
+@import "../../../fonts/fonts";
 .leaderboard-view__link {
-  font-family: 'Orbitron', sans-serif;
+  font-family: mainFont, sans-serif;
   text-decoration: none;
   -webkit-transition: all 0.5s ease;
   cursor: pointer;

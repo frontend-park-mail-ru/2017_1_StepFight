@@ -7,6 +7,7 @@ import MultiPlayerStrategy from "./strategies/Multiplayer";
 import StepObject from "../object/StepObject";
 export default class GameManager {
     constructor(router, storage, view, strategyName) {
+        //для мультиплеера
         this._gameId = null;
 
         this.router = router;
@@ -29,20 +30,31 @@ export default class GameManager {
                 this.initWebSocketListeners();
             };
         } else {
-            this.startGameProcess();
+            this.startSpGameProcess();
         }
     }
 
     /**
-     * Начать игровой процесс
+     * Начать игровой процесс SP
      */
-    startGameProcess(mpOpponentLogin) {
+    startSpGameProcess() {
         if (this.checkUser()) {
             if (this.strategy.constructor.name === SinglePlayerStrategy.name) {
                 this.strategy.setPlayers(this.storage.user, {login: 'SUPER BOT', rating: 99999999});
                 this.scene.setState(this.storage.gameStates.STATEGAME);
                 this.strategy.startGameLoop();
-            } else {
+            }
+        } else {
+            this.router.go(this.storage.urls.LOGIN, true);
+        }
+    }
+
+    /**
+     * Начать игровой процесс MP
+     */
+    startMpGameProcess(mpOpponentLogin) {
+        if (this.checkUser()) {
+            if (this.strategy.constructor.name === MultiPlayerStrategy.name) {
                 this.strategy.setPlayers(this.storage.user, {login: mpOpponentLogin});
                 this.scene.setState(this.storage.gameStates.STATEGAME);
                 this.strategy.startGameLoop();
@@ -57,8 +69,6 @@ export default class GameManager {
      * Завершить игровой процесс
      */
     finish(myResult, opponentResult) {
-        //console.warn(`winner=${resultObj.winner.login} loser=${resultObj.loser.login}`);
-
         this.scene.setResultData(myResult, opponentResult);
         this.scene.setState(this.storage.gameStates.STATERESULT);
     }
@@ -75,13 +85,16 @@ export default class GameManager {
         }
     }
 
+    /**
+     * Инициализация слушателей WebSocket-а
+     */
     initWebSocketListeners() {
         this.ws.onmessage = (event) => {
             console.group("Получены данные");
             console.log(event.data);
             console.groupEnd();
 
-            this.messageAnalyzer(JSON.parse(event.data));
+            this.wsMessageAnalyze(JSON.parse(event.data));
         };
 
         this.ws.onerror = (error) => {
@@ -97,7 +110,11 @@ export default class GameManager {
         };
     }
 
-    messageAnalyzer(data) {
+    /**
+     * Метод обработки входящих сообщений по ws
+     * @param data
+     */
+    wsMessageAnalyze(data) {
         if ('message' in data) {
             switch (data.message) {
                 case 'Connect': {
@@ -112,14 +129,17 @@ export default class GameManager {
         } else if ('key' in data) {
             this._gameId = data.key;
             let opponentLogin = (data.first === this.storage.user.login) ? data.second : data.first;
-            this.startGameProcess(opponentLogin);
+            this.startMpGameProcess(opponentLogin);
             this.startMpTimer();
         } else if ('id' in data) {
-            this.stepResultAnalyzer(data);
+            this.stepResultAnalyze(data);
             this.startMpTimer();
         }
     }
 
+    /**
+     * Запустить таймер
+     */
     startMpTimer() {
         this.scene.timer.start().then(() => {
             let step = new StepObject();
@@ -129,7 +149,11 @@ export default class GameManager {
         });
     }
 
-    stepResultAnalyzer(data) {
+    /**
+     * Обработка шагов(достаем действия шагов из объекта)
+     * @param data
+     */
+    stepResultAnalyze(data) {
         let myAction = new StepObject();
         let opponentAction = new StepObject();
         let myDamage = 0;
@@ -151,7 +175,15 @@ export default class GameManager {
             myHealth = data.second.hp;
             opponentHealth = data.first.hp;
         }
-        this.strategy.stepAnalyzer(myAction, opponentAction, myDamage, opponentDamage, myHealth, opponentHealth);
+        this.strategy.stepAnalyze(myAction, opponentAction, myDamage, opponentDamage, myHealth, opponentHealth);
         this.scene.gameControls.setButtonStepStatus(true);
+    }
+
+    /**
+     * Закрыть ws соединение
+     */
+    closeWebSocket() {
+        if (typeof this.ws !== 'undefined')
+            this.ws.close();
     }
 }

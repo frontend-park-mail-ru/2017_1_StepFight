@@ -1,11 +1,16 @@
-$color-text: white;
-$text-shadow: 10px 10px 40px #6e47ff;
+@import "../../fonts/fonts";
+
+$color-text: #ede40c;
+$color-border: #ed000d;
+$width-border: 6px;
+$text-shadow: 10px 10px 40px #3e3a3b;
 
 .main-title {
   text-decoration: none;
   h1 {
     text-align: center;
-    font-family: 'Orbitron', sans-serif;
+    text-shadow: 6px 0 0 $color-border, -6px 0 0 $color-border, 0 6px 0 $color-border, 0 -6px 0 $color-border;
+    font-family: mainFont, sans-serif;
     text-transform: uppercase;
     font-weight: 700;
     font-size: 60px;
@@ -14,9 +19,10 @@ $text-shadow: 10px 10px 40px #6e47ff;
     margin-bottom: 20px;
 
     &:hover{
-      color: $color-text;
+      /*color: $color-text;
       border-color: $color-text;
-      text-shadow: $text-shadow;
+      text-shadow: $text-shadow;*/
+      text-shadow: 7px 0 0 $color-border, -7px 0 0 $color-border, 0 7px 0 $color-border, 0 -7px 0 $color-border;
     }
   }
 }

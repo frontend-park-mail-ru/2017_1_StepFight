@@ -113,15 +113,6 @@ export default class ObjPerson {
     }
 
     depnut() {
-        /*let step = 0;
-         let render = () => {
-         window.requestAnimationFrame(render);
-         step = Math.PI / 96;
-         if (this.armRT) {
-         this.armRT.skeleton.bones[7].rotation.x += step;
-         this.armRT.skeleton.bones[7].rotation.y += step;
-         }
-         };
-         render();*/
+
     }
 }

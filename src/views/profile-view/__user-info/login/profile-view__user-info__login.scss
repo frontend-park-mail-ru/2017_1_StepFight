@@ -3,6 +3,7 @@
 .profile-view__user-info__login {
   background: $colorLoginText;
   color: $colorLoginBg;
+  border: 3px solid $colorLoginBorder;
   padding: 3px 15px;
   border-radius: 3px;
   margin: 5px;

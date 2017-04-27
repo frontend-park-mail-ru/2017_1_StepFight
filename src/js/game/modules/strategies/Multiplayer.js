@@ -4,12 +4,10 @@
 
 import IziToast from "izitoast";
 import StepObject from "../../object/StepObject";
-import GameTimer from "../../../../elements/game-timer/GameTimer";
 
 export default class MultiPlayerStrategy {
     constructor(manager) {
         this.manager = manager;
-
         this.myStep = new StepObject();
     }
 
@@ -70,7 +68,7 @@ export default class MultiPlayerStrategy {
      */
     initDoStepListener() {
         this.manager.scene.gameControls.initDoStepListener(() => {
-            if (this.checkMyAction()) {
+            if (this.checkMyStep()) {
                 this.sendStep();
             } else {
                 IziToast.error({
@@ -81,13 +79,16 @@ export default class MultiPlayerStrategy {
         });
     }
 
+    /**
+     * Отправить сделанный шаг
+     */
     sendStep(){
         let myActions = this.myStep;
         let send = {
             method: myActions.hit.method,
             target: myActions.hit.target,
             block: myActions.block.method,
-            hp: parseFloat((this.me.health).toFixed(2)),
+            hp: this.me.health,
             id: this.manager._gameId,
             type: 'step'
         };
@@ -102,7 +103,16 @@ export default class MultiPlayerStrategy {
         }
     }
 
-    stepAnalyzer(myAction, opponentAction, myDamage, opponentDamage, myHp, opponentHp) {
+    /**
+     * Обработка шагов, вывод результатов шага
+     * @param myAction
+     * @param opponentAction
+     * @param myDamage
+     * @param opponentDamage
+     * @param myHp
+     * @param opponentHp
+     */
+    stepAnalyze(myAction, opponentAction, myDamage, opponentDamage, myHp, opponentHp) {
         this.clearMyActionsArray();
 
         if (myDamage !== 0) {
@@ -121,6 +131,11 @@ export default class MultiPlayerStrategy {
         this._updateOpponentHealth(opponentHp);
     }
 
+    /**
+     * Вспомогательный метод, заменяет анимацию
+     * @param text
+     * @private
+     */
     _logStep(text) {
         console.log(text);
         IziToast.info({
@@ -131,29 +146,38 @@ export default class MultiPlayerStrategy {
         })
     }
 
+    /**
+     * Обновить здоровье противника
+     * @param hp - новый уровень здоровья
+     * @private
+     */
     _updateOpponentHealth(hp) {
         this.opponent.health = hp;
         this.manager.scene.opponentInfo.updateHealth(hp);
     }
 
+    /**
+     * Обновить мое здоровье
+     * @param hp - новый уровень здоровья
+     * @private
+     */
     _updateMyHealth(hp) {
         this.me.health = hp;
         this.manager.scene.myInfo.updateHealth(hp);
     }
 
     /**
-     * Проверить на полную заполненость массива действия
-     * @return {boolean} true - все заполнено
+     * Проверить на полную заполненость шага
+     * * @return {boolean} true - все заполнено
      */
-    checkMyAction() {
-        //console.log(this.myStep);
+    checkMyStep() {
         return !(this.myStep === null || typeof this.myStep === 'undefined'
         || this.myStep.hit.method === null || this.myStep.hit.target === null
         || this.myStep.block.method === null);
     }
 
     /**
-     * Отчисить массив действия
+     * Отчисить шаг
      */
     clearMyActionsArray() {
         this.myStep = null;

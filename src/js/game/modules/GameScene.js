@@ -24,7 +24,6 @@ export default class GameScene {
         this.storage = storage;
 
         this._setSize();
-        //this.renderContainer();
     }
 
     /**
@@ -58,7 +57,6 @@ export default class GameScene {
 
         this.renderer.setSize(this.WIDTH, this.HEGHT);
         console.log(`RESIZE WIDTH = ${this.WIDTH}`);
-
     }
 
     /**
@@ -93,13 +91,14 @@ export default class GameScene {
 
         this.node.appendChild(this.container);
 
-        //this.world = new OIMO.World(1 / 60, 2, 8);
-
         this._addCamera();
         this._startRenderAnimate();
         this._initListeners();
     }
 
+    /**
+     * Удаление основного контейнера
+     */
     removeContainer() {
         this.node.removeChild(this.container);
     }
@@ -187,7 +186,7 @@ export default class GameScene {
         let axes = new THREE.AxisHelper(20);
         this.scene.add(axes);
 
-        //dome
+        //дом
         let geometry = new THREE.IcosahedronGeometry(700, 1);
         let domeMaterial = new THREE.MeshPhongMaterial({
             color: 0x35FBE0,
@@ -197,7 +196,7 @@ export default class GameScene {
         let dome = new THREE.Mesh(geometry, domeMaterial);
         this.scene.add(dome);
 
-        //light
+        //свет
         let light = new THREE.DirectionalLight(0x4198B5);
         light.position.set(1, 1, 1);
         this.scene.add(light);
@@ -281,6 +280,9 @@ export default class GameScene {
         render();
     }
 
+    /**
+     * Отрисовка таймера
+     */
     renderTimer(){
         this.timer = new GameTimer(this.container);
         this.timer.render();
@@ -319,6 +321,9 @@ export default class GameScene {
         });
     }
 
+    /**
+     * Метод отчистки вьюшки
+     */
     clearView() {
         while (this.node.children.length > 0) {
             this.node.removeChild(this.node.lastChild);
@@ -337,7 +342,7 @@ export default class GameScene {
     }
 
     /**
-     * Отчистка сцены
+     * Отчистка сцены(canvas)
      */
     clearScene() {
         this.scene.children.splice(0, this.scene.children.length);

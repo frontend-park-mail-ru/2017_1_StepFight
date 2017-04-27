@@ -22,32 +22,34 @@
   flex-direction: row;
   flex-wrap: wrap;
   margin: 5px; }
+@font-face {
+  font-family: mainFont;
+  src: url(/src/fonts/mainFont.ttf); }
+
 .menu-view__controls-block__button, .menu-view__controls-block__button_main {
   text-decoration: none;
   width: 150px;
   height: 150px;
-  border: 2px solid white;
+  border: 4px solid #ed000d;
   padding: 10px;
-  border-radius: 50%;
+  border-radius: 20%;
   text-align: center;
   margin: 5px auto;
-  font-family: 'Orbitron', sans-serif;
-  color: white;
+  font-family: mainFont, sans-serif;
+  color: black;
   display: table;
-  background-color: rgba(131, 73, 246, 0.86);
+  background-color: #ede40c;
   -webkit-transition: all 0.2s linear; }
   .menu-view__controls-block__button:hover, .menu-view__controls-block__button_main:hover {
-    color: #191919;
-    border-color: white;
-    background-color: white;
     cursor: pointer;
-    text-shadow: 10px 10px 40px #6e47ff; }
+    border: 4px solid black;
+    background-color: #ed000d;
+    color: #ede40c; }
   .menu-view__controls-block__button:focus, .menu-view__controls-block__button_main:focus {
-    color: #191919;
-    border-color: white;
-    background-color: white;
     cursor: pointer;
-    text-shadow: 10px 10px 40px #6e47ff; }
+    border: 4px solid black;
+    background-color: #ed000d;
+    color: #ede40c; }
   .menu-view__controls-block__button h1, .menu-view__controls-block__button_main h1 {
     font-size: 26px;
     display: table-cell;
@@ -58,9 +60,13 @@
       cursor: pointer; }
 
 .menu-view__controls-block__button_main {
-  background-color: #991b4e;
+  background-color: #ed000d;
+  border: 4px solid #ede40c;
   width: 200px;
   height: 200px; }
+  .menu-view__controls-block__button_main h1 {
+    font-size: 40px;
+    color: white; }
 .view {
   left: 50%;
   right: 50%;
@@ -81,9 +87,9 @@
   left: 0;
   top: 35%;
   margin: auto auto;
-  border: 16px solid rgba(137, 76, 255, 0.56);
+  border: 16px solid #ede40c;
   border-radius: 50%;
-  border-top: 16px solid #d7d7d7;
+  border-top: 16px solid #ed000d;
   width: 50px;
   height: 50px;
   -webkit-animation: spin 2s linear infinite;
@@ -92,9 +98,9 @@
 .loader_parent {
   position: static;
   margin: 5px auto;
-  border: 16px solid rgba(137, 76, 255, 0.56);
+  border: 16px solid #ede40c;
   border-radius: 50%;
-  border-top: 16px solid #d7d7d7;
+  border-top: 16px solid #ed000d;
   width: 50px;
   height: 50px;
   -webkit-animation: spin 2s linear infinite;
@@ -111,21 +117,25 @@
     transform: rotate(0deg); }
   100% {
     transform: rotate(360deg); } }
+@font-face {
+  font-family: mainFont;
+  src: url(/src/fonts/mainFont.ttf); }
+
 .form__button {
   margin-top: 5px;
   padding: 5px;
-  color: white;
-  background-color: #8349f6;
-  border: 1px solid black;
-  border-radius: 2px;
+  color: black;
+  background-color: #ede40c;
+  border: 3px solid #ed000d;
+  border-radius: 3px;
   text-decoration: none;
-  font-family: 'Cabin', sans-serif;
+  font-family: mainFont, sans-serif;
   -webkit-transition: all 0.5s ease;
   cursor: pointer; }
   .form__button:hover {
-    background-color: white;
-    border-color: white;
-    color: black; }
+    background-color: #ed000d;
+    border-color: #ede40c;
+    color: white; }
 .form__input {
   padding: 5px;
   margin-top: 5px;
@@ -156,34 +166,50 @@
   margin: 0;
   text-align: left;
   color: rgba(246, 94, 103, 0.86); }
+@font-face {
+  font-family: mainFont;
+  src: url(/src/fonts/mainFont.ttf); }
+
 .form__link {
-  font-family: 'Orbitron', sans-serif;
+  font-family: mainFont, sans-serif;
   text-decoration: none;
   -webkit-transition: all 0.5s ease;
   cursor: pointer;
   color: rgba(243, 243, 243, 0.91);
   margin: 15px 5px 5px; }
   .form__link:hover {
-    color: rgba(137, 76, 255, 0.56); }
+    color: #ede40c; }
+@font-face {
+  font-family: mainFont;
+  src: url(/src/fonts/mainFont.ttf); }
+
 .form__title {
   text-align: center;
-  font-family: 'Orbitron', sans-serif;
+  font-family: mainFont, sans-serif;
   color: white; }
+@font-face {
+  font-family: mainFont;
+  src: url(/src/fonts/mainFont.ttf); }
+
 .leaderboard-view__title {
-  font-family: 'Orbitron', sans-serif;
+  font-family: mainFont, sans-serif;
   text-transform: uppercase;
   font-weight: 700;
   color: white; }
+@font-face {
+  font-family: mainFont;
+  src: url(/src/fonts/mainFont.ttf); }
+
 .leaderboard-view__link {
-  font-family: 'Orbitron', sans-serif;
+  font-family: mainFont, sans-serif;
   text-decoration: none;
   -webkit-transition: all 0.5s ease;
   cursor: pointer;
-  color: #ff66a2;
+  color: #ed000d;
   margin: 15px 5px 5px;
   font-size: 21px; }
   .leaderboard-view__link:hover {
-    color: #894cff; }
+    color: #ede40c; }
 .leaderboard-view__list {
   color: white;
   font-family: 'Orbitron', sans-serif;
@@ -192,26 +218,35 @@
   list-style-type: none;
   padding: 0; }
   .leaderboard-view__list li:nth-child(2n-1) {
-    background-color: rgba(137, 76, 255, 0.56); }
+    word-wrap: break-word;
+    border: 0 solid black;
+    padding: 5px;
+    word-break: break-all;
+    color: black;
+    background-color: #ede40c; }
+    .leaderboard-view__list li:nth-child(2n-1) .badge {
+      padding: 2px;
+      margin: 2px;
+      line-height: 1;
+      border-radius: 5px;
+      float: right;
+      color: black; }
   .leaderboard-view__list li:nth-child(2n) {
+    word-wrap: break-word;
+    border: 0 solid black;
+    padding: 5px;
+    word-break: break-all;
+    color: white;
     background-color: rgba(135, 75, 251, 0); }
-.leaderboard-view__list__item {
-  word-wrap: break-word;
-  border: 0 solid black;
-  padding: 5px;
-  color: white;
-  word-break: break-all; }
-
-.badge {
-  color: white;
-  padding: 2px;
-  margin: 2px;
-  line-height: 1;
-  border-radius: 5px;
-  float: right; }
-
+    .leaderboard-view__list li:nth-child(2n) .badge {
+      padding: 2px;
+      margin: 2px;
+      line-height: 1;
+      border-radius: 5px;
+      float: right;
+      color: white; }
 .position {
-  color: #ff275e;
+  color: #ed000d;
   padding: 2px;
   margin: 2px;
   line-height: 1;
@@ -244,58 +279,69 @@
   justify-content: space-around;
   flex-direction: column;
   flex-wrap: wrap;
-  margin: 5px auto; }
+  margin: 5px auto;
+  height: 300px; }
 
-@media (max-width: 800px) {
+@media (min-width: 440px) and (max-width: 1000px) {
+  .profile-view__controllers {
+    height: 150px !important; } }
+
+@media (max-width: 1000px) {
   .profile-view__controllers {
     position: inherit;
-    height: 150px;
+    height: 300px;
     flex-direction: row;
     width: auto;
     margin-left: 15px;
     margin-right: 15px;
     left: 15px;
     right: 15px; } }
+@font-face {
+  font-family: mainFont;
+  src: url(/src/fonts/mainFont.ttf); }
+
 .profile-view__controllers__button {
   text-decoration: none;
-  width: 100px;
+  width: 170px;
   height: 100px;
-  border: 2px solid white;
+  border: 2px solid #ed000d;
   padding: 10px;
-  border-radius: 2000px;
+  border-radius: 10%;
+  font-size: 10px;
   text-align: center;
   margin: 5px 5px;
-  font-family: 'Orbitron', sans-serif;
-  color: white;
+  font-family: mainFont, sans-serif;
+  color: black;
   display: table;
-  background-color: rgba(131, 73, 246, 0.86);
+  word-wrap: normal;
+  background-color: #ede40c;
   -webkit-transition: all 0.2s linear; }
   .profile-view__controllers__button h1 {
     font-size: 16px;
     display: table-cell;
     vertical-align: middle; }
   .profile-view__controllers__button:hover {
-    color: #191919;
-    border-color: white;
-    background-color: white;
+    color: #ede40c;
+    border-color: black;
+    background-color: #ed000d;
     cursor: pointer;
-    text-shadow: 10px 10px 40px #6e47ff; }
+    /*text-shadow: 10px 10px 40px $colorButtonShadow;*/ }
   .profile-view__controllers__button:focus {
-    color: #191919;
-    border-color: white;
-    background-color: white;
+    color: #ede40c;
+    border-color: black;
+    background-color: #ed000d;
     cursor: pointer;
-    text-shadow: 10px 10px 40px #6e47ff; }
+    /*text-shadow: 10px 10px 40px $colorButtonShadow;*/ }
 
 .profile-view__controllers__button_logout {
   position: absolute;
   bottom: 15px;
   right: 15px;
-  font-family: 'Orbitron', sans-serif;
+  font-family: mainFont, sans-serif;
   text-decoration: none;
   -webkit-transition: all 0.5s ease;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 10px;
   background: #615b8b;
   border-radius: 3px;
   color: white;
@@ -336,8 +382,9 @@
   flex-wrap: wrap;
   margin: 15px auto; }
 .profile-view__user-info__login {
-  background: #c8ceff;
-  color: #081b32;
+  background: #ede40c;
+  color: #black;
+  border: 3px solid #ed000d;
   padding: 3px 15px;
   border-radius: 3px;
   margin: 5px;
@@ -756,32 +803,39 @@
   top: 0;
   left: 0;
   z-index: -9999; }
+/*#292956*/
 html {
   height: 100%; }
 
 body {
   background-size: 100%;
-  background: #081b32;
+  background: #330176;
   margin: 0;
   height: 100%; }
 
 .hidden {
   display: none !important; }
+@font-face {
+  font-family: mainFont;
+  src: url(/src/fonts/mainFont.ttf); }
+
 .main-title {
   text-decoration: none; }
   .main-title h1 {
     text-align: center;
-    font-family: 'Orbitron', sans-serif;
+    text-shadow: 6px 0 0 #ed000d, -6px 0 0 #ed000d, 0 6px 0 #ed000d, 0 -6px 0 #ed000d;
+    font-family: mainFont, sans-serif;
     text-transform: uppercase;
     font-weight: 700;
     font-size: 60px;
-    color: white;
+    color: #ede40c;
     border-width: 5px;
     margin-bottom: 20px; }
     .main-title h1:hover {
-      color: white;
-      border-color: white;
-      text-shadow: 10px 10px 40px #6e47ff; }
+      /*color: $color-text;
+      border-color: $color-text;
+      text-shadow: $text-shadow;*/
+      text-shadow: 7px 0 0 #ed000d, -7px 0 0 #ed000d, 0 7px 0 #ed000d, 0 -7px 0 #ed000d; }
 /*
 * iziToast | v1.1.0
 * http://izitoast.marcelodolce.com

@@ -1,6 +1,8 @@
 @import "../consts";
+@import "../../../fonts/fonts";
+
 .leaderboard-view__title {
-  font-family: 'Orbitron', sans-serif;
+  font-family: mainFont, sans-serif;
   text-transform: uppercase;
   font-weight: 700;
   color: $colorTitleText;

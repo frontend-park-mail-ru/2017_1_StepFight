@@ -1,20 +1,21 @@
 @import "../consts";
+@import "../../../fonts/fonts";
 
 .form__button {
   margin-top: 5px;
   padding: 5px;
   color: $colorButtonTextForm;
   background-color: $colorButtonBgForm;
-  border: 1px solid $colorButtonBorder;
-  border-radius: 2px;
+  border: 3px solid $colorButtonBorder;
+  border-radius: 3px;
   text-decoration: none;
-  font-family: 'Cabin', sans-serif;
+  font-family: mainFont, sans-serif;
   -webkit-transition: all 0.5s ease;
   cursor: pointer;
 
   &:hover {
-    background-color: $colorButtonTextForm;
-    border-color: $colorButtonTextForm;
+    background-color: $colorButtonFocusBg;
+    border-color: $colorButtonFocusBorder;
     color: $colorButtonFocusTextForm;
   }
 }

@@ -10,12 +10,20 @@
   flex-direction: column;
   flex-wrap: wrap;
   margin: 5px auto;
+  height: 300px;
+
 }
 
-@media (max-width: 800px) {
+@media (min-width: 440px) and (max-width: 1000px) {
+  .profile-view__controllers {
+    height: 150px !important;
+  }
+}
+
+@media (max-width: 1000px) {
   .profile-view__controllers {
     position: inherit;
-    height: 150px;
+    height: 300px;
     flex-direction: row;
     width: auto;
     margin-left: 15px;

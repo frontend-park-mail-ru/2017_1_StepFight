@@ -19,7 +19,6 @@ export default class SinglePlayerStrategy {
      */
     gameLoop() {
         if (this.me.health <= 0) {
-            //TODO create rating analyser
             this.finishGameLoop();
             this.manager.finish({
                 win: false,
@@ -94,15 +93,17 @@ export default class SinglePlayerStrategy {
             let myActions = this.myStep;
             let opponentActions = this.createStepForOpponent();
 
-            console.log(myActions);
-            console.log(opponentActions);
-
             this.stepAnalyser(myActions, opponentActions);
 
             resolve();
         });
     }
 
+    /**
+     * Обработка шагов, вывод результатов шага
+     * @param myAction
+     * @param opponentAction
+     */
     stepAnalyser(myAction, opponentAction) {
         let myDamage = this.getDamage('my', myAction, opponentAction);
         let opponentDamage = this.getDamage('opponent', myAction, opponentAction);
@@ -123,6 +124,12 @@ export default class SinglePlayerStrategy {
         this._updateOpponentHealth(-opponentDamage);
     }
 
+    /**
+     * Получить вероятность метода
+     * @param actionType - вид действия
+     * @param method - метод удара||защиты
+     * @return {number}
+     */
     getProbability(actionType, method) {
         if (actionType === 'hit') {
             switch (method) {
@@ -149,6 +156,11 @@ export default class SinglePlayerStrategy {
         }
     }
 
+    /**
+     * Выдать результат действия по вероятности (прошло ли действие)
+     * @param p - вероятность
+     * @return {boolean}
+     */
     checkProbability(p) {
         let checkP = Math.floor(Math.random() * 100);
         console.log(`random=${checkP}`);
@@ -156,6 +168,13 @@ export default class SinglePlayerStrategy {
         return p * 100 >= checkP;
     }
 
+    /**
+     *
+     * @param who
+     * @param myAction
+     * @param opponentAction
+     * @return {number}
+     */
     getDamage(who, myAction, opponentAction) {
         let actionForAttacking = {};
         let actionForDefensing = {};
@@ -184,7 +203,7 @@ export default class SinglePlayerStrategy {
         console.warn(`hitP=${hitP} blockP=${blockP} checkP=${checkP} damage=${Math.round(damage)}`);
         return Math.round(damage);
 
-        //TODO DONT DELETE COMMENTS!!!
+        //TODO DONT DELETE COMMENTS!!! SHORT VERSION OF PREVIOUS CODE!!!!!!!
         //TODO DONT DELETE!!!
         //TODO DONT DELETE!!!
         //TODO DONT DELETE!!!
@@ -196,13 +215,18 @@ export default class SinglePlayerStrategy {
          * this.getProbability('block', actionForDefensing.block.method))) * this.BASE_DAMAGE : 0);
          } else {
          return Math.round((this.checkProbability(this.getProbability('hit', actionForAttacking.hit.method))) ?
-         (1 - (this.getProbability('hit', actionForAttacking.hit.method))) * this.BASE_DAMAGE : 0);
+         (1 - (this.getProbability('hit', actionForAttacking.hit.method))/2) * this.BASE_DAMAGE : 0);
          }*/
 
         //TODO DONT DELETE!!!
         //TODO DONT DELETE!!!
     }
 
+    /**
+     * Вспомогательный метод, заменяет анимацию
+     * @param text
+     * @private
+     */
     logIt(text) {
         console.log(text);
         IziToast.info({
@@ -213,18 +237,28 @@ export default class SinglePlayerStrategy {
         })
     }
 
+    /**
+     * Обновить здоровье противника
+     * @param div - разница в здоровье
+     * @private
+     */
     _updateOpponentHealth(div) {
         this.opponent.health += div;
-        this.manager.scene.opponentInfo.updateHealth(div);
-    }
-
-    _updateMyHealth(div) {
-        this.me.health += div;
-        this.manager.scene.myInfo.updateHealth(div);
+        this.manager.scene.opponentInfo.updateHealth(this.opponent.health);
     }
 
     /**
-     * Проверить на полную заполненость массива действия
+     * Обновить мое здовроье
+     * @param div - разница в здоровье
+     * @private
+     */
+    _updateMyHealth(div) {
+        this.me.health += div;
+        this.manager.scene.myInfo.updateHealth(this.me.health);
+    }
+
+    /**
+     * Проверить на полную заполненость шага
      * @return {boolean} true - все заполнено
      */
     checkMyAction() {
@@ -235,7 +269,7 @@ export default class SinglePlayerStrategy {
     }
 
     /**
-     * Отчисить массив действия
+     * Отчисить шаг
      */
     clearMyActionsArray() {
         this.myStep = null;
@@ -267,6 +301,10 @@ export default class SinglePlayerStrategy {
     }
 
 
+    /**
+     * Генерация шага для бота
+     * @return {StepObject}
+     */
     createStepForOpponent() {
         let methods = ['head', 'arm', 'leg'];
         let targets = ['head', 'body'];
@@ -278,7 +316,6 @@ export default class SinglePlayerStrategy {
 
         let step = new StepObject();
         step.init(hitMethod, hitTarget, blockMethod);
-        //console.warn(step);
         return step;
     }
 }

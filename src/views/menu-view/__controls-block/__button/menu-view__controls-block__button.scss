@@ -1,24 +1,23 @@
 @import "../../consts";
-$text-shadow: 10px 10px 40px $colorButtonShadow;
+@import "../../../../fonts/fonts";
 
 @mixin menu-button-hover-template() {
-  color: #191919;
-  border-color: $colorButtonHoverBorder;
-  background-color: $colorButtonHoverBg;
   cursor: pointer;
-  text-shadow: $text-shadow;
+  border: 4px solid $colorButtonHoverBorder;
+  background-color: $colorButtonHoverBg;
+  color: $colorButtonHoverText;
 }
 
 .menu-view__controls-block__button {
   text-decoration: none;
   width: 150px;
   height: 150px;
-  border: 2px solid $colorButtonBorder;
+  border: 4px solid $colorButtonBorder;
   padding: 10px;
-  border-radius: 50%;
+  border-radius: 20%;
   text-align: center;
   margin: 5px auto;
-  font-family: 'Orbitron', sans-serif;
+  font-family: mainFont, sans-serif;
   color: $colorButtonText;
   display: table;
   background-color: $colorButtonBg;
@@ -48,7 +47,13 @@ $text-shadow: 10px 10px 40px $colorButtonShadow;
 .menu-view__controls-block__button_main {
   @extend .menu-view__controls-block__button;
   background-color: $colorButtonMainBg;
+  border: 4px solid $colorButtonMainBorder;
   width: 200px;
   height: 200px;
+
+  h1{
+    font-size: 40px;
+    color: white;
+  }
 }
 
