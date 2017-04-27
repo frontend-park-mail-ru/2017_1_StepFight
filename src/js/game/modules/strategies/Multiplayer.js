@@ -117,8 +117,8 @@ export default class MultiPlayerStrategy {
             this._logStep(`Everything okey with OPPONENT!`);
         }
 
-        this._updateMyHealth(-myDamage, myHp);
-        this._updateOpponentHealth(-opponentDamage, opponentHp);
+        this._updateMyHealth(myHp);
+        this._updateOpponentHealth(opponentHp);
     }
 
     _logStep(text) {
@@ -131,12 +131,12 @@ export default class MultiPlayerStrategy {
         })
     }
 
-    _updateOpponentHealth(div, hp) {
+    _updateOpponentHealth(hp) {
         this.opponent.health = hp;
         this.manager.scene.opponentInfo.updateHealth(hp);
     }
 
-    _updateMyHealth(div, hp) {
+    _updateMyHealth(hp) {
         this.me.health = hp;
         this.manager.scene.myInfo.updateHealth(hp);
     }

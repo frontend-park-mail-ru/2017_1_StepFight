@@ -38,7 +38,7 @@ export default class GameInfoToast {
 
          context.fillText(`Health: ${this.health}`, 70,130);
          }*/
-        this.updateHealth(0);
+        this.updateHealth(100);
 
         this.node.appendChild(this.el);
     }
