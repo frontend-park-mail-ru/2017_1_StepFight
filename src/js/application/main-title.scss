@@ -26,3 +26,11 @@ $text-shadow: 10px 10px 40px #3e3a3b;
     }
   }
 }
+
+@media screen and (max-width: 500px){
+  .main-title{
+    h1{
+      font-size: 50px;
+    }
+  }
+}
