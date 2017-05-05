@@ -107,7 +107,7 @@ export default class ObjPerson {
         let flag = true;
         let render = () => {
             window.requestAnimationFrame(render);
-            step = /*Math.PI / 96*/ 0.01;
+            step = 0.01;
         };
         render();
     }

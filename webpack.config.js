@@ -8,14 +8,14 @@ let ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
     context: __dirname,
-    devtool: debug ? "inline-sourcemap" : null,
+    devtool: debug ? "inline-sourcemap" : '',
     entry: {
         app: ['whatwg-fetch', __dirname + '/src/js/application/Application.js'],
         test: ['chai', 'whatwg-fetch', __dirname + '/test/test.js']
     },
     output: {
         path: __dirname + "/dist/",
-        filename: '[name].bundle.js',
+        filename: debug ? '[name].bundle.js' : '[name].bundle.min.js',
         libraryTarget: 'var',
         library: 'Application'
     },
@@ -69,7 +69,7 @@ module.exports = {
         new webpack.optimize.UglifyJsPlugin({
             beautify: false,
             comments: false,
-            minimize: true,
+            minimize: debug,
             compress: {
                 sequences: true,
                 booleans: true,

@@ -803,7 +803,6 @@
   top: 0;
   left: 0;
   z-index: -9999; }
-/*#292956*/
 html {
   height: 100%; }
 
@@ -832,9 +831,6 @@ body {
     border-width: 5px;
     margin-bottom: 20px; }
     .main-title h1:hover {
-      /*color: $color-text;
-      border-color: $color-text;
-      text-shadow: $text-shadow;*/
       text-shadow: 7px 0 0 #ed000d, -7px 0 0 #ed000d, 0 7px 0 #ed000d, 0 -7px 0 #ed000d; }
 
 @media screen and (max-width: 500px) {

@@ -7,6 +7,6 @@
 #### Для сборки проекта:
  `npm run webpack`
 #### Для запуска проекта:
- `npm startMpGameProcess`
+ `npm start`
 
 # [Попробовать](https://stepfighting.herokuapp.com)

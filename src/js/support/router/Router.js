@@ -91,8 +91,8 @@ export default class Router {
     /**
      * Остановить процес маршрутизации
      */
-    cansel() {
-        this.node.removeEventListener('click', event => this._onRouteChange(event))
+    cancel() {
+        this.node.removeEventListener('click', this._onRouteChange(event))
     }
 
     /**
@@ -154,7 +154,7 @@ export default class Router {
             //!!! for debug only !!!
             //return Storage.urls.GAME;
             if (Storage.user) {
-                return Storage.urls.GAME;
+                return path;
             } else {
                 return Storage.urls.MAIN;
             }
