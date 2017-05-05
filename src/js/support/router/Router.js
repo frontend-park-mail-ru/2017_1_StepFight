@@ -1,20 +1,9 @@
 /**
  * Created by Denis on 17.03.2017.
  */
-import MenuView from "../../views/menu/MenuView";
-import LoginView from "../../views/menu/LoginView";
-import SignUpView from "../../views/menu/SignUpView";
-import AboutView from "../../views/menu/AboutView";
-import LeaderBoardView from "../../views/menu/LeaderBoardView";
-import ProfileView from "../../views/menu/ProfileView";
-import User from "../../game/object/User";
-import UserService from "../service/UserService";
-import GameView from "../../views/game/GameView";
-import Animation from "../anim/Animation";
-import RouterUrls from "./RouterUrls";
-import GameManager from "../../game/modules/GameManager";
 
-
+import Storage from "../../game/object/Storage";
+import IziToast from "izitoast";
 export default class Router {
 
     /**
@@ -25,126 +14,53 @@ export default class Router {
         this.node = node;
         this.routes = {};
         this.currView = null;
-        window.router = this;
-        this.init();
+
         window.onpopstate = (event) => {
-            this._setCurrView(document.location.pathname, false);
+            this.go(document.location.pathname, false);
         };
     }
 
     /**
      * Инициализация всех вьюшек
+     * @param config
      */
-    init() {
-        let gameView = new GameView(document.getElementById('game-view'));
-        this._register(window.MAIN, new MenuView(document.getElementById('menu-view')));
-        this._register(window.SINGLEPLAYER, gameView);
-        this._register(window.MULTIPLAYER, gameView);
-        this._register(window.LOGIN, new LoginView(document.getElementById('login-view')));
-        this._register(window.SIGNUP, new SignUpView(document.getElementById('signup-view')));
-        this._register(window.LEADERBOARD, new LeaderBoardView(document.getElementById('leaderboard-view')));
-        this._register(window.ABOUT, new AboutView(document.getElementById('about-view')));
-        this._register(window.PROFILE, new ProfileView(document.getElementById('profile-view')));
-        this._setCurrView(document.location.pathname);
-        this._start();
-    }
-
-    /**
-     * Установить текущую вьюшку
-     * @param path
-     * @param isToHistory
-     * @private
-     */
-    _setCurrView(path, isToHistory) {
-        if (isToHistory !== false) {
-            history.pushState({opa: 'opa'}, 'title1', path);
-        }
-        this._checkUser(path);
-    }
-
-    /**
-     * Проверка, залогинен ли юзер
-     * @param path
-     * @private
-     */
-    _checkUser(path) {
-        if (path === window.LOGIN || path === window.SIGNUP) {
-            this._getUser().then(user => {
-                window.USER = user;
-                this._go(window.PROFILE);
-            }).catch(err => {
-                this._go(path);
-            });
-        } else if (path === window.PROFILE) {
-            this._getUser().then(user => {
-                window.USER = user;
-                this._go(path);
-            }).catch(err => {
-                this._go(window.LOGIN);
-            });
-        } else if (path === window.SINGLEPLAYER) {
-            this._getUser().then(user => {
-                window.USER = user;
-                new GameManager(user, this.getViewByRoute(path), window.SINGLEPLAYER_STRATEGY);
-                this._go(window.SINGLEPLAYER);
-            }).catch(err => {
-                console.error(err);
-                this._go(window.LOGIN);
-            });
-        } else if (path === window.MULTIPLAYER) {
-            this._getUser().then(user => {
-                window.USER = user;
-                new GameManager(user, this.getViewByRoute(path), window.MULTIPLAYER_STRATEGY);
-                this._go(window.MULTIPLAYER);
-            }).catch(err => {
-                this._go(window.LOGIN);
-            });
-        } else {
-            this._go(path);
-        }
-    }
-
-    /**
-     * Получить юзера
-     * @return {Promise}
-     * @private
-     */
-    _getUser() {
-        return new Promise(function (resolve, reject) {
-            if (window.USER) {
-                resolve(window.USER);
+    init(config) {
+        Object.keys(config).forEach(url => {
+            const View = config[url].View;
+            const el = config[url].el;
+            if (el) {
+                this.register(url, new View(el, Storage, this));
             }
-            new UserService().getUser().then(user => {
-                resolve(user);
-            }).catch(err => {
-                reject();
-            });
         });
+        this.go(document.location.pathname);
     }
 
     /**
      * Перейти по маршруту и поменять текущую вьюшку
      * @param {string} path
+     * @param isToHistory
+     * @param gameStrategy
      */
-    _go(path) {
-        if (this.currView !== null && this.currView.constructor.name === GameView.name) {
-            this.currView.clear();
+    go(path, isToHistory, gameStrategy) {
+        path = this._checkOffline(path);
+        if (isToHistory) {
+            window.history.pushState({}, '', path);
         }
-
         if (this.currView) {
-            this.currView.toggleView();
+            this.currView.destroyView();
         }
         this.currView = this.getViewByRoute(path);
 
         if (!this.currView) {
             return;
         }
-
-        if (path === window.PROFILE) {
-            this.currView.refresh();
+        if ('render' in this.currView) {
+            if (gameStrategy !== null && typeof gameStrategy !== 'undefined') {
+                this.currView.render(gameStrategy);
+            } else {
+                this.currView.render();
+            }
         }
-
-        this.currView.toggleView();
     }
 
     /**
@@ -152,7 +68,7 @@ export default class Router {
      * @param {string} route
      * @param {Object} view
      */
-    _register(route, view) {
+    register(route, view) {
         this.routes[route] = view;
     }
 
@@ -168,8 +84,15 @@ export default class Router {
     /**
      * Запустить процес маршрутизации
      */
-    _start() {
+    start() {
         this.node.addEventListener('click', event => this._onRouteChange(event));
+    }
+
+    /**
+     * Остановить процес маршрутизации
+     */
+    cansel() {
+        this.node.removeEventListener('click', event => this._onRouteChange(event))
     }
 
     /**
@@ -180,10 +103,63 @@ export default class Router {
     _onRouteChange(event) {
         if (event.target instanceof HTMLAnchorElement) {
             event.preventDefault();
-            this._setCurrView(event.target.getAttribute('href'));
+            this.go(event.target.getAttribute('href'), true);
         } else if (event.target.parentElement instanceof HTMLAnchorElement) {
             event.preventDefault();
-            this._setCurrView(event.target.parentElement.getAttribute('href'));
+            this.go(event.target.parentElement.getAttribute('href'), true);
+        }
+    }
+
+    _checkOffline(path) {
+        if (navigator.onLine) {
+            path = this._checkUser(path);
+            try {
+                if (Storage.user.login === 'Offline') Storage.user.login = null;
+            } catch (e){
+                //console.warn(e);
+            }
+        } else {
+            IziToast.warning({
+                title: 'Only test single play',
+                message: 'YOU ARE OFFLINE!',
+                position: 'topRight',
+                timeout: 5000
+            });
+            Storage.user = {login: 'Offline', rating: 9999999999999999};
+            path = (path === Storage.urls.LOGIN || path === Storage.urls.SIGNUP || path === Storage.urls.PROFILE)
+                ? Storage.urls.GAME : path;
+        }
+        return path;
+    }
+
+    /**
+     * Проверка, залогинен ли юзер
+     * @param path
+     * @private
+     */
+    _checkUser(path) {
+        if (path === Storage.urls.LOGIN || path === Storage.urls.SIGNUP) {
+            if (Storage.user) {
+                return Storage.urls.PROFILE;
+            } else {
+                return path;
+            }
+        } else if (path === Storage.urls.PROFILE) {
+            if (Storage.user) {
+                return path;
+            } else {
+                return Storage.urls.LOGIN;
+            }
+        } else if (path === Storage.urls.GAME) {
+            //!!! for debug only !!!
+            //return Storage.urls.GAME;
+            if (Storage.user) {
+                return Storage.urls.GAME;
+            } else {
+                return Storage.urls.MAIN;
+            }
+        } else {
+            return path;
         }
     }
 }

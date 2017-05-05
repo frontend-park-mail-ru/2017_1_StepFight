@@ -1,0 +1,81 @@
+@import "../consts";
+
+@mixin flex-container($direction, $justify-content) {
+  display: flex;
+  @if $justify-content == true {
+    justify-content: space-around;
+  }
+  flex-direction: $direction;
+  flex-wrap: wrap;
+}
+
+.game-choose-action__sets-container {
+  @include flex-container(row, true);
+  padding: 5px;
+}
+
+.game-choose-action__action-set {
+  @include flex-container(row, false);
+  padding: 5px 5px 0 5px;
+}
+
+.game-choose-action__action-hit-set {
+  @include flex-container(column, true);
+  padding: 5px;
+  border-radius: 3px;
+  background-color: white;
+  flex-grow: 1;
+}
+
+.action-set-controls {
+  @include flex-container(row, true);
+  padding: 5px;
+  margin: 0 15px 15px 15px;
+  border-radius: 0 0 3px 3px;
+  background-color: #e3e3e3;
+  flex-grow: 1;
+}
+
+.game-choose-action__action-hit-set__column {
+  @include flex-container(column, true);
+  padding: 5px;
+  flex-grow: 1;
+  h3 {
+    margin: 0;
+    text-transform: uppercase;
+  }
+}
+
+.game-choose-action__action-block-set {
+  @include flex-container(column, true);
+  padding: 5px;
+  border-radius: 3px;
+  background-color: white;
+  flex-grow: 1;
+}
+
+.game-choose-action__probability-block {
+  @include flex-container(column, true);
+  padding: 5px;
+  margin: 5px;
+  border-radius: 3px;
+  background-color: #21ff56;
+
+  h5 {
+    color: white;
+    word-wrap: break-word;
+    line-height: 25px;
+    action {
+      padding: 2px;
+      background-color: #8b841e;
+    }
+    probability {
+      padding: 2px;
+      background-color: #262c8b;
+    }
+    damage {
+      padding: 2px;
+      background-color: darkred;
+    }
+  }
+}

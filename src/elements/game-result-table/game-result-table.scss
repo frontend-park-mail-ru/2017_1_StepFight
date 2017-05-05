@@ -1,0 +1,88 @@
+@import "consts";
+
+@mixin flex-container($direction, $justify-content) {
+  display: flex;
+  @if $justify-content == true {
+    justify-content: space-around;
+  }
+  flex-direction: $direction;
+  flex-wrap: wrap;
+}
+
+.game-result-table {
+  @include flex-container(column, true);
+  text-align: center;
+  margin: auto 0;
+  padding: 50px 5px;
+  font-family: 'Orbitron', sans-serif;
+  text-transform: uppercase;
+  h1 {
+    color: $colorTitleText;
+    font-size: 50px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .game-result-table {
+    left: 15px;
+    right: 15px;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.game-result-table__my-info {
+  @include flex-container(column, true);
+  text-align: center;
+  margin: auto 0;
+  background-color: $colorMyInfoBg;
+  border-radius: 3px;
+  h1 {
+    color: $colorTitleText;
+    margin: 5px;
+  }
+  h2 {
+    color: $colorSubTitleText;
+    margin: 3px;
+  }
+}
+
+.game-result-table__opponent-info {
+  @include flex-container(column, true);
+  text-align: center;
+  margin: 0 auto;
+  padding-top: 50px;
+  h1 {
+    color: $colorTitleText;
+    margin: 1px;
+  }
+  h4 {
+    color: $colorSubTitleText2;
+    margin: 3px;
+  }
+}
+
+.game-result-table__button {
+  padding: 15px 0;
+  color: $colorButtonText;
+  background-color: $colorButtonBg;
+  border-radius: 3px;
+  text-decoration: none;
+  font-family: 'Cabin', sans-serif;
+  -webkit-transition: all 0.5s ease;
+  cursor: pointer;
+  width: 200px;
+  text-align: center;
+  margin: 15px auto;
+  &:hover {
+    background-color: $colorButtonHoverBg;
+  }
+}
+
+@media (max-width: 800px) {
+  .game-result-table__button {
+    width: 100%;
+    left: 15px;
+    right: 15px;
+  }
+}

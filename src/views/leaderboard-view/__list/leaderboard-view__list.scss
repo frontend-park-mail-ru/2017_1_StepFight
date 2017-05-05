@@ -1,0 +1,49 @@
+@import "../consts";
+
+@mixin getBadge($light) {
+  padding: 2px;
+  margin: 2px;
+  line-height: 1;
+  border-radius: 5px;
+  float: right;
+  @if $light == true {
+    color: $colorListItemBadgeLight;
+  } @else {
+    color: $colorListItemBadgeDark;
+  }
+}
+
+@mixin getLi($light){
+  word-wrap: break-word;
+  border: 0 solid $colorListItemBorder;
+  padding: 5px;
+  word-break: break-all;
+  @if $light == true {
+    color: $colorListTextLight;
+    background-color: $colorListBgNone;
+  } @else {
+    color: $colorListTextDark;
+    background-color: $colorListBg;
+  }
+}
+
+.leaderboard-view__list {
+  color: $colorListTextLight;
+  font-family: 'Orbitron', sans-serif;
+  text-transform: uppercase;
+  text-align: left;
+  list-style-type: none;
+  padding: 0;
+  li:nth-child(2n-1) {
+    @include getLi(false);
+    .badge {
+      @include getBadge(false)
+    }
+  }
+  li:nth-child(2n) {
+    @include getLi(true);
+    .badge {
+      @include getBadge(true)
+    }
+  }
+}

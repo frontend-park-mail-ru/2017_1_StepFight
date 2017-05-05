@@ -6,10 +6,21 @@ export default class CheckFields {
 
     }
 
+    /**
+     * Проверка на латиницу
+     * @param value - текст для проверка
+     * @return {boolean} false - найдены латинские символы
+     * @private
+     */
     static _checkLatin(value) {
         return value.match(/[а-яА-ЯёЁ]+/) === null;
     }
 
+    /**
+     * Проверка на валидность логина
+     * @param obj - {field - элемент поля, help - элемент текста помощи для поля}
+     * @return {boolean} true - поле валидно
+     */
     static checkLogin(obj) {
         let arr = [];
         if (!this._checkLatin(obj.field.value)) {
@@ -36,26 +47,49 @@ export default class CheckFields {
             }
         });
 
-        if (arr.length == 0) {
+        if (arr.length === 0) {
             this.fieldSetOk(obj.field);
         }
 
-        return arr.length == 0;
+        return arr.length === 0;
     }
 
+    /**
+     * Проверка на длину пароля
+     * @param value
+     * @return {boolean} true - валидно
+     * @private
+     */
     static _checkPassLength(value) {
         return value.length >= 8;
     }
 
+    /**
+     * Проверка на эквивалентоность
+     * @param value1
+     * @param value2
+     * @return {boolean} true - валидно
+     * @private
+     */
     static _checkPassEquals(value1, value2) {
         return value1 === value2;
     }
 
+    /**
+     * Провека текста на пустоту
+     * @param value
+     * @return {boolean} true - пустое поле
+     */
     static checkEmpty(value) {
-        return value.length == 0;
+        return value.length === 0;
     }
 
-
+    /**
+     * Проверка паролей на валидность
+     * @param obj1 - {field - элемент поля, help - элемент текста помощи для поля}
+     * @param obj2 - {field - элемент поля, help - элемент текста помощи для поля}
+     * @return {boolean} true - поле валидно
+     */
     static checkPassword(obj1, obj2) {
         let arr = [];
         let check = true;
@@ -95,11 +129,11 @@ export default class CheckFields {
             }
         });
 
-        if (arr.length == 0) {
+        if (arr.length === 0) {
             this.fieldSetOk(obj1.field);
             this.fieldSetOk(obj2.field);
         }
-        return arr.length == 0;
+        return arr.length === 0;
     }
 
     static helpSetText(elem, value) {
@@ -111,19 +145,19 @@ export default class CheckFields {
     }
 
     static fieldSetErr(elem) {
-        elem.classList.add('input__error');
+        elem.classList.add('form__input_error');
     }
 
     static fieldRemoveErr(elem) {
-        elem.classList.remove('input__error');
+        elem.classList.remove('form__input_error');
     }
 
     static fieldSetOk(elem) {
-        elem.classList.add('input__ok');
+        elem.classList.add('form__input_ok');
     }
 
     static fieldRemoveOk(elem) {
-        elem.classList.remove('input__ok');
+        elem.classList.remove('form__input_ok');
     }
 
 }

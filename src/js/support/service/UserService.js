@@ -8,6 +8,10 @@ export default class UserService {
         this.url = this.http.BaseUrl;
     }
 
+    /**
+     * Получить user-а
+     * @return {Promise}
+     */
     getUser() {
         const address = `${this.url}/user/get`;
         return new Promise((resolve, reject) => {
@@ -19,6 +23,11 @@ export default class UserService {
         });
     }
 
+    /**
+     * Залогиниться
+     * @param body
+     * @return {Promise}
+     */
     login(body) {
         const address = `${this.url}/user/login`;
         let headers = {'Content-Type': 'application/json'};
@@ -31,6 +40,11 @@ export default class UserService {
         });
     }
 
+    /**
+     * Регистрация
+     * @param body
+     * @return {Promise}
+     */
     signup(body) {
         const address = `${this.url}/user/signup`;
         let headers = {'Content-Type': 'application/json'};
@@ -47,6 +61,10 @@ export default class UserService {
         });
     }
 
+    /**
+     * Получить список лидеров
+     * @return {Promise}
+     */
     getLeaders() {
         const address = `${this.url}/user/leaders`;
         return new Promise((resolve, reject) => {
@@ -58,6 +76,10 @@ export default class UserService {
         });
     }
 
+    /**
+     * Выход user-а
+     * @return {Promise}
+     */
     logOutUser() {
         const address = `${this.url}/user/logout`;
         return new Promise((resolve, reject) => {
@@ -69,6 +91,15 @@ export default class UserService {
         });
     }
 
+    /**
+     * Метод "сделать запрос"
+     * @param address
+     * @param headers
+     * @param type - тип запроса
+     * @param body
+     * @return {Promise}
+     * @private
+     */
     _createRequest(address, headers = {}, type = 'GET', body = {}) {
         const http = this.http;
         return new Promise(function (resolve, reject) {
@@ -76,7 +107,7 @@ export default class UserService {
                 if (response.status === '200 OK') {
                     resolve(response);
                 } else {
-                    console.log(response.status);
+                    //console.log(response.status);
                     reject(response);
                 }
             }).catch(e => {

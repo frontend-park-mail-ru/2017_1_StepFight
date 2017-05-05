@@ -1,0 +1,14 @@
+@import "../consts";
+@import "../../../fonts/fonts";
+
+.form__link {
+  font-family: mainFont, sans-serif;
+  text-decoration: none;
+  -webkit-transition: all 0.5s ease;
+  cursor: pointer;
+  color: $colorLinkText;
+  margin: 15px 5px 5px;
+  &:hover {
+    color: $colorLinkHoverText;
+  }
+}

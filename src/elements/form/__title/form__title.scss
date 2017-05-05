@@ -1,0 +1,8 @@
+@import "../consts";
+@import "../../../fonts/fonts";
+
+.form__title {
+  text-align: center;
+  font-family: mainFont, sans-serif;
+  color: $colorFormTitle
+}

@@ -1,0 +1,52 @@
+@import "../consts";
+
+@mixin choose-action-button($color, $background-color, $border-radius, $margin) {
+  cursor: pointer;
+  height: 30px;
+  font-family: 'Cabin', sans-serif;
+  -webkit-transition: all 0.5s ease;
+  padding: 5px;
+  text-align: center;
+  line-height: 30px;
+  text-decoration: none;
+  color: $color;
+  background-color: $background-color;
+  border-radius: $border-radius;
+  margin: $margin;
+  word-wrap: break-word;
+}
+
+.game-choose-action__button {
+  @include choose-action-button($colorButtonText, $colorButtonBg, 3px, 5px);
+  &:hover {
+    background-color: $colorButtonHoverBg;
+  }
+}
+
+.game-choose-action__button_tabs {
+  @include choose-action-button($colorTabText, $colorTabBg, 5px 5px 0 0, 5px 15px 0 15px);
+}
+
+.game-choose-action__button_choose {
+  flex-grow: 1;
+  @include choose-action-button($colorButtonChooseText, $colorButtonChooseBg, 3px, 5px);
+  &:hover {
+    background-color: $colorButtonChooseHoverBg;
+    color: $colorButtonChooseHoverText;
+  }
+}
+
+.game-choose-action__button_choose_focused {
+  background-color: $colorButtonChooseFocusedBg;
+  color: $colorButtonChooseFocusedText;
+}
+
+@media (max-width: 550px) {
+  .game-choose-action__button,
+  .game-choose-action__button_tabs,
+  .game-choose-action__button_choose {
+    width: inherit;
+    left: 15px;
+    right: 15px;
+  }
+}

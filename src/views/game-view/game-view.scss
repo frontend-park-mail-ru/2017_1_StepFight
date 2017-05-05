@@ -1,0 +1,12 @@
+.game-view{
+
+}
+
+@media (max-width: 800px) {
+    .game-view {
+        max-width: 100%;
+        left: 0;
+        right: 0;
+        width: 100vw;
+    }
+}

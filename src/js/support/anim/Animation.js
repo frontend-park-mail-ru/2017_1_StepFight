@@ -9,15 +9,15 @@ export default class Animation{
 
     show(elem){
         if(elem){
-            elem.classList.remove('elem-hide');
-            elem.classList.add('elem-show');
+            elem.classList.remove('elements-hide');
+            elem.classList.add('elements-show');
         }
     }
 
     hide(elem){
         if(elem){
-            elem.classList.remove('elem-show');
-            elem.classList.add('elem-hide');
+            elem.classList.remove('elements-show');
+            elem.classList.add('elements-hide');
         }
     }
 }

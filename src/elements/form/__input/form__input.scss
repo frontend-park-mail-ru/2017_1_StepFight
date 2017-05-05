@@ -1,0 +1,33 @@
+@import "../consts";
+
+$input-border: 1px solid $colorInputBorder;
+$color-outline: $colorInputOutline;
+$color-background-error: $colorInputBgERROR;
+$input-border_error: 1px solid  $colorInputBorderERROR;
+$input-border_ok: 1px solid  $colorInputBorderOK;
+$color-background-ok: $colorInputBgOK;
+
+.form__input {
+  padding: 5px;
+  margin-top: 5px;
+  border: $input-border;
+  border-radius: 2px;
+  -webkit-transition: all 0.5s ease;
+
+  &:focus {
+    height: 25px;
+    outline-color: $color-outline;
+  }
+}
+
+.form__input_error {
+  border: $input-border_error;
+  background-color: $color-background-error;
+  outline-color: $colorInputBorderERROR;
+}
+
+.form__input_ok{
+  border: $input-border_ok;
+  background-color: $color-background-ok;
+  outline-color:  $colorInputBorderOK;
+}

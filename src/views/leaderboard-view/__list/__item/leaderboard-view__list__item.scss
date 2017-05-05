@@ -1,0 +1,11 @@
+@import "../../consts";
+
+
+.position {
+  color: $colorListItemPosition;
+  padding: 2px;
+  margin: 2px;
+  line-height: 1;
+  border-radius: 5px;
+  float: left;
+}

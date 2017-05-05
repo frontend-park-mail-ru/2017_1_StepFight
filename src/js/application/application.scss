@@ -1,0 +1,15 @@
+$color-background: #330176/*#292956*/;
+html {
+  height: 100%;
+}
+
+body {
+  background-size: 100%;
+  background: $color-background;
+  margin: 0;
+  height: 100%;
+}
+
+.hidden {
+  display: none !important;
+}

@@ -1,0 +1,21 @@
+.game-timer {
+  position: absolute;
+  max-width: 100%;
+  font-family: 'Cabin', sans-serif;
+  top: 0;
+  left: 50%;
+
+  h1{
+    position: relative;
+    /*
+    padding: 10px;
+    */
+    left: -50%;
+    font-size: 500%;
+    width: 300px;
+    border-radius: 3px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.70);
+    background-color: rgba(0, 0, 0, 0.30);
+  }
+}

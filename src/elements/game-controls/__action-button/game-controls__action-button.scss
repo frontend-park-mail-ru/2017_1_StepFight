@@ -1,0 +1,39 @@
+@import "../consts";
+
+@mixin game-controls-transition() {
+  $settings: all 0.5s ease;
+  -webkit-transition: $settings;
+  -moz-transition: $settings;
+  -o-transition: $settings;
+  transition: $settings;
+}
+
+.game-controls__action-button {
+  @include game-controls-transition();
+  height: 80px;
+  width: inherit;
+  border-radius: 3px;
+  line-height: 80px;
+  font-family: 'Cabin', sans-serif;
+  cursor: pointer;
+  word-break: break-all;
+}
+
+.game-controls__action-button_empty {
+  @extend .game-controls__action-button;
+  background-color: $colorButtonActionEmptyBg;
+  &:hover {
+    background-color: $colorButtonActionEmptyHoverBg;
+    color: $colorButtonActionEmptyHoverText;
+  }
+}
+
+.game-controls__action-button_fill {
+  @extend .game-controls__action-button;
+  background-color: $colorButtonActionFillBg;
+  color: $colorButtonActionFillText;
+  &:hover {
+    background-color: $colorButtonActionFillHoverBg;
+    color: $colorButtonActionFillHoverText;
+  }
+}

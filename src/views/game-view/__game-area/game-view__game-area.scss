@@ -1,0 +1,16 @@
+.game-view__game-area{
+    border-radius: 3px;
+}
+
+@media (max-width: 1000px) {
+    .game-view__game-area {
+
+    }
+}
+
+.game-view__game-area_info{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -9999;
+}

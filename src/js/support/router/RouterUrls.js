@@ -3,22 +3,13 @@
  */
 export default class RouterUrls{
     constructor(){
-        window.MAIN = '/';
-        window.LOGIN = '/login';
-        window.SIGNUP = '/signup';
-        window.LEADERBOARD = '/leaderboard';
-        window.ABOUT = '/about';
-        window.PROFILE = '/profile';
+        this.MAIN = '/';
+        this.LOGIN = '/login';
+        this.SIGNUP = '/signup';
+        this.LEADERBOARD = '/leaderboard';
+        this.ABOUT = '/about';
+        this.PROFILE = '/profile';
 
-        window.SINGLEPLAYER = '/sgame';
-        window.MULTIPLAYER = '/mgame';
-        window.GAMERESULT = '/gameresult';
-
-        window.SINGLEPLAYER_STRATEGY='SINGLEPLAYERSTRATEGY';
-        window.MULTIPLAYER_STRATEGY='MULTIPLAYERSTRATEGY';
-
-        window.STATEWAIT = 'STATEWAIT';
-        window.STATEGAME = 'STATEGAME';
-        window.STATERESULT = 'STATERESULT';
+        this.GAME = '/game';
     }
 }
