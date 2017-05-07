@@ -16,6 +16,7 @@ import Storage from "../game/object/Storage";
 import "./application.scss";
 import "./main-title.scss";
 import "../../../vendor/css/iziToast.min.css";
+import MusicControls from "../../elements/music-controls/music-controls";
 
 new UserService().getUser().then(user => {
     Storage.user = user;
@@ -25,6 +26,10 @@ new UserService().getUser().then(user => {
     startRoute();
 });
 
+document.getElementById('start-loader').remove();
+
+
+new MusicControls().render();
 
 function startRoute() {
     let router = new Router(window.document.documentElement);
@@ -62,7 +67,7 @@ function startRoute() {
     router.start();
 }
 
-if ('serviceWorker' in navigator) {
+/*if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('../../../service-worker.js')
         .then(function (registration) {
             // при удачной регистрации имеем объект типа ServiceWorkerRegistration
@@ -73,7 +78,7 @@ if ('serviceWorker' in navigator) {
         .catch(function (err) {
             console.error(err);
         });
-}
+}*/
 
 
 

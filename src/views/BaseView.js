@@ -13,6 +13,7 @@ export default class BaseView {
      * Удалить view
      */
     destroyView(){
+        console.log(this.node);
         while (this.node.firstChild) {
             this.node.removeChild(this.node.firstChild);
         }

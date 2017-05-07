@@ -10,9 +10,9 @@ import BaseView from "../BaseView";
 export default class MenuView extends BaseView {
     /**
      *
-     * @param node - узел, память, роутер
-     * @param storage
-     * @param router
+     * @param node - узел
+     * @param storage - память
+     * @param router - роутер
      */
     constructor(node, storage, router) {
         super(node);
@@ -25,6 +25,8 @@ export default class MenuView extends BaseView {
      * Отрисовка меню
      */
     render() {
+        super.destroyView();
+
         const instr = {
             title: {
                 type: 'a',
