@@ -21,6 +21,7 @@ export default class SignUpView extends BaseView{
      * @private
      */
     render() {
+        super.renderView();
         this._showViewProgressBar();
         this.signupForm = new Form({
             data: {

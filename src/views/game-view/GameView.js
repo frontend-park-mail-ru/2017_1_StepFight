@@ -20,6 +20,8 @@ export default class GameView extends BaseView{
      * Отрисовка view
      */
     render(strategy){
+        super.renderView();
+
         if(typeof strategy === 'undefined') strategy = this.storage.gameStates.SINGLEPLAYER_STRATEGY;
 
         this.gameManager = new GameManager(this.router, this.storage, this, strategy);
@@ -27,7 +29,9 @@ export default class GameView extends BaseView{
     }
 
     destroyView(){
-        this.gameManager.closeWebSocket();
+        if(this.gameManager){
+            this.gameManager.closeWebSocket();
+        }
         super.destroyView();
     }
 }

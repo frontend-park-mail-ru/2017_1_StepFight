@@ -20,6 +20,7 @@ export default class LoginView extends BaseView {
      * Отрисовка вьюшки
      */
     render() {
+        super.renderView();
         this._showViewProgressBar();
         this.loginForm = new Form({
             data: {
@@ -163,6 +164,7 @@ export default class LoginView extends BaseView {
                 this._showProgressBar();
 
                 new UserService().login(body).then(user => {
+                    console.log(user);
                     this._clearFields();
                     this.storage.user = user;
                     this.router.go(this.storage.urls.PROFILE, true);

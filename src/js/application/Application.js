@@ -26,9 +26,6 @@ new UserService().getUser().then(user => {
     startRoute();
 });
 
-document.getElementById('start-loader').remove();
-
-
 new MusicControls().render();
 
 function startRoute() {

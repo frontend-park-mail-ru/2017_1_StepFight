@@ -1,7 +1,6 @@
 /**
  * Created by Denis on 29.03.2017.
  */
-// import * as THREE from "../../../../vendor/three";
 import * as THREE from "three";
 
 import ObjPerson from "./ObjPerson";
@@ -12,7 +11,6 @@ import ProgressBarTable from "../../../elements/progress-bar-table/progressBarTa
 import GameResultTable from "../../../elements/game-result-table/GameResultTable";
 import GameTimer from "../../../elements/game-timer/GameTimer";
 const OrbitControls = require('three-orbit-controls')(THREE);
-// import * as OrbitControls from 'three-orbit-controls';
 
 export default class GameScene {
     constructor(node, storage, manager) {

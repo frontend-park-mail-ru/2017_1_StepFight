@@ -10,6 +10,7 @@ class Storage {
         this.urlsObj = new RouterUrls();
         this.gameStatesObj = new GameStates();
         this.objUser = null;
+        //this.objUser = {login: 'test'};
         Storage.__instance = this;
     }
 

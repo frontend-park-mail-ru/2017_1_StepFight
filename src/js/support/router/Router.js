@@ -151,8 +151,6 @@ export default class Router {
                 return Storage.urls.LOGIN;
             }
         } else if (path === Storage.urls.GAME) {
-            //!!! for debug only !!!
-            //return Storage.urls.GAME;
             if (Storage.user) {
                 return path;
             } else {

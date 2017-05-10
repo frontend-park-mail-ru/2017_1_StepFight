@@ -49,6 +49,7 @@ export default class LeaderBoardView extends BaseView {
      * Отрисовка элемента
      */
     render() {
+        super.renderView();
         this._setProgressBar(this.node);
 
         new UserService().getLeaders().then(response => {
