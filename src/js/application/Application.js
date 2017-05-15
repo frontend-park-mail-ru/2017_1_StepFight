@@ -64,8 +64,8 @@ function startRoute() {
     router.start();
 }
 
-/*if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('../../../service-worker.js')
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('../../../sw/service-worker.js')
         .then(function (registration) {
             // при удачной регистрации имеем объект типа ServiceWorkerRegistration
             console.log('ServiceWorker registration', registration);
@@ -75,7 +75,7 @@ function startRoute() {
         .catch(function (err) {
             console.error(err);
         });
-}*/
+}
 
 
 
