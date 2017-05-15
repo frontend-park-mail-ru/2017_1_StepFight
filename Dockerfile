@@ -4,7 +4,7 @@ RUN apk add --update bash
 
 COPY ./nginx.conf /etc/nginx
 COPY ./dist /usr/share/nginx/static
-COPY ./page /usr/share/nginx/static
+COPY ./page-heroku /usr/share/nginx/static
 COPY ./src/img /usr/share/nginx/static
 COPY ./src/music /usr/share/nginx/static
 COPY ./sw /usr/share/nginx/static
