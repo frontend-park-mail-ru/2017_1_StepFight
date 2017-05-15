@@ -50,7 +50,7 @@ export default class GameInfoToast {
             context.clearRect(0, 0, this.canvas.width, this.canvas.height);
             context.fillStyle = 'black';
             context.font = '32px Orbitron';
-            context.fillText(`${this.login}`, 10, 35);
+            context.fillText(`${this.login}`, 30, 35);
 
             context.beginPath();
             context.rect(30, 50, this.healthConst * this.health, 30);

@@ -27,6 +27,7 @@
   src: url(/src/fonts/mainFont.ttf); }
 
 .menu-view__controls-block__button, .menu-view__controls-block__button_main {
+  cursor: pointer;
   text-decoration: none;
   width: 150px;
   height: 150px;
@@ -488,7 +489,7 @@
 
 .game-choose-action__content {
   background-color: #e3e3e3;
-  margin: 100px auto 15px;
+  margin: 70px auto 15px;
   padding: 20px 20px 20px 20px;
   border: 1px solid black;
   border-radius: 30px;
@@ -645,7 +646,7 @@
   padding: 5px;
   margin: 5px;
   border-radius: 3px;
-  background-color: #21ff56; }
+  background-color: #2aba35; }
   .game-choose-action__probability-block h5 {
     color: white;
     word-wrap: break-word;
@@ -796,7 +797,8 @@
   flex-direction: column;
   flex-wrap: wrap; }
 .game-view__game-area {
-  border-radius: 3px; }
+  border-radius: 3px;
+  max-width: 100%; }
 
 .game-view__game-area_info {
   position: absolute;
@@ -845,7 +847,8 @@ body {
   bottom: 15px;
   left: 15px;
   width: 50px;
-  height: 50px; }
+  height: 50px;
+  cursor: pointer; }
 
 .music-controls_on {
   background: url("/src/img/soundon.png");
