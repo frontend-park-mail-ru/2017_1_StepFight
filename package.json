@@ -4,7 +4,6 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-//    "test": "mocha ./dist/js/test.bundle.js",
     "test": "echo 0",
     "start": "node server.js",
     "webpack": "webpack --config webpack.config.js -w"
