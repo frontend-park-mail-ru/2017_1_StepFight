@@ -2,7 +2,6 @@
   "name": "sample",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
   "scripts": {
     "test": "echo 0",
     "webpack": "webpack --config webpack.config.js -w"
