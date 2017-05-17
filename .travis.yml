@@ -14,7 +14,7 @@ deploy:
   app: "stepfighting"
 
 script:
-  - docker login --username=_ --password=$(echo $api_key) registry.heroku.com
-  - docker build -t registry.heroku.com/tp-heroku-2017/web .
-  - docker push registry.heroku.com/tp-heroku-2017/web
+  - docker login --username=_ --password=$api_key registry.heroku.com
+  - docker build -t registry.heroku.com/stepfighting/web .
+  - docker push registry.heroku.com/stepfighting/web
 
