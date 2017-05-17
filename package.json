@@ -5,7 +5,6 @@
   "main": "server.js",
   "scripts": {
     "test": "echo 0",
-    "start-local": "node server.js",
     "webpack": "webpack --config webpack.config.js -w"
   },
   "keywords": [],
