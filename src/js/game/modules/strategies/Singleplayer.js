@@ -53,14 +53,14 @@ export default class SinglePlayerStrategy {
      * Инициализировать слушателей на кнопки "выбор действия"
      */
     initActionListener() {
-        this.manager.scene.gameControls.initActionListener((actionObj) => {
+        this.manager.view.gameControls.initActionListener((actionObj) => {
             if (actionObj !== null && typeof actionObj !== 'undefined') {
                 this.myStep = actionObj;
-                this.manager.scene.gameControls.buttonAddAction.classList.remove('game-controls__action-button_empty');
-                this.manager.scene.gameControls.buttonAddAction.classList.add('game-controls__action-button_fill');
+                this.manager.view.gameControls.buttonAddAction.classList.remove('game-controls__action-button_empty');
+                this.manager.view.gameControls.buttonAddAction.classList.add('game-controls__action-button_fill');
 
                 let btnText = `hit by ${actionObj.hit.method} to ${actionObj.hit.target} and block ${actionObj.block.method}`;
-                this.manager.scene.gameControls.buttonAddAction.innerText = btnText;
+                this.manager.view.gameControls.buttonAddAction.innerText = btnText;
             }
         });
     }
@@ -69,7 +69,7 @@ export default class SinglePlayerStrategy {
      * Инициализация слушателей на кнопку "сделать шаг"
      */
     initDoStepListener() {
-        this.manager.scene.gameControls.initDoStepListener(() => {
+        this.manager.view.gameControls.initDoStepListener(() => {
             //this.opponent.health-=100;
             if (this.checkMyAction()) {
                 this.gameLogic().then(() => {
@@ -273,9 +273,9 @@ export default class SinglePlayerStrategy {
      */
     clearMyActionsArray() {
         this.myStep = null;
-        this.manager.scene.gameControls.buttonAddAction.classList.remove('game-controls__action-button_fill');
-        this.manager.scene.gameControls.buttonAddAction.classList.add('game-controls__action-button_empty');
-        this.manager.scene.gameControls.buttonAddAction.innerText = 'add action';
+        this.manager.view.gameControls.buttonAddAction.classList.remove('game-controls__action-button_fill');
+        this.manager.view.gameControls.buttonAddAction.classList.add('game-controls__action-button_empty');
+        this.manager.view.gameControls.buttonAddAction.innerText = 'add action';
     }
 
     /**
@@ -283,8 +283,8 @@ export default class SinglePlayerStrategy {
      */
     finishGameLoop() {
         clearInterval(this.inteval);
-        this.manager.scene.gameControls.deleteDoStepListener();
-        this.manager.scene.gameControls.deleteActionListener();
+        this.manager.view.gameControls.deleteDoStepListener();
+        this.manager.view.gameControls.deleteActionListener();
     }
 
     /**

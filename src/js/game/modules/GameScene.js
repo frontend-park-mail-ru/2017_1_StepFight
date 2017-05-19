@@ -4,8 +4,6 @@
 import * as THREE from "three";
 
 import ObjPerson from "./ObjPerson";
-import GameControls from "../../../elements/game-controls/GameControls";
-import GameAction from "../../../elements/game-choose-action/GameChooseAction";
 import GameInfoToast from "../../../elements/game-info-toast/GameInfoToast";
 import ProgressBarTable from "../../../elements/progress-bar-table/progressBarTable";
 import GameResultTable from "../../../elements/game-result-table/GameResultTable";
@@ -166,8 +164,9 @@ export default class GameScene {
 
         this.clearScene();
         this._animCameraStart();
-        this._renderControlArea();
-        this._renderGameActionModal();
+        /*this._renderControlArea();
+        this._renderGameActionModal();*/
+        this.manager.view.renderControlElements();
 
         this._renderField();
         this._renderPlayers();
@@ -284,24 +283,6 @@ export default class GameScene {
     renderTimer(){
         this.timer = new GameTimer(this.container);
         this.timer.render();
-    }
-
-    /**
-     * Отрисовка поля элементов управления
-     * @private
-     */
-    _renderControlArea() {
-        this.gameControls = new GameControls(this.container, this);
-        this.gameControls.render();
-    }
-
-    /**
-     * Отрисовка модального окна, для выбора действия
-     * @private
-     */
-    _renderGameActionModal() {
-        this.gameActionModal = new GameAction(this.node, this.manager);
-        this.gameActionModal.render();
     }
 
     /**

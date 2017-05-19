@@ -22,8 +22,10 @@ export default class GameManager {
         this.strategy =
             strategyName === this.storage.gameStates.SINGLEPLAYER_STRATEGY
                 ? new SinglePlayerStrategy(this) : new MultiPlayerStrategy(this);
+    }
 
-        if (strategyName === this.storage.gameStates.MULTIPLAYER_STRATEGY) {
+    startGame(){
+        if (this.strategy.className === 'MultiPlayerStrategy') {
             this.ws = new WebSocket('wss://sf-server.herokuapp.com/api/user/game');
             this.ws.onopen = () => {
                 console.log("Соединение установлено.");
@@ -176,7 +178,7 @@ export default class GameManager {
             opponentHealth = data.first.hp;
         }
         this.strategy.stepAnalyze(myAction, opponentAction, myDamage, opponentDamage, myHealth, opponentHealth);
-        this.scene.gameControls.setButtonStepStatus(true);
+        this.view.gameControls.setButtonStepStatus(true);
     }
 
     /**

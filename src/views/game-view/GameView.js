@@ -7,6 +7,9 @@ import GameManager from "../../js/game/modules/GameManager";
 import './game-view.scss';
 import './__container/game-view__container.scss';
 import './__game-area/game-view__game-area.scss';
+import GameControls from "../../elements/game-controls/GameControls";
+import GameAction from "../../elements/game-choose-action/GameChooseAction";
+
 export default class GameView extends BaseView{
     constructor(node, storage, router){
         super(node);
@@ -23,9 +26,17 @@ export default class GameView extends BaseView{
         super.renderView();
 
         if(typeof strategy === 'undefined') strategy = this.storage.gameStates.SINGLEPLAYER_STRATEGY;
-
         this.gameManager = new GameManager(this.router, this.storage, this, strategy);
-        //this.gameManager.startMpGameProcess();
+
+        this.gameActionModal = new GameAction(this.node, this.gameManager);
+        this.gameControls = new GameControls(this.node, this.gameActionModal, this.gameManager);
+
+        this.gameManager.startGame();
+    }
+
+    renderControlElements(){
+        this.gameControls.render();
+        this.gameActionModal.render();
     }
 
     destroyView(){

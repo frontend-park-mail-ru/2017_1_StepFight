@@ -6,9 +6,10 @@ import "./__button/game-controls__button.scss";
 import "./__action-button/game-controls__action-button.scss";
 
 export default class GameControls {
-    constructor(node, sceneContext) {
+    constructor(node, gameActionModal, managerContext) {
         this.node = node;
-        this.sceneContext = sceneContext;
+        this.gameActionModal = gameActionModal;
+        this.managerContext = managerContext;
         this.isButtonStepActive = true;
     }
 
@@ -65,14 +66,14 @@ export default class GameControls {
      * @param callback
      */
     initActionListener(callback) {
-        this.sceneContext.gameActionModal.initButtonsAction((actionObj) => {
+        this.gameActionModal.initButtonsAction((actionObj) => {
             callback(actionObj);
         });
 
         this.actionAddCallback = function () {
             if (this.isButtonStepActive) {
-                this.sceneContext.gameActionModal.setStartAction(this.sceneContext.manager.strategy.myStep);
-                this.sceneContext.gameActionModal.show();
+                this.gameActionModal.setStartAction(this.managerContext.strategy.myStep);
+                this.gameActionModal.show();
             }
         };
 
@@ -84,7 +85,7 @@ export default class GameControls {
      */
     deleteActionListener() {
         this.buttonAddAction.removeEventListener('click', this.actionAddCallback);
-        this.sceneContext.gameActionModal.deleteButtonAction();
+        this.gameActionModal.deleteButtonAction();
     }
 
     setButtonStepStatus(law) {
