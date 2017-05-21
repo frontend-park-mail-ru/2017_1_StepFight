@@ -102,12 +102,27 @@ export default class Router {
      */
     _onRouteChange(event) {
         if (event.target instanceof HTMLAnchorElement) {
+            if (this._checkOnAbleLink(event.target.getAttribute('href')))
+                return;
             event.preventDefault();
             this.go(event.target.getAttribute('href'), true);
         } else if (event.target.parentElement instanceof HTMLAnchorElement) {
+            if (this._checkOnAbleLink(event.target.parentElement.getAttribute('href')))
+                return;
             event.preventDefault();
             this.go(event.target.parentElement.getAttribute('href'), true);
         }
+    }
+
+    _checkOnAbleLink(link) {
+        console.warn(link);
+        let links = ['https://tech.yandex.ru/speechkit/cloud/', 'https://yandex.ru/'];
+        for (let i = 0; i < links.length; i++) {
+            if (links[i] === link) {
+                return true;
+            }
+        }
+        return false;
     }
 
     _checkOffline(path) {
@@ -115,7 +130,7 @@ export default class Router {
             path = this._checkUser(path);
             try {
                 if (Storage.user.login === 'Offline') Storage.user.login = null;
-            } catch (e){
+            } catch (e) {
                 //console.warn(e);
             }
         } else {

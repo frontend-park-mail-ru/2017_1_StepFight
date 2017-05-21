@@ -94,6 +94,14 @@ export default class SignUpView extends BaseView{
                         type: 'button'
                     },
                     {
+                        type: 'а',
+                        attrs: {
+                            class: 'form__vk-button',
+                            id: 'vk-auth'
+                        },
+                        text: 'Вход через VK'
+                    },
+                    {
                         text: 'Log In',
                         attrs: {
                             class: 'form__link',
@@ -129,6 +137,9 @@ export default class SignUpView extends BaseView{
             this.btnSignUp = document.getElementById('btn-signup');
 
             this.btnToLogin = document.getElementById('btn-to-login');
+
+            this.vkAuth = document.getElementById('vk-auth');
+
             this._initListener();
         }, 500);
     }
@@ -156,6 +167,7 @@ export default class SignUpView extends BaseView{
      */
     _showProgressBar() {
         this.btnSignUp.hidden = true;
+        this.vkAuth.hidden = true;
         let progressBar = new ProgressBar().getElemParent();
         this.btnSignUp.parentNode.insertBefore(progressBar, this.btnSignUp.nextSibling);
     }
@@ -167,6 +179,7 @@ export default class SignUpView extends BaseView{
     _hideProgressBar() {
         setTimeout(() => {
             this.btnSignUp.hidden = false;
+            this.vkAuth.hidden = false;
             this.btnSignUp.parentNode.removeChild(this.btnSignUp.nextElementSibling);
         }, 500);
     }
@@ -207,7 +220,17 @@ export default class SignUpView extends BaseView{
         });
         this.btnToLogin.addEventListener('click', event=>{
             this._clearFields();
-        })
+        });
+
+        this.vkAuth.addEventListener('click', (event) => {
+            event.preventDefault();
+            VK.Auth.login(null, VK.access.FRIENDS);
+        });
+
+        VK.Observer.subscribe('auth.login', (response) => {
+            //console.warn(response.session.user);
+            //new UserService().signup({login: response.session.user.domain})
+        });
     }
 
     /**

@@ -26,6 +26,9 @@ new UserService().getUser().then(user => {
     startRoute();
 });
 
+loadYandexSpeech();
+loadVk();
+
 new MusicControls().render();
 
 function startRoute() {
@@ -64,18 +67,45 @@ function startRoute() {
     router.start();
 }
 
-/*if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('../../../sw/service-worker.js')
-        .then(function (registration) {
-            // при удачной регистрации имеем объект типа ServiceWorkerRegistration
-            console.log('ServiceWorker registration', registration);
-            // строкой ниже можно прекратить работу serviceWorker’а
-            //registration.unregister();
-        })
-        .catch(function (err) {
-            console.error(err);
+function loadVk(){
+    let vkScript = document.createElement('script');
+    vkScript.src = 'https://vk.com/js/api/openapi.js?146';
+    document.body.appendChild(vkScript);
+
+    vkScript.onload = () => {
+        VK.init({
+            apiId: 5915120
         });
-}*/
+    };
+}
+
+function loadYandexSpeech(){
+    let speechScript = document.createElement('script');
+    speechScript.src = 'https://webasr.yandex.net/jsapi/v1/webspeechkit.js';
+    document.body.appendChild(speechScript);
+
+    let speechSettingsScript = document.createElement('script');
+    speechSettingsScript.src = 'https://webasr.yandex.net/jsapi/v1/webspeechkit-settings.js';
+    document.body.appendChild(speechSettingsScript);
+
+    speechSettingsScript.onload = () => {
+        window.ya.speechkit.settings.lang = 'ru-RU';
+        window.ya.speechkit.settings.apikey = '36e3d30b-c782-483b-9ffe-13f8a98f17ff';
+    };
+}
+
+/*if ('serviceWorker' in navigator) {
+ navigator.serviceWorker.register('../../../sw/service-worker.js')
+ .then(function (registration) {
+ // при удачной регистрации имеем объект типа ServiceWorkerRegistration
+ console.log('ServiceWorker registration', registration);
+ // строкой ниже можно прекратить работу serviceWorker’а
+ //registration.unregister();
+ })
+ .catch(function (err) {
+ console.error(err);
+ });
+ }*/
 
 
 

@@ -137,6 +137,19 @@
     background-color: #ed000d;
     border-color: #ede40c;
     color: white; }
+
+.form__vk-button {
+  margin-top: 15px;
+  padding: 5px;
+  color: white;
+  background-color: #507299;
+  border-radius: 15px;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+  -webkit-transition: all 0.5s ease;
+  cursor: pointer; }
+  .form__vk-button:hover {
+    background-color: #597fab; }
 .form__input {
   padding: 5px;
   margin-top: 5px;
@@ -253,6 +266,35 @@
   line-height: 1;
   border-radius: 5px;
   float: left; }
+.about-view {
+  left: 20%;
+  right: 20%;
+  margin: auto auto;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  flex-wrap: wrap; }
+  .about-view .about-view__title {
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase; }
+  .about-view a {
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    color: white;
+    margin-top: 15px;
+    font-size: 20px; }
+  .about-view img {
+    margin: 0 auto; }
+
+@media (max-width: 540px) {
+  .about-view {
+    width: auto;
+    margin-left: 15px;
+    margin-right: 15px;
+    left: 15px;
+    right: 15px; } }
 .profile-view {
   left: 30%;
   right: 30%;
@@ -547,7 +589,7 @@
   margin: auto auto;
   padding: 5px;
   text-transform: uppercase;
-  width: 300px; }
+  width: 500px; }
 
 @media (max-width: 1000px) {
   .game-controls {
@@ -555,6 +597,10 @@
     right: 15px;
     margin: 15px auto;
     padding: 0; } }
+
+@media (max-width: 500px) {
+  .game-controls {
+    width: 300px; } }
 
 .game-controls_actions {
   text-align: center;
@@ -603,7 +649,9 @@
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
   height: 80px;
-  width: inherit;
+  /*width: inherit;*/
+  flex-grow: 3;
+  justify-content: space-around;
   border-radius: 3px;
   line-height: 80px;
   font-family: 'Cabin', sans-serif;
@@ -622,6 +670,25 @@
   .game-controls__action-button_fill:hover {
     background-color: rgba(47, 231, 58, 0.86);
     color: white; }
+.speech-element {
+  height: 80px;
+  border-radius: 3px;
+  justify-content: space-around;
+  margin-left: 5px;
+  flex-grow: 1;
+  background-color: #37a449;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  cursor: pointer; }
+  .speech-element img {
+    margin-top: 10px; }
+  .speech-element:hover {
+    background-color: #3ebe51; }
+
+.speech-element_active {
+  background-color: #a41c21 !important; }
 .game-choose-action {
   background-color: rgba(0, 0, 0, 0.8);
   position: fixed;

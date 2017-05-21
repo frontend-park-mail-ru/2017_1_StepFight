@@ -19,3 +19,19 @@
     color: $colorButtonFocusTextForm;
   }
 }
+
+.form__vk-button{
+  margin-top: 15px;
+  padding: 5px;
+  color: white;
+  background-color: #507299;
+  border-radius: 15px;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+  -webkit-transition: all 0.5s ease;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #597fab;
+  }
+}

@@ -4,6 +4,7 @@
 import "./game-controls.scss";
 import "./__button/game-controls__button.scss";
 import "./__action-button/game-controls__action-button.scss";
+import SpeechControl from "../speech-control/SpeechControl";
 
 export default class GameControls {
     constructor(node, gameActionModal, managerContext) {
@@ -27,6 +28,12 @@ export default class GameControls {
         this.buttonAddAction.innerText = 'add actions';
         this.buttonAddAction.setAttribute('class', 'game-controls__action-button_empty');
         this.actionContainer.appendChild(this.buttonAddAction);
+
+        if (navigator.onLine) {
+            this.speechControl = new SpeechControl(this.actionContainer);
+            this.speechControl.render();
+            this.speechControl.start();
+        }
 
         container.appendChild(this.actionContainer);
 

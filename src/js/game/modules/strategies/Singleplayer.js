@@ -9,7 +9,7 @@ export default class SinglePlayerStrategy {
         this.manager = manager;
 
         this.myStep = new StepObject();
-        this.opponentsStep = new StepObject();
+        this.opponentStep = new StepObject();
 
         this.BASE_DAMAGE = 40;
     }
@@ -202,24 +202,6 @@ export default class SinglePlayerStrategy {
         }
         console.warn(`hitP=${hitP} blockP=${blockP} checkP=${checkP} damage=${Math.round(damage)}`);
         return Math.round(damage);
-
-        //TODO DONT DELETE COMMENTS!!! SHORT VERSION OF PREVIOUS CODE!!!!!!!
-        //TODO DONT DELETE!!!
-        //TODO DONT DELETE!!!
-        //TODO DONT DELETE!!!
-
-        /*if (actionForDefensing.block.method === actionForAttacking.hit.target) {
-         return Math.round((this.checkProbability(this.getProbability('hit', actionForAttacking.hit.method)
-         * this.getProbability('block', actionForDefensing.block.method))) ?
-         (1 - (this.getProbability('hit', actionForAttacking.hit.method)
-         * this.getProbability('block', actionForDefensing.block.method))) * this.BASE_DAMAGE : 0);
-         } else {
-         return Math.round((this.checkProbability(this.getProbability('hit', actionForAttacking.hit.method))) ?
-         (1 - (this.getProbability('hit', actionForAttacking.hit.method))/2) * this.BASE_DAMAGE : 0);
-         }*/
-
-        //TODO DONT DELETE!!!
-        //TODO DONT DELETE!!!
     }
 
     /**

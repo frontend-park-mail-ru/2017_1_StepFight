@@ -125,6 +125,7 @@ export default class Form {
 
             fields[name] = value;
         });
+
         return fields;
     }
 }

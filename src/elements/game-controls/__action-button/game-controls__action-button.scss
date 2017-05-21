@@ -11,7 +11,9 @@
 .game-controls__action-button {
   @include game-controls-transition();
   height: 80px;
-  width: inherit;
+  /*width: inherit;*/
+  flex-grow: 3;
+  justify-content: space-around;
   border-radius: 3px;
   line-height: 80px;
   font-family: 'Cabin', sans-serif;
