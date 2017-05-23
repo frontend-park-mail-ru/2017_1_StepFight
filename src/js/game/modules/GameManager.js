@@ -24,7 +24,7 @@ export default class GameManager {
                 ? new SinglePlayerStrategy(this) : new MultiPlayerStrategy(this);
     }
 
-    startGame(){
+    startGame() {
         if (this.strategy.constructor.name === 'MultiPlayerStrategy') {
             console.log("MP");
             this.ws = new WebSocket('wss://sf-server.herokuapp.com/api/user/game');
@@ -128,28 +128,35 @@ export default class GameManager {
 
                     break;
                 }
+                case 'pulse': {
+
+                    break;
+                }
             }
         } else if ('key' in data) {
             this._gameId = data.key;
             let opponentLogin = (data.first === this.storage.user.login) ? data.second : data.first;
             this.startMpGameProcess(opponentLogin);
-            this.startMpTimer();
+            this.startMpTimer(0);
         } else if ('id' in data) {
             this.stepResultAnalyze(data);
-            this.startMpTimer();
+            this.startMpTimer(5);
         }
     }
 
     /**
      * Запустить таймер
      */
-    startMpTimer() {
-        this.scene.timer.start().then(() => {
-            let step = new StepObject();
-            step.init('arm', 'body', 'body');
-            this.strategy.myStep = step;
-            this.strategy.sendStep();
-        });
+    startMpTimer(delay) {
+        setTimeout(() => {
+            this.ws.send(JSON.stringify({id: this._gameId}));
+            this.scene.timer.start().then(() => {
+                let step = new StepObject();
+                step.init('null', 'null', 'null');
+                this.strategy.myStep = step;
+                this.strategy.sendStep();
+            });
+        }, delay * 1000);
     }
 
     /**
