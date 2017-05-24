@@ -31,7 +31,11 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract({fallback: 'style-loader', use: 'css-loader'})
+                loader: ExtractTextPlugin.extract({
+                    fallback: 'style-loader', use: [
+                        {loader: 'css-loader', options: {minimize: true}}
+                    ]
+                })
             },
             {
                 test: /\.scss$/,
@@ -66,6 +70,7 @@ module.exports = {
     plugins: debug ? [
         new ExtractTextPlugin('[name].bundle.css')
     ] : [
+        new ExtractTextPlugin('[name].bundle.css'),
         new webpack.optimize.UglifyJsPlugin({
             beautify: false,
             comments: false,
