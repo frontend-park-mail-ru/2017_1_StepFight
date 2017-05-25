@@ -17,6 +17,7 @@ import "./application.scss";
 import "./main-title.scss";
 import "../../../vendor/css/iziToast.min.css";
 import MusicControls from "../../elements/music-controls/music-controls";
+import ServiceWorker from "../../sw/ServiceWorker";
 
 new UserService().getUser().then(user => {
     Storage.user = user;
@@ -67,7 +68,7 @@ function startRoute() {
     router.start();
 }
 
-function loadVk(){
+function loadVk() {
     let vkScript = document.createElement('script');
     vkScript.src = 'https://vk.com/js/api/openapi.js?146';
     document.body.appendChild(vkScript);
@@ -79,7 +80,7 @@ function loadVk(){
     };
 }
 
-function loadYandexSpeech(){
+function loadYandexSpeech() {
     let speechScript = document.createElement('script');
     speechScript.src = 'https://webasr.yandex.net/jsapi/v1/webspeechkit.js';
     document.body.appendChild(speechScript);
@@ -94,18 +95,7 @@ function loadYandexSpeech(){
     };
 }
 
-/*if ('serviceWorker' in navigator) {
- navigator.serviceWorker.register('../../../sw/service-worker.js')
- .then(function (registration) {
- // при удачной регистрации имеем объект типа ServiceWorkerRegistration
- console.log('ServiceWorker registration', registration);
- // строкой ниже можно прекратить работу serviceWorker’а
- //registration.unregister();
- })
- .catch(function (err) {
- console.error(err);
- });
- }*/
+new ServiceWorker().init();
 
 
 

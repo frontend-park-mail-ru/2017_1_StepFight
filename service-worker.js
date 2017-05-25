@@ -18,7 +18,10 @@ const CACHE_URLS = [
     '/src/three-models/player.json',
     '/dist/app.bundle.css',
     '/dist/app.bundle.js',
-    '/dist/app.bundle.min.js'
+    '/dist/app.bundle.min.js',
+    '/src/fonts/mainFont.ttf',
+    '/src/img/soundon.png',
+    '/src/img/soundoff.png',
 ];
 
 self.addEventListener('install', (event) => {
