@@ -8,10 +8,6 @@ node_js:
 services:
   - docker
 
-#deploy:
-#  provider: heroku
-#  api_key: "fb7c6a6a-ca34-49e5-8e55-195e49c0e15e"
-#  app: "stepfighting"
 branches:
   only: - master
 
