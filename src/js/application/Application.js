@@ -19,6 +19,12 @@ import "../../../vendor/css/iziToast.min.css";
 import MusicControls from "../../elements/music-controls/music-controls";
 import ServiceWorker from "../../sw/ServiceWorker";
 
+
+console.log(location.href.match(/localhost/i));
+if (location.protocol !== 'https:' && location.href.match(/localhost/i) === null) {
+    location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+}
+
 new UserService().getUser().then(user => {
     Storage.user = user;
     startRoute();
