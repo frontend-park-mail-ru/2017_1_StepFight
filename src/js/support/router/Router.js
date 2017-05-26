@@ -32,6 +32,12 @@ export default class Router {
                 this.register(url, new View(el, Storage, this));
             }
         });
+
+        console.log(location.href.match(/localhost/i));
+        if (location.href !== 'https:' && location.href.match(/localhost/i) === -1) {
+            location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+        }
+
         this.go(document.location.pathname);
     }
 
@@ -54,6 +60,7 @@ export default class Router {
         if (!this.currView) {
             return;
         }
+
         if ('render' in this.currView) {
             if (gameStrategy !== null && typeof gameStrategy !== 'undefined') {
                 this.currView.render(gameStrategy);

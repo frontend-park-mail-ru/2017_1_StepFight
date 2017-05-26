@@ -25,7 +25,7 @@ export default class GameManager {
     }
 
     startGame() {
-        if (this.strategy.constructor.name === 'MultiPlayerStrategy') {
+        if (this.strategy instanceof MultiPlayerStrategy) {
             console.log("MP");
             this.ws = new WebSocket('wss://sf-server.herokuapp.com/api/user/game');
             this.ws.onopen = () => {
