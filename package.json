@@ -2,10 +2,8 @@
   "name": "sample",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
   "scripts": {
-    "test": "mocha ./dist/js/test.bundle.js",
-    "start": "node server.js",
+    "test": "echo 0",
     "webpack": "webpack --config webpack.config.js -w"
   },
   "keywords": [],

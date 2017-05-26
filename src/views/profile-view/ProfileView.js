@@ -1,21 +1,21 @@
 /**
  * Created by Denis on 19.03.2017.
  */
-import BaseView from '../BaseView';
-import UserService from '../../js/support/service/UserService';
+import BaseView from "../BaseView";
+import UserService from "../../js/support/service/UserService";
 import ProgressBar from "../../elements/loader/loader";
 import Diamond from "../../js/menu/elements/Diamond";
-import IziToast from 'izitoast';
+import IziToast from "izitoast";
 
-import './profile-view.scss';
-import './__controllers/profile-view__controllers.scss';
-import './__controllers/__button/profile-view__controllers__button.scss';
-import './__resources/profile-view__resources.scss';
-import './__resources/__diamond/profile-view__resources__diamond.scss';
-import './__resources/__diamond/text/profile-view__resources__diamond__text.scss';
-import './__user-info/profile-view__user-info.scss';
-import './__user-info/login/profile-view__user-info__login.scss';
-import './__user-info/item/profile-view__user-info__item.scss';
+import "./profile-view.scss";
+import "./__controllers/profile-view__controllers.scss";
+import "./__controllers/__button/profile-view__controllers__button.scss";
+import "./__resources/profile-view__resources.scss";
+import "./__resources/__diamond/profile-view__resources__diamond.scss";
+import "./__resources/__diamond/text/profile-view__resources__diamond__text.scss";
+import "./__user-info/profile-view__user-info.scss";
+import "./__user-info/login/profile-view__user-info__login.scss";
+import "./__user-info/item/profile-view__user-info__item.scss";
 
 export default class ProfileView extends BaseView {
     constructor(node, storage, router) {
@@ -31,13 +31,17 @@ export default class ProfileView extends BaseView {
      * @private
      */
     _getUser() {
-        return new Promise(function (resolve, reject) {
-            new UserService().getUser().then(user => {
-                window.USER = user;
-                resolve(user);
-            }).catch(err => {
-                reject({});
-            });
+        return new Promise((resolve, reject) => {
+            if (this.storage.user === null) {
+                new UserService().getUser().then(user => {
+                    //window.USER = user;
+                    resolve(user);
+                }).catch(err => {
+                    reject({});
+                });
+            } else {
+                resolve(this.storage.user);
+            }
         });
     }
 
@@ -45,6 +49,7 @@ export default class ProfileView extends BaseView {
      * Отрисовка профайла
      */
     render() {
+        super.renderView();
         this._showViewProgressBar();
         this._getUser().then(user => {
             setTimeout(() => {
@@ -52,6 +57,10 @@ export default class ProfileView extends BaseView {
                 this._renderProfile(user);
             }, 500);
         }).catch(err => {
+            if (JSON.stringify(err) === '{}') {
+                this.storage.user = null;
+                this.router.go(this.storage.urls.LOGIN, true);
+            }
             this._hideViewProgressBar();
         });
     }
@@ -76,7 +85,7 @@ export default class ProfileView extends BaseView {
 
         this.hrefPlayM.addEventListener('click', event => {
             //TODO check-connection
-            if(navigator.onLine) {
+            if (navigator.onLine) {
                 this.router.go(this.storage.urls.GAME, true, this.storage.gameStates.MULTIPLAYER_STRATEGY);
             } else {
                 IziToast.error({
@@ -130,6 +139,7 @@ export default class ProfileView extends BaseView {
      * @private
      */
     _renderProfile(user) {
+        console.log(user);
         /* create main title */
         let title = document.createElement('a');
         title.setAttribute('href', this.storage.urls.MAIN);

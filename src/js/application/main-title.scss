@@ -19,9 +19,6 @@ $text-shadow: 10px 10px 40px #3e3a3b;
     margin-bottom: 20px;
 
     &:hover{
-      /*color: $color-text;
-      border-color: $color-text;
-      text-shadow: $text-shadow;*/
       text-shadow: 7px 0 0 $color-border, -7px 0 0 $color-border, 0 7px 0 $color-border, 0 -7px 0 $color-border;
     }
   }

@@ -5,11 +5,11 @@ import BaseView from "../BaseView";
 import ProgressBar from "../../elements/loader/loader";
 import UserService from "../../js/support/service/UserService";
 
-import './__title/leaderboard-view__title.scss';
-import './__link/leaderboard-view__link.scss';
-import './__list/leaderboard-view__list.scss';
-import './__list/__item/leaderboard-view__list__item.scss';
-import Handlebars from 'handlebars/dist/handlebars.min';
+import "./__title/leaderboard-view__title.scss";
+import "./__link/leaderboard-view__link.scss";
+import "./__list/leaderboard-view__list.scss";
+import "./__list/__item/leaderboard-view__list__item.scss";
+import Handlebars from "handlebars/dist/handlebars.min";
 
 export default class LeaderBoardView extends BaseView {
     constructor(node, storage, router) {
@@ -34,12 +34,14 @@ export default class LeaderBoardView extends BaseView {
                         {{/with}}
                         <p class="{{control.class}}" id="{{control.id}}">{{control.text}}</p>
                         {{#if leaderboard}}
+                        <div>
                         <ul class="leaderboard-view__list">
                             {{#each leaderboard}}
                             <li class="leaderboard-view__list__item">{{login}}<span class="badge">{{rating}}</span>
                             <span class="position">{{position}}</span></li>
                             {{/each}}
                         </ul>
+                        </div>
                         {{/if}}`;
         let leaderBoardTemplate = Handlebars.compile(leaderBoardSource);
         return leaderBoardTemplate(data);
@@ -49,6 +51,7 @@ export default class LeaderBoardView extends BaseView {
      * Отрисовка элемента
      */
     render() {
+        super.renderView();
         this._setProgressBar(this.node);
 
         new UserService().getLeaders().then(response => {

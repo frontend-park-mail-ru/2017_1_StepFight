@@ -134,26 +134,6 @@ export default class GameChooseAction {
         this.buttonHitTargetBody.innerText = 'Body';
         containerHitTargetControls.appendChild(this.buttonHitTargetBody);
 
-        /*/!*--------------create probability block info--------------*!/
-         this.probabilityContainer = document.createElement('div');
-         this.probabilityContainer.setAttribute('class', 'game-choose-action__probability-block');
-         contentContainer.appendChild(this.probabilityContainer);
-
-         /!*--------------fill probability block info--------------*!/
-         this.pHitOpponentDontBlock = document.createElement('p');
-         this.pHitOpponentDontBlockSuccess = document.createElement('p');
-
-         this.pHitOpponentBlock = document.createElement('p');
-         this.pHitOpponentBlockSuccess = document.createElement('p');
-
-         this.pBlock = document.createElement('p');
-
-         this.probabilityContainer.appendChild(this.pHitOpponentDontBlock);
-         this.probabilityContainer.appendChild(this.pHitOpponentDontBlockSuccess);
-         this.probabilityContainer.appendChild(this.pHitOpponentBlock);
-         this.probabilityContainer.appendChild(this.pHitOpponentBlockSuccess);
-         this.probabilityContainer.appendChild(this.pBlock);*/
-
         /*--------------create probability block info--------------*/
         this.probabilityContainer = document.createElement('div');
         this.probabilityContainer.setAttribute('class', 'game-choose-action__probability-block');
@@ -234,8 +214,9 @@ export default class GameChooseAction {
      * @private
      */
     _initActionSetsListeners() {
-        this.chooseThanHitHead = function () {
-            //console.log(this);
+        this.actionListenersMap = new Map();
+        //TODO normalize
+        this.chooseMethodHitHead = function () {
             this.clearHitMethodFocus();
             this.buffAction.hit.method = 'head';
             this._setButtonActionFocus(this.buttonHitMethodHead);
@@ -262,7 +243,7 @@ export default class GameChooseAction {
             this._setButtonActionFocus(this.buttonHitTargetBody);
         };
 
-        this.buttonHitMethodHead.addEventListener('click', this.chooseThanHitHead.bind(this));
+        this.buttonHitMethodHead.addEventListener('click', this.chooseMethodHitHead.bind(this));
         this.buttonHitMethodArm.addEventListener('click', this.chooseThanHitArm.bind(this));
         this.buttonHitMethodLeg.addEventListener('click', this.chooseThanHitLeg.bind(this));
         this.buttonHitTargetHead.addEventListener('click', this.chooseWhereHitHead.bind(this));
@@ -383,7 +364,7 @@ export default class GameChooseAction {
         this.buttonClose.removeEventListener('click', this.actionCallbackClose);
         this.btnChoose.removeEventListener('click', this.actionCallbackChoose);
 
-        this.buttonHitMethodHead.removeEventListener('click', this.chooseThanHitHead);
+        this.buttonHitMethodHead.removeEventListener('click', this.chooseMethodHitHead);
         this.buttonHitMethodArm.removeEventListener('click', this.chooseThanHitArm);
         this.buttonHitMethodLeg.removeEventListener('click', this.chooseThanHitLeg);
         this.buttonHitTargetHead.removeEventListener('click', this.chooseWhereHitHead);

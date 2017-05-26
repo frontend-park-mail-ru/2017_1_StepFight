@@ -42,9 +42,9 @@ export default class ObjPerson {
                 z: 2
             },
             startRotation: {
-                x: 0,
-                y: 0,
-                z: Math.PI
+                x: Math.PI,
+                y: Math.PI,
+                z: 0
             }
         }
     }
@@ -83,7 +83,7 @@ export default class ObjPerson {
             );
             this.person.rotation.set(
                 this.personConst.startRotation.x,
-                this.personConst.startRotation.y,
+                this.partOf === 'left' ? 0 : this.personConst.startRotation.y,
                 this.personConst.startRotation.z
             );
 
@@ -104,10 +104,12 @@ export default class ObjPerson {
 
 
     _moveToPos(position) {
-        let flag = true;
+        let bones = this.getBones();
+        let arm = bones[this.bonesNames.armRightBottom];
+
         let render = () => {
             window.requestAnimationFrame(render);
-            step = /*Math.PI / 96*/ 0.01;
+            step = 0.01;
         };
         render();
     }

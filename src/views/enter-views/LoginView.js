@@ -1,12 +1,10 @@
 /**
  * Created by Denis on 19.03.2017.
  */
-import BaseView from '../BaseView';
+import BaseView from "../BaseView";
 import ProgressBar from "../../elements/loader/loader";
 import Form from "../../elements/form/form";
 import UserService from "../../js/support/service/UserService";
-import User from "../../js/game/object/Storage";
-import RouterUrls from "../../js/support/router/RouterUrls";
 
 export default class LoginView extends BaseView {
     constructor(node, storage, router) {
@@ -20,6 +18,7 @@ export default class LoginView extends BaseView {
      * Отрисовка вьюшки
      */
     render() {
+        super.renderView();
         this._showViewProgressBar();
         this.loginForm = new Form({
             data: {
@@ -76,6 +75,14 @@ export default class LoginView extends BaseView {
                         type: 'button'
                     },
                     {
+                        type: 'а',
+                        attrs: {
+                            class: 'form__vk-button',
+                            id: 'vk-auth'
+                        },
+                        text: 'Вход через VK'
+                    },
+                    {
                         text: 'Sign up',
                         attrs: {
                             class: 'form__link',
@@ -95,7 +102,7 @@ export default class LoginView extends BaseView {
             title.setAttribute('href', this.storage.urls.MAIN);
             title.setAttribute('class', 'main-title');
             let h1 = document.createElement('h1');
-            h1.innerText='Step Fight';
+            h1.innerText = 'Step Fight';
             title.appendChild(h1);
 
             this.node.appendChild(title);
@@ -106,6 +113,9 @@ export default class LoginView extends BaseView {
             this.loginHelp = document.getElementById('l-login-help');
             this.btnLogin = document.getElementById('btn-login');
             this.btnToSignUp = document.getElementById('btn-to-signup');
+
+            this.vkAuth = document.getElementById('vk-auth');
+
 
             this._initListener();
         }, 500);
@@ -134,6 +144,7 @@ export default class LoginView extends BaseView {
      */
     _showProgressBar() {
         this.btnLogin.hidden = true;
+        this.vkAuth.hidden = true;
         let progressBar = new ProgressBar().getElemParent();
         this.btnLogin.parentNode.insertBefore(progressBar, this.btnLogin.nextSibling);
     }
@@ -145,6 +156,7 @@ export default class LoginView extends BaseView {
     _hideProgressBar() {
         setTimeout(() => {
             this.btnLogin.hidden = false;
+            this.vkAuth.hidden = false;
             this.btnLogin.parentNode.removeChild(this.btnLogin.nextElementSibling);
         }, 500);
     }
@@ -163,6 +175,7 @@ export default class LoginView extends BaseView {
                 this._showProgressBar();
 
                 new UserService().login(body).then(user => {
+                    console.log(user);
                     this._clearFields();
                     this.storage.user = user;
                     this.router.go(this.storage.urls.PROFILE, true);
@@ -178,9 +191,26 @@ export default class LoginView extends BaseView {
                 });
             }
         });
-        this.btnToSignUp.addEventListener('click', event=>{
+        this.btnToSignUp.addEventListener('click', event => {
             this._clearFields();
-        })
+        });
+
+        this.vkAuth.addEventListener('click', (event) => {
+            event.preventDefault();
+            VK.Auth.getLoginStatus((response) => {
+                if (response.session) {
+                    console.warn(response.session);
+                }
+                else {
+                    VK.Auth.login(null, VK.access.FRIENDS);
+                }
+            });
+        });
+
+        VK.Observer.subscribe('auth.login', (response) => {
+            //console.warn(response.session.user);
+            //new UserService().signup({login: response.session.user.domain})
+        });
     }
 
     /**

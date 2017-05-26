@@ -8,6 +8,12 @@ import './__controls-block/__button/menu-view__controls-block__button.scss';
 
 import BaseView from "../BaseView";
 export default class MenuView extends BaseView {
+    /**
+     *
+     * @param node - узел
+     * @param storage - память
+     * @param router - роутер
+     */
     constructor(node, storage, router) {
         super(node);
         this.node = node;
@@ -19,6 +25,9 @@ export default class MenuView extends BaseView {
      * Отрисовка меню
      */
     render() {
+        super.renderView();
+        super.destroyView();
+
         const instr = {
             title: {
                 type: 'a',

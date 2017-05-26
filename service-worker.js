@@ -13,10 +13,15 @@ const CACHE_URLS = [
     '/leaderboard',
     '/about',
     '/game',
+    '/manifest.json',
     '/src/music/Serious_Sam-_The_Second_Encounter-War.mp3',
     '/src/three-models/player.json',
     '/dist/app.bundle.css',
-    '/dist/app.bundle.js'
+    '/dist/app.bundle.js',
+    '/dist/app.bundle.min.js',
+    '/src/fonts/mainFont.ttf',
+    '/src/img/soundon.png',
+    '/src/img/soundoff.png',
 ];
 
 self.addEventListener('install', (event) => {
@@ -34,8 +39,6 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-    console.warn('fetch!!');
-
     event.respondWith(
         // ищем запрашиваемый ресурс в хранилище кэша
         caches.match(event.request).then(function(cachedResponse) {

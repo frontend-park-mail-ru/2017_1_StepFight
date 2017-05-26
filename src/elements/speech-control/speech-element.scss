@@ -1,0 +1,29 @@
+@mixin game-controls-transition() {
+  $settings: all 0.5s ease;
+  -webkit-transition: $settings;
+  -moz-transition: $settings;
+  -o-transition: $settings;
+  transition: $settings;
+}
+
+.speech-element {
+  height: 80px;
+  border-radius: 3px;
+  justify-content: space-around;
+  margin-left: 5px;
+  flex-grow: 1;
+  background-color: #37a449;
+  @include game-controls-transition();
+  cursor: pointer;
+
+  img {
+    margin-top: 10px;
+  }
+  &:hover {
+    background-color: #3ebe51;
+  }
+}
+
+.speech-element_active{
+  background-color: #a41c21 !important;
+}
