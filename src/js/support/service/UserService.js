@@ -50,7 +50,7 @@ export default class UserService {
         let headers = {'Content-Type': 'application/json'};
         return new Promise((resolve, reject) => {
             this._createRequest(address, headers, 'POST', body).then(response => {
-                resolve({result: 'success'});
+                resolve(response);
             }).catch(e => {
                 if(!e){
                     reject({result: 'no-conn'});

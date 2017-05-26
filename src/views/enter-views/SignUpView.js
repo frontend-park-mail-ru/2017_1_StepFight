@@ -198,6 +198,7 @@ export default class SignUpView extends BaseView{
                 this._showProgressBar();
 
                 new UserService().signup(body).then(response => {
+                    this.storage.user = response.user;
                     this._clearFields();
                     this._hideProgressBar();
                     IziToast.success({
