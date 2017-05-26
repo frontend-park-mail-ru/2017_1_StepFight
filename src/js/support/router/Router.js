@@ -34,10 +34,9 @@ export default class Router {
         });
 
         console.log(location.href.match(/localhost/i));
-        if (location.href !== 'https:' && location.href.match(/localhost/i) === null) {
-            location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+        if (location.protocol !== 'https:' && location.href.match(/localhost/i) === null) {
+            path = 'https:' + window.location.href.substring(window.location.protocol.length);
         }
-
         this.go(document.location.pathname);
     }
 
