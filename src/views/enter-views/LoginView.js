@@ -198,8 +198,8 @@ export default class LoginView extends BaseView {
         this.vkAuth.addEventListener('click', (event) => {
             event.preventDefault();
             VK.Auth.getLoginStatus((response) => {
-                if (response.session) {
-                    console.warn(response.session);
+                if (response) {
+                    console.warn(response);
                 }
                 else {
                     VK.Auth.login(null, VK.access.FRIENDS);
