@@ -19,6 +19,7 @@ export default class GameTimer {
     }
 
     start() {
+        this.show();
         return new Promise((resolve) => {
             this.timeDown = new Date().getTime();
             this.timeDown = this.timeDown + 30000;
@@ -37,6 +38,16 @@ export default class GameTimer {
                 }
             }, 1000);
         });
+    }
+
+    show() {
+        setTimeout(() => {
+            this.timeText.classList.remove('hidden');
+        }, 1000);
+    }
+
+    hidden() {
+        this.timeText.classList.add('hidden');
     }
 
     cancel() {

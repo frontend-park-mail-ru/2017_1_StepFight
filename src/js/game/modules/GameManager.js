@@ -148,6 +148,8 @@ export default class GameManager {
      * Запустить таймер
      */
     startMpTimer(delay) {
+        this.scene.timer.hidden();
+        this.scene.timer.cancel();
         setTimeout(() => {
             this.ws.send(JSON.stringify({id: this._gameId}));
             this.scene.timer.start().then(() => {
