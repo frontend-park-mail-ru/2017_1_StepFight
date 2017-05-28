@@ -118,7 +118,7 @@ export default class LoginView extends BaseView {
 
 
             this._initListener();
-        }, 500);
+        }, 0);
     }
 
     /**
@@ -158,7 +158,7 @@ export default class LoginView extends BaseView {
             this.btnLogin.hidden = false;
             this.vkAuth.hidden = false;
             this.btnLogin.parentNode.removeChild(this.btnLogin.nextElementSibling);
-        }, 500);
+        }, 0);
     }
 
     /**

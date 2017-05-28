@@ -36,3 +36,33 @@
     right: 15px;
   }
 }
+
+.about-view__name-list {
+  font-family: 'Orbitron', sans-serif;
+  color: white;
+  list-style-type: none;
+  padding: 0;
+  li {
+    text-transform: uppercase;
+    font-size: 20px;
+    cursor: pointer;
+    &:hover {
+
+    }
+  }
+}
+
+$color-text: #ede40c;
+$color-border: #ed000d;
+.about-view__subtitle {
+  text-decoration: none;
+  text-align: center;
+  text-shadow: 3px 0 0 $color-border, -3px 0 0 $color-border, 0 3px 0 $color-border, 0 -3px 0 $color-border;
+  font-family: mainFont, sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 30px;
+  color: $color-text;
+  border-width: 5px;
+  margin-bottom: 20px;
+}

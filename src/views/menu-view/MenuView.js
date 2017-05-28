@@ -26,7 +26,7 @@ export default class MenuView extends BaseView {
      */
     render() {
         super.renderView();
-        super.destroyView();
+        //super.destroyView();
 
         const instr = {
             title: {

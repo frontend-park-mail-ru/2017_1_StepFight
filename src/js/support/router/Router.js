@@ -15,6 +15,14 @@ export default class Router {
         this.routes = {};
         this.currView = null;
 
+        window.onbeforeunload = function(e) {
+            if(document.location.pathname === "/game"){
+                let dialogText = 'Dialog text here';
+                e.returnValue = dialogText;
+                return dialogText;
+            }
+        };
+
         window.onpopstate = (event) => {
             this.go(document.location.pathname, false);
         };
@@ -45,7 +53,7 @@ export default class Router {
     go(path, isToHistory, gameStrategy) {
         path = this._checkOffline(path);
         if (isToHistory) {
-            window.history.pushState({}, '', path);
+            window.history.pushState({path: path}, '', path);
         }
         if (this.currView) {
             this.currView.destroyView();

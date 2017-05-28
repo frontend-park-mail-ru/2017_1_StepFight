@@ -16,7 +16,6 @@ export default class GameView extends BaseView{
         this.node = node;
         this.storage = storage;
         this.router = router;
-
     }
 
     /**

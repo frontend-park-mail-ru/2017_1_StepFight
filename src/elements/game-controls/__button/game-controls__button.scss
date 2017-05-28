@@ -31,3 +31,18 @@
     right: 15px;
   }
 }
+
+
+.game-controls__button_help{
+  text-decoration: none;
+  font-family: 'Cabin', sans-serif;
+  -webkit-transition: all 0.5s ease;
+  cursor: pointer;
+  text-transform: uppercase;
+  color: white;
+  margin: 3px;
+
+  &:hover{
+    color: $colorButtonChooseBg;
+  }
+}

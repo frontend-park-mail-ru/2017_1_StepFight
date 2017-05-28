@@ -141,7 +141,7 @@ export default class SignUpView extends BaseView{
             this.vkAuth = document.getElementById('vk-auth');
 
             this._initListener();
-        }, 500);
+        }, 0);
     }
 
     /**
@@ -181,7 +181,7 @@ export default class SignUpView extends BaseView{
             this.btnSignUp.hidden = false;
             this.vkAuth.hidden = false;
             this.btnSignUp.parentNode.removeChild(this.btnSignUp.nextElementSibling);
-        }, 500);
+        }, 0);
     }
 
     /**

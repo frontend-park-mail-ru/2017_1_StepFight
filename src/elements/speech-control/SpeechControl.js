@@ -2,6 +2,7 @@
  * Created by Denis on 21.05.2017.
  */
 import "./speech-element.scss";
+import StepObject from "../../js/game/object/StepObject";
 
 export default class SpeechControl {
     constructor(node) {
@@ -31,7 +32,7 @@ export default class SpeechControl {
 
         this.button.addEventListener('click', (event) => {
             if (this.isActive) {
-                this.speechRecognition.stop();
+                //this.speechRecognition.stop();
             }
             else {
                 this.speechRecognition.start({
@@ -52,9 +53,9 @@ export default class SpeechControl {
     }
 
     _errorRecognize(err) {
+        this._finishAnimation();
         console.warn(err);
         this.isActive = false;
-        this._finishAnimation();
     }
 
     _statusRecognize(sent_bytes, sent_packages, processed, format) {
@@ -72,8 +73,9 @@ export default class SpeechControl {
 
     _analiseSpeech(text, done, merge, words, biometry) {
         if (done && text !== ''){
-            console.warn(`RESULT=${text}`);
+            this._analiseText(text);
             this.speechRecognition.stop();
+            console.warn(biometry);
         }
         /*console.log("Распознанный текст: " + text);
         console.log("Является ли результат финальным:" + done);
@@ -106,6 +108,51 @@ export default class SpeechControl {
         this.button.classList.remove('speech-element_active');
         if (typeof this.buttonAnimation !== 'undefined')
             this.buttonAnimation.cancel();
+    }
+
+    _analiseText(text){
+        let stepObj = new StepObject();
+        console.warn(`RESULT=${text}`);
+        let textWOSpaces = text.replace(/\s/g, '');
+        console.warn("РУКА="+this._prefixFunction("ударрукой", textWOSpaces));
+        console.warn("НОГА="+this._prefixFunction("ударногой", textWOSpaces));
+        console.warn("ГОЛОВА="+this._prefixFunction("ударголовой", textWOSpaces));
+        console.warn("В ГОЛОВУ="+this._prefixFunction("вголову", textWOSpaces));
+        console.warn("В ГОЛОВУ="+this._prefixFunction("голову", textWOSpaces));
+        console.warn("БЛОК ГОЛОВУ="+this._prefixFunction("блокголовы", textWOSpaces));
+
+    }
+
+    _prefixFunction(sub, string) {
+        const s = sub + '@' + string;
+
+        let maxLength = 0;
+        const n = s.length;
+        let prefixArr = new Array(n);
+
+        prefixArr[0] = 0;
+        if(s[0] === s[1])
+            prefixArr[1] = 1;
+
+        for(let i = 1; i < n; i++){
+            let j = prefixArr[i-1];
+            while((j>0) && (s[i] !== s[j])){
+                j = prefixArr[j-1];
+            }
+
+            if(s[i] === s[j]){
+                j++;
+                if(j > maxLength){
+                    maxLength = j;
+                }
+            }
+
+            prefixArr[i] = j;
+        }
+
+        console.log("maxLength="+maxLength);
+        console.log("sub.length="+sub.length);
+        return maxLength/sub.length;
     }
 
 }

@@ -5,6 +5,8 @@ import "./game-controls.scss";
 import "./__button/game-controls__button.scss";
 import "./__action-button/game-controls__action-button.scss";
 import SpeechControl from "../speech-control/SpeechControl";
+import "sweetalert/dist/sweetalert.css";
+import swal from "sweetalert";
 
 export default class GameControls {
     constructor(node, gameActionModal, managerContext) {
@@ -43,9 +45,31 @@ export default class GameControls {
         this.btnStepText = document.createElement('p');
         this.btnStepText.innerText = 'Create step';
         this.btnStep.appendChild(this.btnStepText);
-
         container.appendChild(this.btnStep);
+
+        this.btnHelp = document.createElement('h2');
+        this.btnHelp.setAttribute('class', 'game-controls__button_help');
+        this.btnHelp.innerText = 'help';
+        container.appendChild(this.btnHelp);
+
         this.node.appendChild(container);
+        this.initHelpListener();
+    }
+
+    initHelpListener() {
+        this.btnHelp.addEventListener('click', (event) => {
+            swal({
+                title: "HOW TO USE",
+                text: "<h3>Keywords in speech:</h3>\n " +
+                "<ul class='keywords'>" +
+                "<li>Ударить Рукой|Ногой|Головой</li>" +
+                "<li>В тело|В голову</li>" +
+                "<li>Блок Головы|Тела</li>" +
+                "</ul> ",
+                html: true,
+                animation: 'slide-from-top',
+            });
+        });
     }
 
     /**

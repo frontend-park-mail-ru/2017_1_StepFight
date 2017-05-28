@@ -25,6 +25,8 @@ if (location.protocol !== 'https:' && location.href.match(/localhost/i) === null
     location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
 }
 
+new ServiceWorker().init();
+
 new UserService().getUser().then(user => {
     Storage.user = user;
     startRoute();
@@ -100,8 +102,5 @@ function loadYandexSpeech() {
         window.ya.speechkit.settings.apikey = '36e3d30b-c782-483b-9ffe-13f8a98f17ff';
     };
 }
-
-new ServiceWorker().init();
-
 
 
