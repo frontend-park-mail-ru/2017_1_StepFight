@@ -1,14 +1,14 @@
 /**
  * Created by Denis on 29.03.2017.
  */
-import * as THREE from "three";
+// import B4W from "../../../../vendor/js/b4w.min";
 
-import ObjPerson from "./ObjPerson";
 import GameInfoToast from "../../../elements/game-info-toast/GameInfoToast";
 import ProgressBarTable from "../../../elements/progress-bar-table/progressBarTable";
 import GameResultTable from "../../../elements/game-result-table/GameResultTable";
 import GameTimer from "../../../elements/game-timer/GameTimer";
-const OrbitControls = require('three-orbit-controls')(THREE);
+
+import "./game-scene.scss";
 
 export default class GameScene {
     constructor(node, storage, manager) {
@@ -18,6 +18,9 @@ export default class GameScene {
         this.node = node;
         this.manager = manager;
         this.storage = storage;
+
+        this.app = b4w.require("app");
+        this.data = b4w.require("data");
 
         this._setSize();
     }
@@ -34,10 +37,6 @@ export default class GameScene {
         this.HEGHT = this.fieldSize / 3 * 2 * this.HDim;
     }
 
-    /**
-     * Метод срабатывает, когда окно меняет размер
-     * @private
-     */
     _onWindowResize() {
         let height = window.innerHeight;
 
@@ -46,13 +45,10 @@ export default class GameScene {
 
         this.HEGHT = this.fieldSize / 3 * 2 * this.HDim;
 
-        if (!this.camera || !this.renderer) return;
+        this.container.style.height = `${this.HEGHT}px`;
 
-        this.camera.aspect = this.WIDTH / this.HEGHT;
-        this.camera.updateProjectionMatrix();
-
-        this.renderer.setSize(this.WIDTH, this.HEGHT);
-        console.log(`RESIZE WIDTH = ${this.WIDTH}`);
+       /* console.log(`RESIZE WIDTH = ${this.WIDTH}`);
+        console.log(`RESIZE HEIGHT = ${this.HEGHT}`);*/
     }
 
     /**
@@ -61,51 +57,6 @@ export default class GameScene {
      */
     _initListeners() {
         window.addEventListener('resize', this._onWindowResize.bind(this), false);
-        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    }
-
-    /**
-     * Отрисовка основного контейнера
-     */
-    renderContainer() {
-        this.scene = new THREE.Scene();
-        this.renderer = new THREE.WebGLRenderer({
-            antialias: true,
-            alpha: true
-        });
-
-        this.scene.fog = new THREE.FogExp2(0xffffff, 0.002);
-        this.renderer.setClearColor(this.scene.fog.color);
-
-        this.renderer.setSize(this.WIDTH, this.HEGHT);
-        this._addStylesToContainer();
-
-        this.container = document.createElement('div');
-        this.container.setAttribute('class', 'game-view__container');
-
-        this.container.appendChild(this.renderer.domElement);
-
-        this.node.appendChild(this.container);
-
-        this._addCamera();
-        this._startRenderAnimate();
-        this._initListeners();
-    }
-
-    /**
-     * Удаление основного контейнера
-     */
-    removeContainer() {
-        this.node.removeChild(this.container);
-    }
-
-    /**
-     * Добавить стили для контейнера
-     * @private
-     */
-    _addStylesToContainer() {
-        this.renderer.domElement.setAttribute('class', 'game-view__game-area');
-        this.renderer.domElement.setAttribute('id', 'game-area');
     }
 
     /**
@@ -138,6 +89,10 @@ export default class GameScene {
         }
     }
 
+    _addStyleOnCanvas(){
+        this.canvas = this.node.getElementsByTagName('canvas')[2];
+    }
+
     /**
      * Отрисовка ждущего режима
      * @private
@@ -159,129 +114,47 @@ export default class GameScene {
      */
     _renderGameState() {
         this.progressBarTable.remove();
+        this._renderContainer();
 
-        this.renderContainer();
-
-        this.clearScene();
-        this._animCameraStart();
-        /*this._renderControlArea();
-        this._renderGameActionModal();*/
         this.manager.view.renderControlElements();
 
-        this._renderField();
-        this._renderPlayers();
-        this.refreshScene();
-
         this._renderInfoBars();
+        this._initListeners();
+    }
+
+    _renderContainer(){
+        this.container = document.createElement('div');
+        this.container.setAttribute('id', 'game-container');
+        this.container.setAttribute('class', 'game-container');
+        this.node.appendChild(this.container);
+
+        this._onWindowResize();
+
+        this._renderCanvas();
     }
 
     /**
-     * Нарисовать поле
-     * @private
+     * Отрисовка canvas
      */
-    _renderField() {
-        let axes = new THREE.AxisHelper(20);
-        this.scene.add(axes);
+    _renderCanvas() {
+        this.app.init({
+            canvas_container_id: "game-container",
+            autoresize: true,
+            physics_enabled: true,
+            callback: ()=>{
+                this._addStyleOnCanvas();
+                this.data.load("/src/three-models/animation_all.json", ()=>{
 
-        //дом
-        let geometry = new THREE.IcosahedronGeometry(700, 1);
-        let domeMaterial = new THREE.MeshPhongMaterial({
-            color: 0x35FBE0,
-            shading: THREE.FlatShading,
-            side: THREE.BackSide
-        });
-        let dome = new THREE.Mesh(geometry, domeMaterial);
-        this.scene.add(dome);
-
-        //свет
-        let light = new THREE.DirectionalLight(0x4198B5);
-        light.position.set(1, 1, 1);
-        this.scene.add(light);
-        light = new THREE.DirectionalLight(0x4198B5);
-        light.position.set(1, -1, 0);
-        this.scene.add(light);
-        light = new THREE.SpotLight(0x4198B5);
-        light.position.set(-1, 1, 0);
-        this.scene.add(light);
-
-        let planeGeometry = new THREE.PlaneGeometry(1000, 1000, 40, 40);
-        let planeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff, wireframe: true});
-        let plane = new THREE.Mesh(planeGeometry, planeMaterial);
-        plane.rotation.x = -0.5 * Math.PI;
-        plane.position.set(0, -10, 0);
-        this.scene.add(plane);
-    }
-
-
-    /**
-     * Нарисовать игроков
-     * @private
-     */
-    _renderPlayers() {
-        this.mePerson = new ObjPerson(this.scene, this);
-        this.mePerson.render('left');
-
-        this.opponentPerson = new ObjPerson(this.scene, this);
-        this.opponentPerson.render('right');
-    }
-
-    /**
-     * Добавить камеру
-     * @private
-     */
-    _addCamera() {
-        this.camera = new THREE.PerspectiveCamera(45
-            , this.WIDTH / this.HEGHT, 0.1, 1000);
-
-        this.camera.position.set(0, 25, 80);
-        this.camera.lookAt(this.scene.position);
-    }
-
-    /**
-     * Запуск анимации, отрисовки
-     * @private
-     */
-    _startRenderAnimate() {
-        let render = () => {
-            window.requestAnimationFrame(render);
-            this.refreshScene();
-        };
-        render();
-    }
-
-    /**
-     * Метод обновления, перерисовки сцены
-     */
-    refreshScene() {
-        this.renderer.render(this.scene, this.camera);
-    }
-
-
-    /**
-     * Метод анимации камеры на старте
-     * @private
-     */
-    _animCameraStart() {
-        this.camera.position.set(0, 0, 1000);
-        let render = () => {
-            if (this.camera.position.z > 60) {
-                this.camera.position.z -= 10;
-                this.camera.lookAt(this.scene.position);
-                window.requestAnimationFrame(render);
-            } else if (this.camera.position.y < 30) {
-                this.camera.position.y += 1;
-                this.camera.lookAt(this.scene.position);
-                window.requestAnimationFrame(render);
+                });
             }
-        };
-        render();
+        });
     }
 
     /**
      * Отрисовка таймера
      */
     renderTimer(){
-        this.timer = new GameTimer(this.container);
+        this.timer = new GameTimer(this.node);
         this.timer.render();
     }
 
@@ -290,7 +163,6 @@ export default class GameScene {
      * @private
      */
     _renderResultState() {
-        this.clearScene();
         this.clearView();
 
         this.gameResultTable = new GameResultTable(this.node);
@@ -314,18 +186,10 @@ export default class GameScene {
      * @private
      */
     _renderInfoBars() {
-        this.myInfo = new GameInfoToast(this.container, this.players.me.health, this.players.me.login, 'left');
+        this.myInfo = new GameInfoToast(this.node, this.players.me.health, this.players.me.login, 'left');
         this.myInfo.render();
-        this.opponentInfo = new GameInfoToast(this.container, this.players.opponent.health, this.players.opponent.login, 'right');
+        this.opponentInfo = new GameInfoToast(this.node, this.players.opponent.health, this.players.opponent.login, 'right');
         this.opponentInfo.render();
-    }
-
-    /**
-     * Отчистка сцены(canvas)
-     */
-    clearScene() {
-        this.scene.children.splice(0, this.scene.children.length);
-        this.refreshScene();
     }
 
     /**

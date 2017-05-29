@@ -643,6 +643,8 @@
     text-align: center;
     color: rgba(255, 255, 255, 0.7);
     background-color: rgba(0, 0, 0, 0.3); }
+.game-container {
+  width: 100%; }
 @media (max-width: 800px) {
   .game-view {
     max-width: 100%;
@@ -1034,3 +1036,5 @@ body {
     left: 15px;
     bottom: inherit;
   }*/ }
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAuYnVuZGxlLmNzcyIsInNvdXJjZVJvb3QiOiIifQ==*/
