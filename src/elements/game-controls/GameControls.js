@@ -31,11 +31,11 @@ export default class GameControls {
         this.buttonAddAction.setAttribute('class', 'game-controls__action-button_empty');
         this.actionContainer.appendChild(this.buttonAddAction);
 
-        if (navigator.onLine) {
+       /* if (navigator.onLine) {
             this.speechControl = new SpeechControl(this.actionContainer);
             this.speechControl.render();
             this.speechControl.start();
-        }
+        }*/
 
         container.appendChild(this.actionContainer);
 
@@ -60,12 +60,17 @@ export default class GameControls {
         this.btnHelp.addEventListener('click', (event) => {
             swal({
                 title: "HOW TO USE",
-                text: "<h3>Keywords in speech:</h3>\n " +
+               /* text: "<h3>Keywords in speech:</h3>\n " +
                 "<ul class='keywords'>" +
                 "<li>Ударить Рукой|Ногой|Головой</li>" +
                 "<li>В тело|В голову</li>" +
                 "<li>Блок Головы|Тела</li>" +
-                "</ul> ",
+                "</ul> ",*/
+                text: "<div class='game-choose-action__probability-block'><h5>"+
+                "<action>Hit head</action> = <probability>the smallest</probability> probability, damage is the <damage>biggest</damage>.</br>" +
+                "<action>Hit arm</action> = <probability>the biggest</probability> probability, damage is the <damage>smallest</damage>.</br>" +
+                "<action>Hit leg</action> = <probability>average</probability> probability, damage is <damage>average</damage>.</br>" +
+                "</h5></div>",
                 html: true,
                 animation: 'slide-from-top',
             });

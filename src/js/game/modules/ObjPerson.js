@@ -2,43 +2,68 @@
  * Created by Denis on 05.04.2017.
  */
 export default class ObjPerson {
-    constructor(scene, sceneContext) {
-        this.scene = scene;
-        this.sceneContext = sceneContext;
+    constructor(m_anim, obj) {
+        this.obj = obj;
+        this.m_anim = m_anim;
+        //console.warn(this.m_anim.get_anim_names(obj));
+        this._renderOnStart();
     }
 
-    /**
-     * Отрисовка персонажа
-     * @param partOf - с какой части поля
-     */
-    render(partOf) {
-        this.partOf = partOf;
-        this._renderBodyOnStart();
+    _renderOnStart() {
+        this.m_anim.stop(this.obj);
     }
 
-
-    /**
-     * Отрисовка персонажа на начальных позициях
-     * @private
-     */
-    _renderBodyOnStart() {
-
-    }
-
-    getBones() {
-
-    }
-
-    getBonesNames() {
-
-    }
-
-
-    _moveToPos(position) {
-
-    }
-
-    depnut() {
-
+    play(obj){
+        return new Promise((resolve)=>{
+            let command = '';
+            switch (obj.action){
+                case 'hit':{
+                    command+='Attack';
+                    break;
+                }
+                case 'block':{
+                    command+='Block';
+                    break;
+                }
+            }
+            switch (obj.method){
+                case 'arm':{
+                    command+='_Arm';
+                    break;
+                }
+                case 'leg':{
+                    command+='_Leg';
+                    break;
+                }
+                case 'head':{
+                    command+='_Head';
+                    break;
+                }
+            }
+            switch (obj.target){
+                case 'body':{
+                    command+='_Body';
+                    break;
+                }
+                case 'head':{
+                    command+='_Head';
+                    break;
+                }
+            }
+            switch (obj.result){
+                case true:{
+                    command+='_Success';
+                    break;
+                }
+                case false:{
+                    command+='_Fail';
+                    break;
+                }
+            }
+            this.m_anim.apply(this.obj, command);
+            this.m_anim.play(this.obj, ()=>{
+                resolve();
+            });
+        });
     }
 }

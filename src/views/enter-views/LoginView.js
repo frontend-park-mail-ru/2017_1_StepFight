@@ -77,7 +77,7 @@ export default class LoginView extends BaseView {
                     {
                         type: 'а',
                         attrs: {
-                            class: 'form__vk-button',
+                            class: 'form__vk-button hidden',
                             id: 'vk-auth'
                         },
                         text: 'Вход через VK'

@@ -1,14 +1,13 @@
 /**
  * Created by Denis on 29.03.2017.
  */
-// import B4W from "../../../../vendor/js/b4w.min";
-
 import GameInfoToast from "../../../elements/game-info-toast/GameInfoToast";
 import ProgressBarTable from "../../../elements/progress-bar-table/progressBarTable";
 import GameResultTable from "../../../elements/game-result-table/GameResultTable";
 import GameTimer from "../../../elements/game-timer/GameTimer";
 
 import "./game-scene.scss";
+import ObjPerson from "./ObjPerson";
 
 export default class GameScene {
     constructor(node, storage, manager) {
@@ -114,6 +113,7 @@ export default class GameScene {
      */
     _renderGameState() {
         this.progressBarTable.remove();
+        this.progressBarTable.render({conf: [{text: 'Loading'}]});
         this._renderContainer();
 
         this.manager.view.renderControlElements();
@@ -144,7 +144,18 @@ export default class GameScene {
             callback: ()=>{
                 this._addStyleOnCanvas();
                 this.data.load("/src/three-models/animation_all.json", ()=>{
+                    this.progressBarTable.remove();
 
+                    this.m_scenes = b4w.require("scenes");
+                    this.m_cam  = b4w.require("camera");
+                    this.m_anim  = b4w.require("animation");
+                    this.active_scene = this.m_scenes.get_active();
+                    this.active_camera = this.m_scenes.get_active_camera();
+
+                    this.playerMe = new ObjPerson(this.m_anim, this.m_scenes.get_object_by_name("Player_1"));
+                    this.playerOpponent = new ObjPerson(this.m_anim, this.m_scenes.get_object_by_name("Player_2"));
+
+                    // console.warn(this.m_scenes.get_all_objects());
                 });
             }
         });

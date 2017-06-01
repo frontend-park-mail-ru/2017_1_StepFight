@@ -135,7 +135,7 @@ export default class GameChooseAction {
         containerHitTargetControls.appendChild(this.buttonHitTargetBody);
 
         /*--------------create probability block info--------------*/
-        this.probabilityContainer = document.createElement('div');
+        /*this.probabilityContainer = document.createElement('div');
         this.probabilityContainer.setAttribute('class', 'game-choose-action__probability-block');
         contentContainer.appendChild(this.probabilityContainer);
 
@@ -146,7 +146,7 @@ export default class GameChooseAction {
                                         <action>Hit arm</action> = <probability>the biggest</probability> probability, damage is the <damage>smallest</damage>.</br>
                                           <action>Hit leg</action> = <probability>average</probability> probability, damage is <damage>average</damage>.</br>`;
 
-
+*/
         /*--------------create button choose--------------*/
         this.btnChoose = document.createElement('div');
         this.btnChoose.setAttribute('class', 'game-choose-action__button');

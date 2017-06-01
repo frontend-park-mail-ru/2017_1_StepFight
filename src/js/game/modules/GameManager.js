@@ -139,7 +139,7 @@ export default class GameManager {
             this.startMpGameProcess(opponentLogin);
             this.startMpTimer(0);
         } else if ('id' in data) {
-            this.stepResultAnalyze(data);
+            this.stepResultAnalyzeFromWs(data);
             this.startMpTimer(5);
         }
     }
@@ -165,7 +165,7 @@ export default class GameManager {
      * Обработка шагов(достаем действия шагов из объекта)
      * @param data
      */
-    stepResultAnalyze(data) {
+    stepResultAnalyzeFromWs(data) {
         let myAction = new StepObject();
         let opponentAction = new StepObject();
         let myDamage = 0;
@@ -190,6 +190,8 @@ export default class GameManager {
         this.strategy.stepAnalyze(myAction, opponentAction, myDamage, opponentDamage, myHealth, opponentHealth);
         this.view.gameControls.setButtonStepStatus(true);
     }
+
+
 
     /**
      * Закрыть ws соединение

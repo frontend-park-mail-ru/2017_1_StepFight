@@ -35,7 +35,7 @@ new UserService().getUser().then(user => {
     startRoute();
 });
 
-loadYandexSpeech();
+//loadYandexSpeech();
 loadVk();
 
 new MusicControls().render();

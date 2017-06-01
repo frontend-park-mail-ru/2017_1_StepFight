@@ -18,7 +18,7 @@ export default class SinglePlayerStrategy {
      * Игровой цикл
      */
     gameLoop() {
-        if (this.me.health <= 0) {
+        if (this.me.health <= 0 && this.animationDone) {
             this.finishGameLoop();
             this.manager.finish({
                 win: false,
@@ -27,7 +27,7 @@ export default class SinglePlayerStrategy {
                 win: true,
                 object: this.opponent
             });
-        } else if (this.opponent.health <= 0) {
+        } else if (this.opponent.health <= 0 && this.animationDone) {
             this.finishGameLoop();
             this.manager.finish({
                 win: true,
@@ -107,21 +107,80 @@ export default class SinglePlayerStrategy {
     stepAnalyser(myAction, opponentAction) {
         let myDamage = this.getDamage('my', myAction, opponentAction);
         let opponentDamage = this.getDamage('opponent', myAction, opponentAction);
+        this.animationDone = false;
 
-        if (myDamage !== 0) {
-            this.logIt(`I missed hit by ${opponentAction.hit.method} to ${opponentAction.hit.target}`);
-        } else {
-            this.logIt(`Everything okey with ME!`);
+        function analyseMyDamage() {
+            return new Promise((resolve) => {
+                let myPlay = {
+                    action: 'block',
+                    target: myAction.block.method,
+                    method: opponentAction.hit.method,
+                    result: false
+                };
+                let opponentPlay = {
+                    action: 'hit',
+                    target: opponentAction.hit.target,
+                    method: opponentAction.hit.method,
+                    result: true
+                };
+                if (myDamage !== 0) {
+                    this.manager.scene.playerMe.play(myPlay).then(() => {
+                    });
+                    this.manager.scene.playerOpponent.play(opponentPlay).then(() => {
+                        resolve();
+                    });
+                    this.logIt(true, `I missed hit by ${opponentAction.hit.method} to ${opponentAction.hit.target}`);
+                } else {
+                    myPlay.result = true;
+                    opponentPlay.result = false;
+                    this.manager.scene.playerMe.play(myPlay).then(() => {
+                    });
+                    this.manager.scene.playerOpponent.play(opponentPlay).then(() => {
+                        resolve();
+                    });
+                    this.logIt(true, `Everything okey with ME!`);
+                }
+                this._updateMyHealth(-myDamage);
+            });
         }
 
-        if (opponentDamage !== 0) {
-            this.logIt(`Opponent missed hit by ${myAction.hit.method} to ${myAction.hit.target}`);
-        } else {
-            this.logIt(`Everything okey with OPPONENT!`);
+        function analyseOpponentDamage() {
+            let myPlay = {
+                action: 'hit',
+                target: myAction.hit.target,
+                method: myAction.hit.method,
+                result: true
+            };
+            let opponentPlay = {
+                action: 'block',
+                target: opponentAction.block.method,
+                method: myAction.hit.method,
+                result: false
+            };
+            if (opponentDamage !== 0) {
+                this.manager.scene.playerMe.play(myPlay).then(() => {
+                });
+                this.manager.scene.playerOpponent.play(opponentPlay).then(() => {
+                });
+                this.logIt(false, `Opponent missed hit by ${myAction.hit.method} to ${myAction.hit.target}`);
+            } else {
+                myPlay.result = false;
+                opponentPlay.result = true;
+                this.manager.scene.playerMe.play(myPlay).then(() => {
+                });
+                this.manager.scene.playerOpponent.play(opponentPlay).then(() => {
+                    this.animationDone = true;
+                });
+                this.logIt(false, `Everything okey with OPPONENT!`);
+            }
+            this._updateOpponentHealth(-opponentDamage);
         }
 
-        this._updateMyHealth(-myDamage);
-        this._updateOpponentHealth(-opponentDamage);
+        let fMyDamage = analyseMyDamage.bind(this);
+        let fOpponentDamage = analyseOpponentDamage.bind(this);
+        fMyDamage().then(() => {
+            fOpponentDamage();
+        });
     }
 
     /**
@@ -198,7 +257,7 @@ export default class SinglePlayerStrategy {
         } else {
             hitP = this.getProbability('hit', actionForAttacking.hit.method);
             checkP = this.checkProbability(hitP);
-            damage = checkP ? (1 - hitP/2) * this.BASE_DAMAGE : 0;
+            damage = checkP ? (1 - hitP / 2) * this.BASE_DAMAGE : 0;
         }
         console.warn(`hitP=${hitP} blockP=${blockP} checkP=${checkP} damage=${Math.round(damage)}`);
         return Math.round(damage);
@@ -206,15 +265,17 @@ export default class SinglePlayerStrategy {
 
     /**
      * Вспомогательный метод, заменяет анимацию
+     * @param isMe
      * @param text
      * @private
      */
-    logIt(text) {
+    logIt(isMe, text) {
         console.log(text);
+        let position = (isMe) ? 'topLeft' : 'topRight';
         IziToast.info({
             title: text,
-            position: 'bottomRight',
-            timeout: 10000,
+            position: position,
+            timeout: 5000,
             icon: ''
         })
     }

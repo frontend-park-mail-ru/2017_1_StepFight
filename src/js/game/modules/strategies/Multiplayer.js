@@ -113,22 +113,73 @@ export default class MultiPlayerStrategy {
      * @param opponentHp
      */
     stepAnalyze(myAction, opponentAction, myDamage, opponentDamage, myHp, opponentHp) {
-        this.clearMyActionsArray();
+        this.clearMyActionStep();
 
-        if (myDamage !== 0) {
-            this._logStep(`I missed hit by ${opponentAction.hit.method} to ${opponentAction.hit.target}`);
-        } else {
-            this._logStep(`Everything okey with ME!`);
+        function analyseMyDamage() {
+            return new Promise((resolve) => {
+                let myPlay = {
+                    action: 'block',
+                    target: myAction.block.method,
+                    method: opponentAction.hit.method,
+                    result: false
+                };
+                let opponentPlay = {
+                    action: 'hit',
+                    target: opponentAction.hit.target,
+                    method: opponentAction.hit.method,
+                    result: true
+                };
+                if (myDamage !== 0) {
+                    this.manager.scene.playerMe.play(myPlay).then(() => {});
+                    this.manager.scene.playerOpponent.play(opponentPlay).then(() => {
+                        resolve();
+                    });
+                    this._logStep(`I missed hit by ${opponentAction.hit.method} to ${opponentAction.hit.target}`);
+                } else {
+                    myPlay.result = true;
+                    opponentPlay.result = false;
+                    this.manager.scene.playerMe.play(myPlay).then(() => {});
+                    this.manager.scene.playerOpponent.play(opponentPlay).then(() => {
+                        resolve();
+                    });
+                    this._logStep(`Everything okey with ME!`);
+                }
+                this._updateMyHealth(myHp);
+            });
         }
 
-        if (opponentDamage !== 0) {
-            this._logStep(`Opponent missed hit by ${myAction.hit.method} to ${myAction.hit.target}`);
-        } else {
-            this._logStep(`Everything okey with OPPONENT!`);
+        function analyseOpponentDamage() {
+            let myPlay = {
+                action: 'hit',
+                target: myAction.hit.target,
+                method: myAction.hit.method,
+                result: true
+            };
+            let opponentPlay = {
+                action: 'block',
+                target: opponentAction.block.method,
+                method: myAction.hit.method,
+                result: false
+            };
+            if (opponentDamage !== 0) {
+                this.manager.scene.playerMe.play(myPlay).then(() => {});
+                this.manager.scene.playerOpponent.play(opponentPlay).then(() => {});
+                this._logStep(`Opponent missed hit by ${myAction.hit.method} to ${myAction.hit.target}`);
+            } else {
+                myPlay.result = false;
+                opponentPlay.result = true;
+                this.manager.scene.playerMe.play(myPlay).then(() => {});
+                this.manager.scene.playerOpponent.play(opponentPlay).then(() => {});
+                this._logStep(`Everything okey with OPPONENT!`);
+            }
+            this._updateOpponentHealth(opponentHp);
         }
 
-        this._updateMyHealth(myHp);
-        this._updateOpponentHealth(opponentHp);
+        let fMyDamage = analyseMyDamage.bind(this);
+        let fOpponentDamage = analyseOpponentDamage.bind(this);
+        fMyDamage().then(()=>{
+            fOpponentDamage();
+        });
     }
 
     /**
@@ -179,7 +230,7 @@ export default class MultiPlayerStrategy {
     /**
      * Отчисить шаг
      */
-    clearMyActionsArray() {
+    clearMyActionStep() {
         this.myStep = null;
         this.manager.view.gameControls.buttonAddAction.classList.remove('game-controls__action-button_fill');
         this.manager.view.gameControls.buttonAddAction.classList.add('game-controls__action-button_empty');
