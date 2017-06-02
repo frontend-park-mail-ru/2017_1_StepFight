@@ -76,14 +76,19 @@ export default class MenuView extends BaseView {
                 }
             ]
         };
+        let container = document.createElement('div');
+        container.classList.add('menu-view');
+
         let title = this._getTitle(instr.title);
-        this.node.appendChild(title);
+        container.appendChild(title);
         let elemArray = this._getElems(instr.elements);
 
         let controlsBlock = document.createElement('div');
         controlsBlock.setAttribute('class', 'menu-view__controls-block');
         this._elemsAppendTo(elemArray, controlsBlock);
-        this.node.appendChild(controlsBlock);
+
+        container.appendChild(controlsBlock);
+        this.node.appendChild(container);
     }
 
     /**

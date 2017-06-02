@@ -105,7 +105,7 @@ export default class AboutView extends BaseView {
         ]
     }) {
         super.renderView();
-        super.destroyView();
+        //super.destroyView();
 
         ElementCreator.create(config, this.node);
         this._initListener();

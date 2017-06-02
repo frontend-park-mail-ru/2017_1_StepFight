@@ -18,6 +18,7 @@ export default class SinglePlayerStrategy {
      * Игровой цикл
      */
     gameLoop() {
+        //console.log(`${this.me.health} ${this.animationDone}`);
         if (this.me.health <= 0 && this.animationDone) {
             this.finishGameLoop();
             this.manager.finish({
@@ -59,8 +60,7 @@ export default class SinglePlayerStrategy {
                 this.manager.view.gameControls.buttonAddAction.classList.remove('game-controls__action-button_empty');
                 this.manager.view.gameControls.buttonAddAction.classList.add('game-controls__action-button_fill');
 
-                let btnText = `hit by ${actionObj.hit.method} to ${actionObj.hit.target} and block ${actionObj.block.method}`;
-                this.manager.view.gameControls.buttonAddAction.innerText = btnText;
+                this.manager.view.gameControls.buttonAddAction.innerText = `hit by ${actionObj.hit.method} to ${actionObj.hit.target} and block ${actionObj.block.method}`;
             }
         });
     }
@@ -129,7 +129,7 @@ export default class SinglePlayerStrategy {
                     this.manager.scene.playerOpponent.play(opponentPlay).then(() => {
                         resolve();
                     });
-                    this.logIt(true, `I missed hit by ${opponentAction.hit.method} to ${opponentAction.hit.target}`);
+                    this.logIt(true, 'red', `I missed hit by ${opponentAction.hit.method} to ${opponentAction.hit.target}`);
                 } else {
                     myPlay.result = true;
                     opponentPlay.result = false;
@@ -138,7 +138,7 @@ export default class SinglePlayerStrategy {
                     this.manager.scene.playerOpponent.play(opponentPlay).then(() => {
                         resolve();
                     });
-                    this.logIt(true, `Everything okey with ME!`);
+                    this.logIt(true, 'blue', `Everything okey with ME!`);
                 }
                 this._updateMyHealth(-myDamage);
             });
@@ -161,8 +161,9 @@ export default class SinglePlayerStrategy {
                 this.manager.scene.playerMe.play(myPlay).then(() => {
                 });
                 this.manager.scene.playerOpponent.play(opponentPlay).then(() => {
+                    this.animationDone = true;
                 });
-                this.logIt(false, `Opponent missed hit by ${myAction.hit.method} to ${myAction.hit.target}`);
+                this.logIt(false, 'red', `Opponent missed hit by ${myAction.hit.method} to ${myAction.hit.target}`);
             } else {
                 myPlay.result = false;
                 opponentPlay.result = true;
@@ -171,7 +172,7 @@ export default class SinglePlayerStrategy {
                 this.manager.scene.playerOpponent.play(opponentPlay).then(() => {
                     this.animationDone = true;
                 });
-                this.logIt(false, `Everything okey with OPPONENT!`);
+                this.logIt(false, 'blue', `Everything okey with OPPONENT!`);
             }
             this._updateOpponentHealth(-opponentDamage);
         }
@@ -266,18 +267,33 @@ export default class SinglePlayerStrategy {
     /**
      * Вспомогательный метод, заменяет анимацию
      * @param isMe
+     * @param color
      * @param text
      * @private
      */
-    logIt(isMe, text) {
-        console.log(text);
+    logIt(isMe, color, text) {
         let position = (isMe) ? 'topLeft' : 'topRight';
-        IziToast.info({
-            title: text,
-            position: position,
-            timeout: 5000,
-            icon: ''
-        })
+
+        switch (color){
+            case ('red'):{
+                IziToast.error({
+                    title: text,
+                    position: position,
+                    timeout: 5000,
+                    icon: ''
+                });
+                break;
+            }
+            case ('blue'):{
+                IziToast.success({
+                    title: text,
+                    position: position,
+                    timeout: 5000,
+                    icon: ''
+                });
+                break;
+            }
+        }
     }
 
     /**

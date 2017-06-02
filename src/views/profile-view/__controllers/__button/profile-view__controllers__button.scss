@@ -52,6 +52,8 @@
   padding: 3px 25px;
   margin: auto auto;
   text-align: center;
+  height: 50px;
+  line-height: 50px;
   &:hover {
     background: $colorButtonHoverLogoutBg;
     color: $colorButtonHoverLogoutText;

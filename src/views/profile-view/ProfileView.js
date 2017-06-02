@@ -202,7 +202,7 @@ export default class ProfileView extends BaseView {
         });
 
         /*create resources div*/
-        let resourcesDiv = document.createElement('div');
+        /*let resourcesDiv = document.createElement('div');
         resourcesDiv.setAttribute('class', 'profile-view__resources');
 
         let arrCrystals = [
@@ -222,10 +222,10 @@ export default class ProfileView extends BaseView {
             elem.innerText = `${params.value}`;
             div.appendChild(elem);
             resourcesDiv.appendChild(div);
-        });
+        });*/
 
         this.node.appendChild(userDiv);
-        this.node.appendChild(resourcesDiv);
+        //this.node.appendChild(resourcesDiv);
         this.node.appendChild(controllersDiv);
 
         this.hrefLogout = document.createElement('div');

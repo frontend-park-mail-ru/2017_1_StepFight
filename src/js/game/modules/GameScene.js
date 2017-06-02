@@ -142,18 +142,18 @@ export default class GameScene {
             autoresize: true,
             physics_enabled: true,
             callback: ()=>{
-                this._addStyleOnCanvas();
+                //this._addStyleOnCanvas();
                 this.data.load("/src/three-models/animation_all.json", ()=>{
                     this.progressBarTable.remove();
 
-                    this.m_scenes = b4w.require("scenes");
-                    this.m_cam  = b4w.require("camera");
-                    this.m_anim  = b4w.require("animation");
-                    this.active_scene = this.m_scenes.get_active();
-                    this.active_camera = this.m_scenes.get_active_camera();
+                    let m_scenes = b4w.require("scenes");
+                    //this.m_cam  = b4w.require("camera");
+                    let m_anim  = b4w.require("animation");
+                    /*this.active_scene = this.m_scenes.get_active();
+                    this.active_camera = this.m_scenes.get_active_camera();*/
 
-                    this.playerMe = new ObjPerson(this.m_anim, this.m_scenes.get_object_by_name("Player_1"));
-                    this.playerOpponent = new ObjPerson(this.m_anim, this.m_scenes.get_object_by_name("Player_2"));
+                    this.playerMe = new ObjPerson(m_anim, m_scenes.get_object_by_name("Player_1"));
+                    this.playerOpponent = new ObjPerson(m_anim, m_scenes.get_object_by_name("Player_2"));
 
                     // console.warn(this.m_scenes.get_all_objects());
                 });

@@ -15,7 +15,7 @@ export default class MultiPlayerStrategy {
      * Игровой цикл
      */
     gameLoop() {
-        if (this.me.health <= 0) {
+        if (this.me.health <= 0 && this.animationDone) {
             //TODO create rating analyser
             this.finishGameLoop();
             this.manager.finish({
@@ -25,7 +25,7 @@ export default class MultiPlayerStrategy {
                 win: true,
                 object: this.opponent
             });
-        } else if (this.opponent.health <= 0) {
+        } else if (this.opponent.health <= 0 && this.animationDone) {
             this.finishGameLoop();
             this.manager.finish({
                 win: true,
@@ -114,6 +114,7 @@ export default class MultiPlayerStrategy {
      */
     stepAnalyze(myAction, opponentAction, myDamage, opponentDamage, myHp, opponentHp) {
         this.clearMyActionStep();
+        this.animationDone = false;
 
         function analyseMyDamage() {
             return new Promise((resolve) => {
@@ -165,12 +166,14 @@ export default class MultiPlayerStrategy {
                 this.manager.scene.playerMe.play(myPlay).then(() => {});
                 this.manager.scene.playerOpponent.play(opponentPlay).then(() => {});
                 this._logStep(`Opponent missed hit by ${myAction.hit.method} to ${myAction.hit.target}`);
+                this.animationDone = true;
             } else {
                 myPlay.result = false;
                 opponentPlay.result = true;
                 this.manager.scene.playerMe.play(myPlay).then(() => {});
                 this.manager.scene.playerOpponent.play(opponentPlay).then(() => {});
                 this._logStep(`Everything okey with OPPONENT!`);
+                this.animationDone = true;
             }
             this._updateOpponentHealth(opponentHp);
         }
