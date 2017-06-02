@@ -32,16 +32,16 @@ export default class ProfileView extends BaseView {
      */
     _getUser() {
         return new Promise((resolve, reject) => {
-            if (this.storage.user === null) {
+//            if (this.storage.user === null) {
                 new UserService().getUser().then(user => {
                     //window.USER = user;
                     resolve(user);
                 }).catch(err => {
                     reject({});
                 });
-            } else {
+           /* } else {
                 resolve(this.storage.user);
-            }
+            }*/
         });
     }
 
@@ -111,7 +111,11 @@ export default class ProfileView extends BaseView {
      * @private
      */
     _hideViewProgressBar() {
-        this.node.removeChild(this.node.lastChild);
+        try {
+            this.node.removeChild(this.node.lastChild);
+        } catch (e){
+
+        }
     }
 
     /**

@@ -15,6 +15,7 @@ export default class ObjPerson {
 
     play(obj){
         return new Promise((resolve)=>{
+            let sum = 0;
             let command = '';
             switch (obj.action){
                 case 'hit':{
@@ -23,6 +24,10 @@ export default class ObjPerson {
                 }
                 case 'block':{
                     command+='Block';
+                    break;
+                }
+                default: {
+                    sum++;
                     break;
                 }
             }
@@ -39,6 +44,9 @@ export default class ObjPerson {
                     command+='_Head';
                     break;
                 }
+                default: {
+                    sum++;
+                }
             }
             switch (obj.target){
                 case 'body':{
@@ -48,6 +56,9 @@ export default class ObjPerson {
                 case 'head':{
                     command+='_Head';
                     break;
+                }
+                default:{
+                    sum++;
                 }
             }
             switch (obj.result){
@@ -59,15 +70,19 @@ export default class ObjPerson {
                     command+='_Fail';
                     break;
                 }
+                default: {
+                    sum++;
+                }
             }
-            try {
+            //console.warn(`SUM=${sum}`);
+            if(sum>0){
+                this.m_anim.stop(this.obj);
+                resolve();
+            } else {
                 this.m_anim.apply(this.obj, command);
                 this.m_anim.play(this.obj, () => {
                     resolve();
                 });
-            } catch (e){
-                this.m_anim.stop(this.obj);
-                resolve();
             }
         });
     }

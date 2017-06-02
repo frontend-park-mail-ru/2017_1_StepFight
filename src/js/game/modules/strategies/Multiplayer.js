@@ -82,7 +82,7 @@ export default class MultiPlayerStrategy {
     /**
      * Отправить сделанный шаг
      */
-    sendStep(){
+    sendStep() {
         let myActions = this.myStep;
         let send = {
             method: myActions.hit.method,
@@ -98,7 +98,7 @@ export default class MultiPlayerStrategy {
             console.groupEnd();
             this.manager.ws.send(JSON.stringify(send));
             this.manager.view.gameControls.setButtonStepStatus(false);
-        } catch (err){
+        } catch (err) {
             console.error(err);
         }
     }
@@ -116,22 +116,33 @@ export default class MultiPlayerStrategy {
         this.clearMyActionStep();
         this.animationDone = false;
 
-        function analyseMyDamage() {
+        function analyseMyDamage(myPlay = {
+            action: 'block',
+            target: myAction.block.method,
+            method: opponentAction.hit.method,
+            result: false
+        }, opponentPlay = {
+            action: 'hit',
+            target: opponentAction.hit.target,
+            method: opponentAction.hit.method,
+            result: true
+        }) {
             return new Promise((resolve) => {
-                let myPlay = {
-                    action: 'block',
-                    target: myAction.block.method,
-                    method: opponentAction.hit.method,
-                    result: false
-                };
+                /*let myPlay = {
+                 action: 'block',
+                 target: myAction.block.method,
+                 method: opponentAction.hit.method,
+                 result: false
+                 };
                 let opponentPlay = {
-                    action: 'hit',
-                    target: opponentAction.hit.target,
-                    method: opponentAction.hit.method,
-                    result: true
-                };
+                 action: 'hit',
+                 target: opponentAction.hit.target,
+                 method: opponentAction.hit.method,
+                 result: true
+                 };*/
                 if (myDamage !== 0) {
-                    this.manager.scene.playerMe.play(myPlay).then(() => {});
+                    this.manager.scene.playerMe.play(myPlay).then(() => {
+                    });
                     this.manager.scene.playerOpponent.play(opponentPlay).then(() => {
                         resolve();
                     });
@@ -139,7 +150,8 @@ export default class MultiPlayerStrategy {
                 } else {
                     myPlay.result = true;
                     opponentPlay.result = false;
-                    this.manager.scene.playerMe.play(myPlay).then(() => {});
+                    this.manager.scene.playerMe.play(myPlay).then(() => {
+                    });
                     this.manager.scene.playerOpponent.play(opponentPlay).then(() => {
                         resolve();
                     });
@@ -149,29 +161,43 @@ export default class MultiPlayerStrategy {
             });
         }
 
-        function analyseOpponentDamage() {
-            let myPlay = {
-                action: 'hit',
-                target: myAction.hit.target,
-                method: myAction.hit.method,
-                result: true
-            };
-            let opponentPlay = {
-                action: 'block',
-                target: opponentAction.block.method,
-                method: myAction.hit.method,
-                result: false
-            };
+        function analyseOpponentDamage(myPlay = {
+            action: 'hit',
+            target: myAction.hit.target,
+            method: myAction.hit.method,
+            result: true
+        },opponentPlay = {
+            action: 'block',
+            target: opponentAction.block.method,
+            method: myAction.hit.method,
+            result: false
+        }) {
+            /*let myPlay = {
+             action: 'hit',
+             target: myAction.hit.target,
+             method: myAction.hit.method,
+             result: true
+             };
+             let opponentPlay = {
+             action: 'block',
+             target: opponentAction.block.method,
+             method: myAction.hit.method,
+             result: false
+             };*/
             if (opponentDamage !== 0) {
-                this.manager.scene.playerMe.play(myPlay).then(() => {});
-                this.manager.scene.playerOpponent.play(opponentPlay).then(() => {});
+                this.manager.scene.playerMe.play(myPlay).then(() => {
+                });
+                this.manager.scene.playerOpponent.play(opponentPlay).then(() => {
+                });
                 this._logStep(false, 'red', `Opponent missed hit by ${myAction.hit.method} to ${myAction.hit.target}`);
                 this.animationDone = true;
             } else {
                 myPlay.result = false;
                 opponentPlay.result = true;
-                this.manager.scene.playerMe.play(myPlay).then(() => {});
-                this.manager.scene.playerOpponent.play(opponentPlay).then(() => {});
+                this.manager.scene.playerMe.play(myPlay).then(() => {
+                });
+                this.manager.scene.playerOpponent.play(opponentPlay).then(() => {
+                });
                 this._logStep(false, 'blue', `Everything okey with OPPONENT!`);
                 this.animationDone = true;
             }
@@ -180,9 +206,55 @@ export default class MultiPlayerStrategy {
 
         let fMyDamage = analyseMyDamage.bind(this);
         let fOpponentDamage = analyseOpponentDamage.bind(this);
-        fMyDamage().then(()=>{
-            fOpponentDamage();
+
+       /* console.warn(`MY=${this.checkOnNullStep(myAction)}`);
+        console.warn(`OPP=${this.checkOnNullStep(opponentAction)}`);*/
+
+        let checkMy = this.checkOnNullStep(myAction);
+        let checkOpp = this.checkOnNullStep(opponentAction);
+
+        if (checkMy && !checkOpp){
+            fMyDamage({
+                action: 'block',
+                target: opponentAction.hit.target,
+                method: opponentAction.hit.method,
+                result: false
+            }, {
+                action: 'hit',
+                target: opponentAction.hit.target,
+                method: opponentAction.hit.method,
+                result: true
+            });
+        } else if(!checkMy && checkOpp){
+            fOpponentDamage({
+                action: 'hit',
+                target: myAction.hit.target,
+                method: myAction.hit.method,
+                result: true
+            }, {
+                action: 'block',
+                target: myAction.hit.target,
+                method: myAction.hit.method,
+                result: false
+            });
+        } else {
+            fMyDamage().then(() => {
+                fOpponentDamage();
+            });
+        }
+    }
+
+    checkOnNullStep(obj) {
+        let result = false;
+        Object.keys(obj.hit).forEach(key => {
+            if (obj.hit[key] === 'null')
+                result = true;
         });
+        Object.keys(obj.block).forEach(key => {
+            if (obj.hit[key] === 'null')
+                result = true;
+        });
+        return result;
     }
 
     /**
@@ -195,8 +267,8 @@ export default class MultiPlayerStrategy {
     _logStep(isMe, color, text) {
         let position = (isMe) ? 'topLeft' : 'topRight';
 
-        switch (color){
-            case ('red'):{
+        switch (color) {
+            case ('red'): {
                 IziToast.error({
                     title: text,
                     position: position,
@@ -205,7 +277,7 @@ export default class MultiPlayerStrategy {
                 });
                 break;
             }
-            case ('blue'):{
+            case ('blue'): {
                 IziToast.success({
                     title: text,
                     position: position,

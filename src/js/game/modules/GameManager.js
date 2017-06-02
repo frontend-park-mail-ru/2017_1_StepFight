@@ -132,6 +132,20 @@ export default class GameManager {
 
                     break;
                 }
+                case 'go':{
+                    this.startMpTimer(0);
+                    break;
+                }
+                case 'win':{
+                    this.strategy.finishGameLoop();
+                    this.finish({
+                        win: true,
+                        object: this.strategy.me
+                    }, {
+                        win: false,
+                        object: this.strategy.opponent
+                    });
+                }
             }
         } else if ('key' in data) {
             this._gameId = data.key;
@@ -151,7 +165,8 @@ export default class GameManager {
         this.scene.timer.hidden();
         this.scene.timer.cancel();
         setTimeout(() => {
-            this.ws.send(JSON.stringify({id: this._gameId}));
+            this.sendMessageToServer({id: this._gameId});
+            //this.ws.send(JSON.stringify({id: this._gameId}));
             this.scene.timer.start().then(() => {
                 let step = new StepObject();
                 step.init('null', 'null', 'null');
@@ -159,6 +174,10 @@ export default class GameManager {
                 this.strategy.sendStep();
             });
         }, delay * 1000);
+    }
+
+    sendMessageToServer(obj){
+        this.ws.send(JSON.stringify(obj));
     }
 
     /**

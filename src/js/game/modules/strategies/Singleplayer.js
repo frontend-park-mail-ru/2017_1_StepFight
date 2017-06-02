@@ -106,7 +106,7 @@ export default class SinglePlayerStrategy {
      */
     stepAnalyser(myAction, opponentAction) {
         let myDamage = this.getDamage('my', myAction, opponentAction);
-        myDamage = 1000;
+        //myDamage = 1000;
         let opponentDamage = this.getDamage('opponent', myAction, opponentAction);
         this.animationDone = false;
 

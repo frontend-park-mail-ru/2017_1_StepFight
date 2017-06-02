@@ -5,6 +5,7 @@ import "./about-view.scss";
 
 import BaseView from "../BaseView";
 import ElementCreator from "../../js/support/element-creator/ElementCreator";
+
 export default class AboutView extends BaseView {
     constructor(node, storage) {
         super(node);
@@ -41,11 +42,17 @@ export default class AboutView extends BaseView {
                         text: 'Game developed by:'
                     },
                     {
+                        type: 'img',
+                        attrs: {
+                            id: 'img-ept',
+                        }
+                    },
+                    {
                         type: 'ul',
                         attrs: {class: 'about-view__name-list'},
                         elements: [
                             {
-                                type:'li',
+                                type: 'li',
                                 attrs: {id: 'egor'},
                                 text: 'EGOR FOMICHEV'
                             },
@@ -55,18 +62,18 @@ export default class AboutView extends BaseView {
                                 text: 'RISHAT VALITOV'
                             },
                             {
-                                type:'li',
+                                type: 'li',
                                 attrs: {id: 'andrey'},
                                 text: 'ANDREY CHERNOV'
                             },
                             {
-                                type:'li',
+                                type: 'li',
                                 attrs: {id: 'denis'},
                                 text: 'DENIS STEPANOV'
                             }
                         ]
                     },
-                    {
+                    /*{
                         type: 'h2',
                         attrs: {
                             class: 'about-view__subtitle'
@@ -98,7 +105,7 @@ export default class AboutView extends BaseView {
                             }
                         ]
 
-                    }
+                    }*/
                 ]
             }
 
@@ -111,11 +118,24 @@ export default class AboutView extends BaseView {
         this._initListener();
     }
 
-    _initListener(){
+    _initListener() {
+        let imgept = document.getElementById('img-ept');
         let egor = document.getElementById('egor');
+        egor.addEventListener('click', () => {
+            imgept.setAttribute('src', '/src/img/egor.png');
+        });
         let denis = document.getElementById('denis');
+        denis.addEventListener('click', () => {
+            imgept.setAttribute('src', 'http://justclickit.ru/flash/ufo/ufo%20(314).gif');
+        });
         let rishat = document.getElementById('rishat');
+        rishat.addEventListener('click', () => {
+            imgept.setAttribute('src', 'http://justclickit.ru/flash/fear/fear%20(5).gif');
+        });
         let andrey = document.getElementById('andrey');
+        andrey.addEventListener('click', () => {
+            imgept.setAttribute('src', 'http://justclickit.ru/flash/chert/chert%20(34).gif');
+        });
     }
 
 }

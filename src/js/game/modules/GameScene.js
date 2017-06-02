@@ -158,7 +158,8 @@ export default class GameScene {
 
                     if(this.manager.strategy instanceof MultiPlayerStrategy){
                         this.renderTimer();
-                        this.manager.startMpTimer(0);
+                        this.manager.sendMessageToServer({type: 'ready', id: this.manager._gameId});
+                        // this.manager.startMpTimer(0);
                     }
 
                     // console.warn(this.m_scenes.get_all_objects());

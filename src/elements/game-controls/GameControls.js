@@ -82,6 +82,7 @@ export default class GameControls {
      * @param callback
      */
     initDoStepListener(callback) {
+        //this.managerContext.ws.close();
         this.createStep = function () {
             if (this.isButtonStepActive) {
                 callback();

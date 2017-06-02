@@ -1012,6 +1012,7 @@ body {
     font-size: 60px;
     color: #ede40c;
     border-width: 5px;
+    margin-top: 10px;
     margin-bottom: 20px; }
     .main-title h1:hover {
       text-shadow: 7px 0 0 #ed000d, -7px 0 0 #ed000d, 0 7px 0 #ed000d, 0 -7px 0 #ed000d; }
