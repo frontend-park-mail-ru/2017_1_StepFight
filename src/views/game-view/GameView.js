@@ -40,6 +40,7 @@ export default class GameView extends BaseView{
 
     destroyView(){
         if(this.gameManager){
+            this.gameManager.destroy();
             this.gameManager.closeWebSocket();
         }
         super.destroyView();

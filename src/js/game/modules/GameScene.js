@@ -25,6 +25,11 @@ export default class GameScene {
         this._setSize();
     }
 
+    destroy(){
+        delete this.app;
+        delete this.data;
+    }
+
     /**
      * Установить все размеры экрана
      * @private
@@ -138,20 +143,17 @@ export default class GameScene {
      * Отрисовка canvas
      */
     _renderCanvas() {
+        this.data.unload();
         this.app.init({
             canvas_container_id: "game-container",
             autoresize: true,
             physics_enabled: true,
             callback: ()=>{
-                //this._addStyleOnCanvas();
                 this.data.load("/src/three-models/animation_all.json", ()=>{
                     this.progressBarTable.remove();
 
                     let m_scenes = b4w.require("scenes");
-                    //this.m_cam  = b4w.require("camera");
                     let m_anim  = b4w.require("animation");
-                    /*this.active_scene = this.m_scenes.get_active();
-                    this.active_camera = this.m_scenes.get_active_camera();*/
 
                     this.playerMe = new ObjPerson(m_anim, m_scenes.get_object_by_name("Player_1"));
                     this.playerOpponent = new ObjPerson(m_anim, m_scenes.get_object_by_name("Player_2"));
@@ -159,12 +161,9 @@ export default class GameScene {
                     if(this.manager.strategy instanceof MultiPlayerStrategy){
                         this.renderTimer();
                         this.manager.sendMessageToServer({type: 'ready', id: this.manager._gameId});
-                        // this.manager.startMpTimer(0);
                     }
 
                     this.manager.view.gameControls.show();
-
-                    // console.warn(this.m_scenes.get_all_objects());
                 });
             }
         });

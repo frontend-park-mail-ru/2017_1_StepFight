@@ -103,7 +103,8 @@ export default class GameControls {
      * Удалить слушателя на кнопку "сделать шаг"
      */
     deleteDoStepListener() {
-        this.btnStep.removeEventListener('click', this.createStep);
+        if(typeof this.btnStep !== 'undefined')
+            this.btnStep.removeEventListener('click', this.createStep);
     }
 
     /**

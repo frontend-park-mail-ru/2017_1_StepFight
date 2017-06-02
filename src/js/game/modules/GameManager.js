@@ -24,6 +24,11 @@ export default class GameManager {
                 ? new SinglePlayerStrategy(this) : new MultiPlayerStrategy(this);
     }
 
+    destroy(){
+        this.scene.destroy();
+        delete this.scene;
+    }
+
     startGame() {
         if (this.strategy instanceof MultiPlayerStrategy) {
             this.ws = new WebSocket('wss://sf-server.herokuapp.com/api/user/game');
