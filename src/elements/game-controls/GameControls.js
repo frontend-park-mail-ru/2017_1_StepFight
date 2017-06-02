@@ -81,9 +81,7 @@ export default class GameControls {
      * Инициализация слушателей на кнопку "сделать шаг"
      * @param callback
      */
-    initDoStepListener(callback) {
-        //this.managerContext.ws.close();
-        this.createStep = function () {
+    initDoStepListener(callback) {this.createStep = function () {
             if (this.isButtonStepActive) {
                 callback();
             }
