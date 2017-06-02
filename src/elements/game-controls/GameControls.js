@@ -20,8 +20,8 @@ export default class GameControls {
      * Отрисовка элемент
      */
     render() {
-        let container = document.createElement('div');
-        container.setAttribute('class', 'game-controls');
+        this.container = document.createElement('div');
+        this.container.setAttribute('class', 'game-controls');
 
         this.actionContainer = document.createElement('div');
         this.actionContainer.setAttribute('class', 'game-controls_actions');
@@ -37,7 +37,7 @@ export default class GameControls {
             this.speechControl.start();
         }*/
 
-        container.appendChild(this.actionContainer);
+        this.container.appendChild(this.actionContainer);
 
         this.btnStep = document.createElement('div');
         this.btnStep.setAttribute('id', 'btn-next-step');
@@ -45,15 +45,25 @@ export default class GameControls {
         this.btnStepText = document.createElement('p');
         this.btnStepText.innerText = 'Create step';
         this.btnStep.appendChild(this.btnStepText);
-        container.appendChild(this.btnStep);
+        this.container.appendChild(this.btnStep);
 
         this.btnHelp = document.createElement('h2');
         this.btnHelp.setAttribute('class', 'game-controls__button_help');
         this.btnHelp.innerText = 'help';
-        container.appendChild(this.btnHelp);
+        this.container.appendChild(this.btnHelp);
 
-        this.node.appendChild(container);
+        this.node.appendChild(this.container);
         this.initHelpListener();
+
+        this.hidden();
+    }
+
+    hidden(){
+        this.container.hidden = true;
+    }
+
+    show(){
+        this.container.hidden = false;
     }
 
     initHelpListener() {

@@ -162,6 +162,8 @@ export default class GameScene {
                         // this.manager.startMpTimer(0);
                     }
 
+                    this.manager.view.gameControls.show();
+
                     // console.warn(this.m_scenes.get_all_objects());
                 });
             }
