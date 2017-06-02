@@ -26,7 +26,6 @@ export default class GameManager {
 
     startGame() {
         if (this.strategy instanceof MultiPlayerStrategy) {
-            console.log("MP");
             this.ws = new WebSocket('wss://sf-server.herokuapp.com/api/user/game');
             this.ws.onopen = () => {
                 console.log("Соединение установлено.");
@@ -42,7 +41,7 @@ export default class GameManager {
      */
     startSpGameProcess() {
         if (this.checkUser()) {
-            if (this.strategy.constructor.name === SinglePlayerStrategy.name) {
+            if (this.strategy instanceof SinglePlayerStrategy) {
                 this.strategy.setPlayers(this.storage.user, {login: 'SUPER BOT', rating: 99999999});
                 this.scene.setState(this.storage.gameStates.STATEGAME);
                 this.strategy.startGameLoop();
@@ -57,11 +56,12 @@ export default class GameManager {
      */
     startMpGameProcess(mpOpponentLogin) {
         if (this.checkUser()) {
-            if (this.strategy.constructor.name === MultiPlayerStrategy.name) {
+            if (this.strategy instanceof MultiPlayerStrategy) {
                 this.strategy.setPlayers(this.storage.user, {login: mpOpponentLogin});
                 this.scene.setState(this.storage.gameStates.STATEGAME);
                 this.strategy.startGameLoop();
-                this.scene.renderTimer();
+                //this.scene.renderTimer();
+                // this.startMpTimer(0);
             }
         } else {
             this.router.go(this.storage.urls.LOGIN, true);
@@ -137,7 +137,7 @@ export default class GameManager {
             this._gameId = data.key;
             let opponentLogin = (data.first === this.storage.user.login) ? data.second : data.first;
             this.startMpGameProcess(opponentLogin);
-            this.startMpTimer(0);
+            // this.startMpTimer(0);
         } else if ('id' in data) {
             this.stepResultAnalyzeFromWs(data);
             this.startMpTimer(5);

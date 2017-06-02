@@ -135,7 +135,7 @@ export default class MultiPlayerStrategy {
                     this.manager.scene.playerOpponent.play(opponentPlay).then(() => {
                         resolve();
                     });
-                    this._logStep(`I missed hit by ${opponentAction.hit.method} to ${opponentAction.hit.target}`);
+                    this._logStep(true, 'red', `I missed hit by ${opponentAction.hit.method} to ${opponentAction.hit.target}`);
                 } else {
                     myPlay.result = true;
                     opponentPlay.result = false;
@@ -143,7 +143,7 @@ export default class MultiPlayerStrategy {
                     this.manager.scene.playerOpponent.play(opponentPlay).then(() => {
                         resolve();
                     });
-                    this._logStep(`Everything okey with ME!`);
+                    this._logStep(true, 'blue', `Everything okey with ME!`);
                 }
                 this._updateMyHealth(myHp);
             });
@@ -165,14 +165,14 @@ export default class MultiPlayerStrategy {
             if (opponentDamage !== 0) {
                 this.manager.scene.playerMe.play(myPlay).then(() => {});
                 this.manager.scene.playerOpponent.play(opponentPlay).then(() => {});
-                this._logStep(`Opponent missed hit by ${myAction.hit.method} to ${myAction.hit.target}`);
+                this._logStep(false, 'red', `Opponent missed hit by ${myAction.hit.method} to ${myAction.hit.target}`);
                 this.animationDone = true;
             } else {
                 myPlay.result = false;
                 opponentPlay.result = true;
                 this.manager.scene.playerMe.play(myPlay).then(() => {});
                 this.manager.scene.playerOpponent.play(opponentPlay).then(() => {});
-                this._logStep(`Everything okey with OPPONENT!`);
+                this._logStep(false, 'blue', `Everything okey with OPPONENT!`);
                 this.animationDone = true;
             }
             this._updateOpponentHealth(opponentHp);
@@ -187,17 +187,34 @@ export default class MultiPlayerStrategy {
 
     /**
      * Вспомогательный метод, заменяет анимацию
+     * @param isMe
+     * @param color
      * @param text
      * @private
      */
-    _logStep(text) {
-        console.log(text);
-        IziToast.info({
-            title: text,
-            position: 'bottomRight',
-            timeout: 7000,
-            icon: ''
-        })
+    _logStep(isMe, color, text) {
+        let position = (isMe) ? 'topLeft' : 'topRight';
+
+        switch (color){
+            case ('red'):{
+                IziToast.error({
+                    title: text,
+                    position: position,
+                    timeout: 5000,
+                    icon: ''
+                });
+                break;
+            }
+            case ('blue'):{
+                IziToast.success({
+                    title: text,
+                    position: position,
+                    timeout: 5000,
+                    icon: ''
+                });
+                break;
+            }
+        }
     }
 
     /**

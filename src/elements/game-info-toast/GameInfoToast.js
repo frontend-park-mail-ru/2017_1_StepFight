@@ -44,6 +44,7 @@ export default class GameInfoToast {
     }
 
     updateHealth(hp) {
+        if(hp < 0) hp = 0;
         this.health = hp;
         if (this.canvas.getContext) {
             let context = this.canvas.getContext('2d');

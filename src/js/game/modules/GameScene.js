@@ -8,6 +8,7 @@ import GameTimer from "../../../elements/game-timer/GameTimer";
 
 import "./game-scene.scss";
 import ObjPerson from "./ObjPerson";
+import MultiPlayerStrategy from "./strategies/Multiplayer";
 
 export default class GameScene {
     constructor(node, storage, manager) {
@@ -155,6 +156,11 @@ export default class GameScene {
                     this.playerMe = new ObjPerson(m_anim, m_scenes.get_object_by_name("Player_1"));
                     this.playerOpponent = new ObjPerson(m_anim, m_scenes.get_object_by_name("Player_2"));
 
+                    if(this.manager.strategy instanceof MultiPlayerStrategy){
+                        this.renderTimer();
+                        this.manager.startMpTimer(0);
+                    }
+
                     // console.warn(this.m_scenes.get_all_objects());
                 });
             }
@@ -176,11 +182,11 @@ export default class GameScene {
     _renderResultState() {
         this.clearView();
 
-        this.gameResultTable = new GameResultTable(this.node);
+        this.gameResultTable = new GameResultTable(this.node, this.storage);
         this.gameResultTable.render(this.resultData);
-        this.gameResultTable.initListener(()=>{
+        /*this.gameResultTable.initListener(()=>{
            this.manager.router.go(this.storage.urls.PROFILE, false);
-        });
+        });*/
     }
 
     /**

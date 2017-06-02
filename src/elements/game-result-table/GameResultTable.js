@@ -5,8 +5,9 @@
 import './game-result-table.scss';
 
 export default class GameResultTable{
-    constructor(node){
+    constructor(node, storage){
         this.node = node;
+        this.storage = storage;
     }
 
     render(settings) {
@@ -47,7 +48,7 @@ export default class GameResultTable{
         this.myDataInfo.appendChild(rating);
 
         /*----------------opponent data-----------------*/
-        this.opponentDataInfo = document.createElement('div');
+        /*this.opponentDataInfo = document.createElement('div');
         this.opponentDataInfo.setAttribute('class', 'game-result-table__opponent-info');
         this.container.appendChild(this.opponentDataInfo);
 
@@ -61,21 +62,22 @@ export default class GameResultTable{
 
         rating = document.createElement('h4');
         rating.innerText = `Rating: ${settings.opponent.object.rating}`;
-        this.opponentDataInfo.appendChild(rating);
+        this.opponentDataInfo.appendChild(rating);*/
 
 
         /*-------------add button--------------*/
-        this.btnOk = document.createElement('div');
+        this.btnOk = document.createElement('a');
         this.btnOk.setAttribute('class', 'game-result-table__button');
+        this.btnOk.setAttribute('href', this.storage.urls.PROFILE);
         this.btnOk.innerText = 'Ok';
-        this.opponentDataInfo.appendChild(this.btnOk);
+        this.container.appendChild(this.btnOk);
     }
 
-    initListener(callback){
+   /* initListener(callback){
         this.btnOk.addEventListener('click', (event)=>{
             callback();
         });
-    }
+    }*/
 
     remove() {
         this.node.removeChild(this.container);

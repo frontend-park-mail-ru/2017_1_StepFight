@@ -60,10 +60,15 @@ export default class ObjPerson {
                     break;
                 }
             }
-            this.m_anim.apply(this.obj, command);
-            this.m_anim.play(this.obj, ()=>{
+            try {
+                this.m_anim.apply(this.obj, command);
+                this.m_anim.play(this.obj, () => {
+                    resolve();
+                });
+            } catch (e){
+                this.m_anim.stop(this.obj);
                 resolve();
-            });
+            }
         });
     }
 }
