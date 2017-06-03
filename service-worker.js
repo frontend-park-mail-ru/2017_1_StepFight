@@ -22,6 +22,8 @@ const CACHE_URLS = [
     '/src/fonts/mainFont.ttf',
     '/src/img/soundon.png',
     '/src/img/soundoff.png',
+    '/dist/blend/b4w.min.js',
+    '/dist/blend/*'
 ];
 
 self.addEventListener('install', (event) => {
