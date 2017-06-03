@@ -25,7 +25,7 @@ export default class GameScene {
         this._setSize();
     }
 
-    destroy(){
+    destroy() {
         delete this.app;
         delete this.data;
     }
@@ -52,8 +52,8 @@ export default class GameScene {
 
         this.container.style.height = `${this.HEGHT}px`;
 
-       /* console.log(`RESIZE WIDTH = ${this.WIDTH}`);
-        console.log(`RESIZE HEIGHT = ${this.HEGHT}`);*/
+        /* console.log(`RESIZE WIDTH = ${this.WIDTH}`);
+         console.log(`RESIZE HEIGHT = ${this.HEGHT}`);*/
     }
 
     /**
@@ -94,7 +94,7 @@ export default class GameScene {
         }
     }
 
-    _addStyleOnCanvas(){
+    _addStyleOnCanvas() {
         this.canvas = this.node.getElementsByTagName('canvas')[2];
     }
 
@@ -128,7 +128,7 @@ export default class GameScene {
         this._initListeners();
     }
 
-    _renderContainer(){
+    _renderContainer() {
         this.container = document.createElement('div');
         this.container.setAttribute('id', 'game-container');
         this.container.setAttribute('class', 'game-container');
@@ -144,35 +144,40 @@ export default class GameScene {
      */
     _renderCanvas() {
         this.data.unload();
+        this.data.activate_media();
         this.app.init({
             canvas_container_id: "game-container",
             autoresize: true,
             physics_enabled: true,
-            callback: ()=>{
-                this.data.load("/src/three-models/animation_all.json", ()=>{
-                    this.progressBarTable.remove();
-
-                    let m_scenes = b4w.require("scenes");
-                    let m_anim  = b4w.require("animation");
-
-                    this.playerMe = new ObjPerson(m_anim, m_scenes.get_object_by_name("Player_1"));
-                    this.playerOpponent = new ObjPerson(m_anim, m_scenes.get_object_by_name("Player_2"));
-
-                    if(this.manager.strategy instanceof MultiPlayerStrategy){
-                        this.renderTimer();
-                        this.manager.sendMessageToServer({type: 'ready', id: this.manager._gameId});
-                    }
-
-                    this.manager.view.gameControls.show();
+            callback: () => {
+                this.data.load("/src/three-models/animation_all.json", () => {
+                    this._initScene();
                 });
             }
         });
     }
 
+    _initScene() {
+        this.progressBarTable.remove();
+
+        let m_scenes = b4w.require("scenes");
+        let m_anim = b4w.require("animation");
+
+        this.playerMe = new ObjPerson(m_anim, m_scenes.get_object_by_name("Player_1"));
+        this.playerOpponent = new ObjPerson(m_anim, m_scenes.get_object_by_name("Player_2"));
+
+        if (this.manager.strategy instanceof MultiPlayerStrategy) {
+            this.renderTimer();
+            this.manager.sendMessageToServer({type: 'ready', id: this.manager._gameId});
+        }
+
+        this.manager.view.gameControls.show();
+    }
+
     /**
      * Отрисовка таймера
      */
-    renderTimer(){
+    renderTimer() {
         this.timer = new GameTimer(this.node);
         this.timer.render();
     }
@@ -187,8 +192,8 @@ export default class GameScene {
         this.gameResultTable = new GameResultTable(this.node, this.storage);
         this.gameResultTable.render(this.resultData);
         /*this.gameResultTable.initListener(()=>{
-           this.manager.router.go(this.storage.urls.PROFILE, false);
-        });*/
+         this.manager.router.go(this.storage.urls.PROFILE, false);
+         });*/
     }
 
     /**

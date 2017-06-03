@@ -128,18 +128,6 @@ export default class MultiPlayerStrategy {
             result: true
         }) {
             return new Promise((resolve) => {
-                /*let myPlay = {
-                 action: 'block',
-                 target: myAction.block.method,
-                 method: opponentAction.hit.method,
-                 result: false
-                 };
-                let opponentPlay = {
-                 action: 'hit',
-                 target: opponentAction.hit.target,
-                 method: opponentAction.hit.method,
-                 result: true
-                 };*/
                 if (myDamage !== 0) {
                     this.manager.scene.playerMe.play(myPlay).then(() => {
                     });
@@ -172,43 +160,28 @@ export default class MultiPlayerStrategy {
             method: myAction.hit.method,
             result: false
         }) {
-            /*let myPlay = {
-             action: 'hit',
-             target: myAction.hit.target,
-             method: myAction.hit.method,
-             result: true
-             };
-             let opponentPlay = {
-             action: 'block',
-             target: opponentAction.block.method,
-             method: myAction.hit.method,
-             result: false
-             };*/
             if (opponentDamage !== 0) {
                 this.manager.scene.playerMe.play(myPlay).then(() => {
                 });
                 this.manager.scene.playerOpponent.play(opponentPlay).then(() => {
+                    this.animationDone = true;
                 });
                 this._logStep(false, 'red', `Opponent missed hit by ${myAction.hit.method} to ${myAction.hit.target}`);
-                this.animationDone = true;
             } else {
                 myPlay.result = false;
                 opponentPlay.result = true;
                 this.manager.scene.playerMe.play(myPlay).then(() => {
                 });
                 this.manager.scene.playerOpponent.play(opponentPlay).then(() => {
+                    this.animationDone = true;
                 });
                 this._logStep(false, 'blue', `Everything okey with OPPONENT!`);
-                this.animationDone = true;
             }
             this._updateOpponentHealth(opponentHp);
         }
 
         let fMyDamage = analyseMyDamage.bind(this);
         let fOpponentDamage = analyseOpponentDamage.bind(this);
-
-       /* console.warn(`MY=${this.checkOnNullStep(myAction)}`);
-        console.warn(`OPP=${this.checkOnNullStep(opponentAction)}`);*/
 
         let checkMy = this.checkOnNullStep(myAction);
         let checkOpp = this.checkOnNullStep(opponentAction);

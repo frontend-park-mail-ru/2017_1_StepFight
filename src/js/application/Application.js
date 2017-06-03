@@ -25,7 +25,7 @@ if (location.protocol !== 'https:' && location.href.match(/localhost/i) === null
     location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
 }
 
-// new ServiceWorker().init();
+new ServiceWorker().init();
 
 new UserService().getUser().then(user => {
     Storage.user = user;

@@ -65,8 +65,6 @@ export default class GameManager {
                 this.strategy.setPlayers(this.storage.user, {login: mpOpponentLogin});
                 this.scene.setState(this.storage.gameStates.STATEGAME);
                 this.strategy.startGameLoop();
-                //this.scene.renderTimer();
-                // this.startMpTimer(0);
             }
         } else {
             this.router.go(this.storage.urls.LOGIN, true);
@@ -156,7 +154,6 @@ export default class GameManager {
             this._gameId = data.key;
             let opponentLogin = (data.first === this.storage.user.login) ? data.second : data.first;
             this.startMpGameProcess(opponentLogin);
-            // this.startMpTimer(0);
         } else if ('id' in data) {
             this.stepResultAnalyzeFromWs(data);
             this.startMpTimer(5);
@@ -171,7 +168,6 @@ export default class GameManager {
         this.scene.timer.cancel();
         setTimeout(() => {
             this.sendMessageToServer({id: this._gameId});
-            //this.ws.send(JSON.stringify({id: this._gameId}));
             this.scene.timer.start().then(() => {
                 let step = new StepObject();
                 step.init('null', 'null', 'null');
