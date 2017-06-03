@@ -122,19 +122,19 @@ export default class AboutView extends BaseView {
         let imgept = document.getElementById('img-ept');
         let egor = document.getElementById('egor');
         egor.addEventListener('click', () => {
-            imgept.setAttribute('src', '/src/img/egor.png');
+            //imgept.setAttribute('src', '/src/img/egor.png');
         });
         let denis = document.getElementById('denis');
         denis.addEventListener('click', () => {
-            imgept.setAttribute('src', 'http://justclickit.ru/flash/ufo/ufo%20(314).gif');
+            //imgept.setAttribute('src', 'http://justclickit.ru/flash/ufo/ufo%20(314).gif');
         });
         let rishat = document.getElementById('rishat');
         rishat.addEventListener('click', () => {
-            imgept.setAttribute('src', 'http://justclickit.ru/flash/fear/fear%20(5).gif');
+            //imgept.setAttribute('src', 'http://justclickit.ru/flash/fear/fear%20(5).gif');
         });
         let andrey = document.getElementById('andrey');
         andrey.addEventListener('click', () => {
-            imgept.setAttribute('src', 'http://justclickit.ru/flash/chert/chert%20(34).gif');
+            //imgept.setAttribute('src', 'http://justclickit.ru/flash/chert/chert%20(34).gif');
         });
     }
 
