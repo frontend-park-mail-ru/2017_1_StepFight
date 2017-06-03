@@ -15,7 +15,8 @@ const CACHE_URLS = [
     '/game',
     '/manifest.json',
     '/src/music/Serious_Sam-_The_Second_Encounter-War.mp3',
-    '/src/three-models/player.json',
+    '/src/three-models/animation_all.json',
+    '/src/three-models/animation_all.bin',
     '/dist/app.bundle.css',
     '/dist/app.bundle.js',
     '/dist/app.bundle.min.js',
@@ -23,7 +24,15 @@ const CACHE_URLS = [
     '/src/img/soundon.png',
     '/src/img/soundoff.png',
     '/dist/blend/b4w.min.js',
-    '/dist/blend/*'
+    '/dist/blend/b4w.min.js.map',
+    '/dist/blend/b4w.simple.min.js',
+    '/dist/blend/b4w.simple.min.js.map',
+    '/dist/blend/b4w.whitespace.min.js',
+    '/dist/blend/b4w.whitespace.min.js.map',
+    '/dist/blend/uranium.js',
+    '/dist/blend/uranium.js.mem',
+    '/dist/blend/uranium_wasm.js',
+    '/dist/blend/uranium_wasm.wasm',
 ];
 
 self.addEventListener('install', (event) => {
