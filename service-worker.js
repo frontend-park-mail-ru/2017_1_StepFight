@@ -33,6 +33,7 @@ const CACHE_URLS = [
     '/dist/blend/uranium.js.mem',
     '/dist/blend/uranium_wasm.js',
     '/dist/blend/uranium_wasm.wasm',
+    '/src/three-models/animation_all.json?v=_b4w_ver_17_04_',
 ];
 
 self.addEventListener('install', (event) => {
